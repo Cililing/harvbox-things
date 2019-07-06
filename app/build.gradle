@@ -51,6 +51,8 @@ dependencies {
     implementation 'androidx.vectordrawable:vectordrawable-animated:1.0.0'
     implementation 'androidx.appcompat:appcompat:1.0.0'
 
+    implementation 'com.google.firebase:firebase-core:17.0.0'
+
     // Tests
     testImplementation 'junit:junit:4.12'
     //    androidTestImplementation 'com.android.support.test:runner:1.0.2'
@@ -59,3 +61,5 @@ dependencies {
     implementation project(':thingscontroller')
     implementation project(':common')
 }
+
+apply plugin: 'com.google.gms.google-services'
