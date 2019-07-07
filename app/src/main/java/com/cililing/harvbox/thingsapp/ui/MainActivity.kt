@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import com.cililing.harvbox.thingsapp.common.TAG
 import com.cililing.harvbox.thingsapp.R
+import com.cililing.harvbox.thingsapp.realtimeDatabase.RealtimeStatusHandler
 import com.cililing.harvbox.thingsapp.thingscontroller.controllers.ButtonController
 import com.cililing.harvbox.thingsapp.thingscontroller.controllers.ButtonControllerImpl
 import com.cililing.harvbox.thingsapp.thingscontroller.controllers.LEDController
@@ -47,17 +48,9 @@ class MainActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        startLed()
-        buttonController.registerCallback {
-            Log.d(TAG, "Button is working ahwuuu")
-
-            val ledState = ledController.getState()
-            ledController.setState(!ledState)
-
-            true
+        RealtimeStatusHandler().observeLedStatus {
+            ledController.setState(it)
         }
-
-        Log.d(this.javaClass.simpleName, I2CHelper.getDeviceList(PeripheralManagerProvider.getInstance()).toString())
     }
 
     override fun onDestroy() {
@@ -65,13 +58,5 @@ class MainActivity : Activity() {
         buttonController.release()
 
         super.onDestroy()
-    }
-
-    private fun startLed() {
-        ledController.setState(true)
-    }
-
-    private fun stopLed() {
-        ledController.setState(false)
     }
 }

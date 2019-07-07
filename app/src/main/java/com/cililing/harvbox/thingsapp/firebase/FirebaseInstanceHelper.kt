@@ -5,7 +5,6 @@ import com.cililing.harvbox.thingsapp.common.TAG
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.iid.FirebaseInstanceId
 
-
 object FirebaseInstanceHelper {
 
     private val firebaseInstanceId: FirebaseInstanceId by lazy {
