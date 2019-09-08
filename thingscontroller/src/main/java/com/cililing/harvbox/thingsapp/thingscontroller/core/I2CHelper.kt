@@ -1,6 +1,7 @@
 package com.cililing.harvbox.thingsapp.thingscontroller.core
 
 import android.util.Log
+import com.cililing.harvbox.thingsapp.common.TAG
 import com.google.android.things.pio.PeripheralManager
 import java.io.IOException
 

@@ -1,18 +1,24 @@
-package com.cililing.harvbox.thingsapp.thingscontroller.controllers
+package com.cililing.harvbox.thingsapp.thingscontroller.controllers.generic
 
-import android.util.Log
-import com.cililing.harvbox.thingsapp.common.TAG
+import com.cililing.harvbox.thingsapp.thingscontroller.controllers.Controller
+import com.cililing.harvbox.thingsapp.thingscontroller.core.Logger
 import com.google.android.things.pio.Gpio
 import com.google.android.things.pio.GpioCallback
 import com.google.android.things.pio.PeripheralManager
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 
-interface ButtonController : Controller {
+interface SingleActionController : Controller {
     fun registerCallback(callback: () -> Boolean)
     fun unregisterCallback()
+
+    override fun release()
 }
 
-class ButtonControllerImpl(peripheralManager: PeripheralManager,
-                           gpio: String) : ButtonController {
+internal class SingleActionControllerImpl(gpio: String) : SingleActionController, KoinComponent {
+
+    private val peripheralManager by inject<PeripheralManager>()
+    private val logger by inject<Logger>()
 
     private val buttonGpio: Gpio = peripheralManager.openGpio(gpio)
     private var gpioCallback: GpioCallback? = null
@@ -41,6 +47,7 @@ class ButtonControllerImpl(peripheralManager: PeripheralManager,
         if (gpioCallback != null) {
             buttonGpio.unregisterGpioCallback(gpioCallback)
         }
+        gpioCallback = null
     }
 
     override fun release() {
@@ -48,10 +55,10 @@ class ButtonControllerImpl(peripheralManager: PeripheralManager,
             if (gpioCallback != null) {
                 buttonGpio.unregisterGpioCallback(gpioCallback)
             }
-            gpioCallback = null;
+            gpioCallback = null
             buttonGpio.close()
-        } catch (ex: Exception) {
-            Log.e(TAG, "Error on PeripheralIO Api", ex)
+        } catch (exception: Exception) {
+            logger.e("Error on PeripheralIO Api, $buttonGpio", exception = exception)
         }
     }
 
