@@ -1,20 +1,23 @@
 package com.cililing.harvbox.thingsapp.thingscontroller
 
-import com.cililing.harvbox.thingsapp.thingscontroller.controllers.ADS1015Controller
-import com.cililing.harvbox.thingsapp.thingscontroller.controllers.Controller
-import com.cililing.harvbox.thingsapp.thingscontroller.controllers.HCSR04Controller
-import com.cililing.harvbox.thingsapp.thingscontroller.controllers.TwoRelayController
+import com.cililing.harvbox.thingsapp.thingscontroller.controllers.*
 import com.cililing.harvbox.thingsapp.thingscontroller.core.getKoinModule
-import com.google.android.things.contrib.driver.adc.ads1xxx.Ads1xxx
 import org.koin.core.KoinComponent
 import org.koin.core.context.startKoin
 import org.koin.core.inject
 import org.koin.core.parameter.parametersOf
+import java.io.Serializable
+
+data class ThingsSnapshot(
+        val twoRelaySnapshot: TwoRelaySnapshot,
+        val proximitySnapshot: HCSR04Snapshot
+): Serializable
 
 class ThingsController internal constructor(
         private val configMap: ControllerConfigMap = ControllerConfigMapDefault,
-        debug: Boolean = false
-) : Controller, KoinComponent {
+        debug: Boolean = false,
+        override val parent: Controller<*>? = null
+) : Controller<ThingsSnapshot>, KoinComponent {
 
     init {
         startKoin {
@@ -29,11 +32,11 @@ class ThingsController internal constructor(
 //    }
 //
     val twoRelayController by inject<TwoRelayController> {
-        parametersOf(configMap.relayIn1, configMap.relayIn2)
+        parametersOf(configMap.relayIn1, configMap.relayIn2, this)
     }
 
     val proximityController by inject<HCSR04Controller> {
-        parametersOf(configMap.proximitySensorTrig, configMap.proximitySensorEcho)
+        parametersOf(configMap.proximitySensorTrig, configMap.proximitySensorEcho, this)
     }
 
 //    internal val tempController by lazy {
@@ -52,7 +55,15 @@ class ThingsController internal constructor(
 //            humidityController
     )
 
+    override fun getSnapshot(): ThingsSnapshot {
+        return ThingsSnapshot(
+                twoRelaySnapshot = twoRelayController.getSnapshot(),
+                proximitySnapshot = proximityController.getSnapshot()
+        )
+    }
+
     override fun release() {
         allControllers.forEach { it.release() }
     }
+
 }

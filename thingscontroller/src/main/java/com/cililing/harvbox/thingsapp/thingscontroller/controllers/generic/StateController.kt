@@ -7,17 +7,23 @@ import com.google.android.things.pio.PeripheralManager
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import java.io.IOException
+import java.io.Serializable
 
-interface StateController : Controller {
+interface StateController : Controller<StateSnapshot> {
     fun getState(): Boolean
     fun setState(value: Boolean)
     fun changeState()
 }
 
+data class StateSnapshot(
+        val gpioState: Boolean
+): Serializable
+
 internal class StateControllerImpl(
         gpio: String,
-        startingState: Boolean = false)
-    : StateController, KoinComponent {
+        startingState: Boolean = false,
+        override val parent: Controller<*>? = null
+) : StateController, KoinComponent {
 
     private val peripheralManager by inject<PeripheralManager>()
     private val logger by inject<Logger>()
@@ -49,5 +55,11 @@ internal class StateControllerImpl(
         } catch (e: IOException) {
             logger.e("Error on: $stateGpio")
         }
+    }
+
+    override fun getSnapshot(): StateSnapshot {
+        return StateSnapshot(
+                gpioState = stateGpio.value
+        )
     }
 }

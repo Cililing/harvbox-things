@@ -2,25 +2,27 @@ package com.cililing.harvbox.thingsapp.thingscontroller.controllers
 
 import com.cililing.harvbox.thingsapp.thingscontroller.core.Clock
 import com.cililing.harvbox.thingsapp.thingscontroller.core.Logger
-import com.cililing.harvbox.thingsapp.thingscontroller.core.multithreading.FixedExecutor
 import com.cililing.harvbox.thingsapp.thingscontroller.core.multithreading.SerialExecutor
 import com.google.android.things.pio.Gpio
-import com.google.android.things.pio.GpioCallback
 import com.google.android.things.pio.PeripheralManager
 import org.koin.core.KoinComponent
 import org.koin.core.inject
-import org.koin.core.parameter.parametersOf
 import java.io.IOException
-import java.lang.Exception
+import java.io.Serializable
 import java.util.concurrent.TimeUnit
 
-interface HCSR04Controller : Controller {
+interface HCSR04Controller : Controller<HCSR04Snapshot> {
     var distanceCallback: ((Double) -> Unit)?
 }
 
+data class HCSR04Snapshot(
+        val value: Double?
+): Serializable
+
 internal class HCSR04ControllerImpl(
         gpioTrig: String,
-        gpioEcho: String
+        gpioEcho: String,
+        override val parent: Controller<*>? = null
 ) : HCSR04Controller, KoinComponent {
 
     companion object {
@@ -35,6 +37,7 @@ internal class HCSR04ControllerImpl(
     private val echoGpio = peripheralManager.openGpio(gpioEcho)
     private val trigGpio = peripheralManager.openGpio(gpioTrig)
 
+    private var lastRead: Double? = null
     override var distanceCallback: ((Double) -> Unit)? = null
 
     private val triggerRunnable: Runnable = Runnable {
@@ -63,6 +66,7 @@ internal class HCSR04ControllerImpl(
             val distanceInCm = ellapsedTime / 58.0
 
             distanceCallback?.invoke(distanceInCm)
+            lastRead = distanceInCm
 
         } catch (ex: IOException) {
             logger.e("Error on IO", exception = ex)
@@ -83,6 +87,10 @@ internal class HCSR04ControllerImpl(
         }
 
         executor.startExecuting(TRIGGERS_INTERVAL, true, triggerRunnable)
+    }
+
+    override fun getSnapshot(): HCSR04Snapshot {
+        return HCSR04Snapshot(lastRead)
     }
 
     override fun release() {

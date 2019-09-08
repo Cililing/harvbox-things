@@ -8,7 +8,7 @@ import com.cililing.harvbox.thingsapp.R
 import com.cililing.harvbox.thingsapp.thingscontroller.ControllerConfigMapDefault
 import com.cililing.harvbox.thingsapp.thingscontroller.ThingsController
 import com.cililing.harvbox.thingsapp.thingscontroller.ThingsControllerBuilder
-import com.cililing.harvbox.thingsapp.ui.views.SingleRelayView
+import com.cililing.harvbox.thingsapp.views.SingleRelayView
 
 /**
  * Skeleton of an Android Things activity.

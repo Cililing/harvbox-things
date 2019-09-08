@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.MainActivity">
 
-    <com.cililing.harvbox.thingsapp.ui.views.SingleRelayView
+    <com.cililing.harvbox.thingsapp.views.SingleRelayView
         android:id="@+id/relay_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,9 +17,9 @@
         tools:layout_height="64dp"
         tools:layout_width="64dp">
 
-    </com.cililing.harvbox.thingsapp.ui.views.SingleRelayView>
+    </com.cililing.harvbox.thingsapp.views.SingleRelayView>
 
-    <com.cililing.harvbox.thingsapp.ui.views.SingleRelayView
+    <com.cililing.harvbox.thingsapp.views.SingleRelayView
         android:id="@+id/relay_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -30,6 +30,6 @@
         tools:layout_height="64dp"
         tools:layout_width="64dp">
 
-    </com.cililing.harvbox.thingsapp.ui.views.SingleRelayView>
+    </com.cililing.harvbox.thingsapp.views.SingleRelayView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

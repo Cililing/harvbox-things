@@ -3,6 +3,7 @@ package com.cililing.harvbox.thingsapp.thingscontroller.core
 import com.cililing.harvbox.thingsapp.thingscontroller.controllers.*
 import com.cililing.harvbox.thingsapp.thingscontroller.controllers.ADS1015Controller
 import com.cililing.harvbox.thingsapp.thingscontroller.controllers.ADS1015ControllerImpl
+import com.cililing.harvbox.thingsapp.thingscontroller.controllers.generic.StateControllerImpl
 import com.cililing.harvbox.thingsapp.thingscontroller.core.multithreading.FixedExecutor
 import com.cililing.harvbox.thingsapp.thingscontroller.core.multithreading.FixedExecutorImpl
 import com.cililing.harvbox.thingsapp.thingscontroller.core.multithreading.SerialExecutor
@@ -26,6 +27,10 @@ internal fun getKoinModule(debug: Boolean): Module {
         }
 
         // Controllers
+        factory { (gpio1: String, startingState: Boolean, parent: Controller<*>?) ->
+            StateControllerImpl(gpio1, startingState, parent)
+        }
+
         factory { (gpio1: String, gpio2: String) ->
                 TwoRelayControllerImpl(gpio1, gpio2) as TwoRelayController
         }

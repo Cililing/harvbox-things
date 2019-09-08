@@ -1,4 +1,4 @@
-package com.cililing.harvbox.thingsapp.ui.views
+package com.cililing.harvbox.thingsapp.views
 
 import android.content.Context
 import android.util.AttributeSet
@@ -6,7 +6,7 @@ import android.widget.CompoundButton
 import android.widget.FrameLayout
 import android.widget.Switch
 import android.widget.TextView
-import com.cililing.harvbox.thingsapp.R
+import com.cililing.harvbox.thingsapp.common.R
 
 class SingleRelayView @JvmOverloads constructor(
         context: Context,
