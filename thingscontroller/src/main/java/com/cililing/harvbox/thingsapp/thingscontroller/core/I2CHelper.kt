@@ -14,6 +14,7 @@ object I2CHelper {
     fun scanI2cAvailableAddresses(peripheralManager: PeripheralManager, i2cName: String): List<Int> {
         return (0..127).filter {
             val k = peripheralManager.openI2cDevice(i2cName, it)
+            println(k)
             with(k) {
                 try {
                     Log.d(this@I2CHelper.javaClass.simpleName, "Checking $it")

@@ -22,8 +22,8 @@ internal class TwoRelayControllerImpl(gpio1: String,
                                       override val parent: Controller<*>? = null
 ) : TwoRelayController, KoinComponent {
 
-    override val relay1: StateController by inject { parametersOf(gpio1, false, null) }
-    override val relay2: StateController by inject { parametersOf(gpio2, false, null) }
+    override val relay1: StateController by inject { parametersOf(gpio1, false, this) }
+    override val relay2: StateController by inject { parametersOf(gpio2, false, this) }
 
     override fun release() {
         relay1.release()

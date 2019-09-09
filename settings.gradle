@@ -1,1 +1,1 @@
-include ':app', ':thingscontroller', ':common'
+include ':app', ':thingscontroller', ':common', ':appcomponent'

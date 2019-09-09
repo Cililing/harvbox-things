@@ -21,7 +21,7 @@ object ControllerConfigMapDefault: ControllerConfigMap {
     override val relayIn1: String = "GPIO6_IO15"
     override val relayIn2: String = "GPIO6_IO14"
 
-    override val adcI2C: String = "I2C1"
+    override val adcI2C: String = "I2C2"
     override val adcAdrr: Int = 0x48
 
     override val humiditySensorAdcPin: Int = 0

@@ -3,6 +3,7 @@ package com.cililing.harvbox.thingsapp.thingscontroller.core
 import com.cililing.harvbox.thingsapp.thingscontroller.controllers.*
 import com.cililing.harvbox.thingsapp.thingscontroller.controllers.ADS1015Controller
 import com.cililing.harvbox.thingsapp.thingscontroller.controllers.ADS1015ControllerImpl
+import com.cililing.harvbox.thingsapp.thingscontroller.controllers.generic.StateController
 import com.cililing.harvbox.thingsapp.thingscontroller.controllers.generic.StateControllerImpl
 import com.cililing.harvbox.thingsapp.thingscontroller.core.multithreading.FixedExecutor
 import com.cililing.harvbox.thingsapp.thingscontroller.core.multithreading.FixedExecutorImpl
@@ -28,19 +29,19 @@ internal fun getKoinModule(debug: Boolean): Module {
 
         // Controllers
         factory { (gpio1: String, startingState: Boolean, parent: Controller<*>?) ->
-            StateControllerImpl(gpio1, startingState, parent)
+            StateControllerImpl(gpio1, startingState, parent) as StateController
         }
 
-        factory { (gpio1: String, gpio2: String) ->
-                TwoRelayControllerImpl(gpio1, gpio2) as TwoRelayController
+        factory { (gpio1: String, gpio2: String, parent: Controller<*>?) ->
+                TwoRelayControllerImpl(gpio1, gpio2, parent) as TwoRelayController
         }
 
-        factory { (gpioTrig: String, gpioEcho: String) ->
-            HCSR04ControllerImpl(gpioTrig, gpioEcho) as HCSR04Controller
+        factory { (gpioTrig: String, gpioEcho: String, parent: Controller<*>?) ->
+            HCSR04ControllerImpl(gpioTrig, gpioEcho, parent) as HCSR04Controller
         }
 
-        factory { (i2cName: String, addr: Int, range: Int) ->
-            ADS1015ControllerImpl(i2cName, addr, range) as ADS1015Controller
+        factory { (i2cName: String, addr: Int, range: Int, parent: Controller<*>?) ->
+            ADS1015ControllerImpl(i2cName, addr, range, parent) as ADS1015Controller
         }
 
         // Executors

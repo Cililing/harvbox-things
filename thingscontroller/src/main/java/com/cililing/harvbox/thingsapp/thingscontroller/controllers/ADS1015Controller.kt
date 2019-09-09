@@ -22,15 +22,15 @@ interface ADS1015Controller : Controller<ADS1015Snapshot> {
 
     val a0: ADS1015PinController
     val a1: ADS1015PinController
-    val a2: ADS1015PinController
-    val a3: ADS1015PinController
+//    val a2: ADS1015PinController
+//    val a3: ADS1015PinController
 
     operator fun get(index: Int): ADS1015PinController {
         return when (index) {
             0 -> a0
             1 -> a1
-            2 -> a2
-            3 -> a3
+//            2 -> a2
+//            3 -> a3
             else -> throw IllegalArgumentException("Index invalid. Possible indexes: 0, 1, 2, 3")
         }
     }
@@ -38,9 +38,9 @@ interface ADS1015Controller : Controller<ADS1015Snapshot> {
 
 data class ADS1015Snapshot(
         private val a0: ADS1015Controller.ADS1015PinSnapshot,
-        private val a1: ADS1015Controller.ADS1015PinSnapshot,
-        private val a2: ADS1015Controller.ADS1015PinSnapshot,
-        private val a3: ADS1015Controller.ADS1015PinSnapshot
+        private val a1: ADS1015Controller.ADS1015PinSnapshot
+//        private val a2: ADS1015Controller.ADS1015PinSnapshot,
+//        private val a3: ADS1015Controller.ADS1015PinSnapshot
 ) : Serializable
 
 internal class ADS1015ControllerImpl(i2cName: String,
@@ -87,8 +87,8 @@ internal class ADS1015ControllerImpl(i2cName: String,
 
     override val a0: ADS1015Controller.ADS1015PinController = ADS1015PinControllerImpl(0)
     override val a1: ADS1015Controller.ADS1015PinController = ADS1015PinControllerImpl(1)
-    override val a2: ADS1015Controller.ADS1015PinController = ADS1015PinControllerImpl(2)
-    override val a3: ADS1015Controller.ADS1015PinController = ADS1015PinControllerImpl(3)
+//    override val a2: ADS1015Controller.ADS1015PinController = ADS1015PinControllerImpl(2)
+//    override val a3: ADS1015Controller.ADS1015PinController = ADS1015PinControllerImpl(3)
 
     init {
         instance.inputRange = range
@@ -97,9 +97,9 @@ internal class ADS1015ControllerImpl(i2cName: String,
     override fun getSnapshot(): ADS1015Snapshot {
         return ADS1015Snapshot(
                 a0.getSnapshot(),
-                a1.getSnapshot(),
-                a2.getSnapshot(),
-                a3.getSnapshot()
+                a1.getSnapshot()
+//                a2.getSnapshot(),
+//                a3.getSnapshot()
         )
     }
 

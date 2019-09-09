@@ -1,6 +1,5 @@
-package com.cililing.harvbox.thingsapp.realtimeDatabase
+package com.cililing.harvbox.thingsapp._old
 
-import com.cililing.harvbox.thingsapp.firebase.FirebaseDatabaseHelper
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener

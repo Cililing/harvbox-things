@@ -7,11 +7,12 @@
     <uses-permission android:name="com.google.android.things.permission.MANAGE_INPUT_DRIVERS" />
 
     <application
+        android:theme="@style/Theme.AppCompat.Light"
         android:name=".ThingsApp"
         tools:ignore="GoogleAppIndexingWarning">
         <uses-library android:name="com.google.android.things" />
 
-        <activity android:name=".ui.MainActivity">
+        <activity android:name=".core.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,7 +27,7 @@
         </activity>
 
         <service
-            android:name=".firebase.FirebaseCloudMessagingService"
+            android:name="._old.FirebaseCloudMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
