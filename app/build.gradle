@@ -22,6 +22,18 @@ android {
         }
     }
 
+    flavorDimensions "version"
+    productFlavors {
+        client {
+            dimension "version"
+            versionNameSuffix "-client"
+        }
+        direct {
+            dimension "version"
+            versionNameSuffix "-direct"
+        }
+    }
+
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
         exclude 'META-INF/LICENSE'
@@ -37,6 +49,9 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    directImplementation project(":direct")
+    clientImplementation project(":client")
 
     // Core
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -60,7 +75,6 @@ dependencies {
     //    androidTestImplementation 'com.android.support.test:runner:1.0.2'
     //    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
-    // implementation project(':thingscontroller')
     implementation project(':common')
 }
 

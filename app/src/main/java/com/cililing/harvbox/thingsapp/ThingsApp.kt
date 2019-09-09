@@ -6,4 +6,6 @@ class ThingsApp : Application() {
     override fun onCreate() {
         super.onCreate()
     }
+
+    val appComponent: AppComponent = AppComponentImpl()
 }
