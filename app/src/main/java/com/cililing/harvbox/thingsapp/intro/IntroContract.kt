@@ -5,6 +5,18 @@ import com.cililing.harvbox.thingsapp.core.mvp.BasePresenter
 import com.cililing.harvbox.thingsapp.core.mvp.BaseView
 
 interface IntroContract: BaseContract {
-    interface View: BaseView<Presenter>
-    interface Presenter: BasePresenter<View>
+    interface View: BaseView<Presenter> {
+//        fun showProgress()
+//
+//        fun showDeviceError()
+//        fun showConnectingError()
+//
+//        fun goToDashboard()
+    }
+
+    interface Presenter: BasePresenter<View> {
+//        fun deviceErrorRetryClicked()
+//        fun connectingErrorRetryClicked()
+    }
+
 }

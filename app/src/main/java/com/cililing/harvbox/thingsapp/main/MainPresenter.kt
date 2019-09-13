@@ -1,5 +1,7 @@
 package com.cililing.harvbox.thingsapp.main
 
+import com.cililing.harvbox.thingsapp.core.mvp.BasePresenterImpl
+
 class MainPresenter(
-        override var view: MainContract.View
-) : MainContract.Presenter
+        view: MainContract.View
+) : BasePresenterImpl<MainContract.View>(view), MainContract.Presenter

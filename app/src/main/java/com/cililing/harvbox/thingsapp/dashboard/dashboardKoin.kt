@@ -10,12 +10,12 @@ val dashboardScope = { module: Module ->
         scoped { params ->
             DashboardPresenter(
                     params[0]
-            )
+            ) as DashboardContract.Presenter
         }
     }
 }
 
-fun DashboardFragment.createParams(
+fun DashboardContract.View.createPresenterParams(
         view: DashboardContract.View
 ): DefinitionParameters {
     return parametersOf(view)

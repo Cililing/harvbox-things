@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.cililing.harvbox.thingsapp.R
 import com.cililing.harvbox.thingsapp.core.mvp.BaseFragment
-import org.koin.android.ext.android.inject
 import org.koin.android.scope.currentScope
 
 /**
@@ -15,8 +14,12 @@ import org.koin.android.scope.currentScope
  */
 class DashboardFragment : BaseFragment<DashboardContract.Presenter>(), DashboardContract.View {
 
+    companion object {
+        fun newInstance() = DashboardFragment()
+    }
+
     override val presenter: DashboardContract.Presenter by currentScope.inject {
-        createParams(this)
+        createPresenterParams(this)
     }
 
     private var rootView: View? = null

@@ -1,22 +1,22 @@
-package com.cililing.harvbox.thingsapp.intro
+package com.cililing.harvbox.thingsapp.settings
 
 import org.koin.core.module.Module
 import org.koin.core.parameter.DefinitionParameters
 import org.koin.core.parameter.parametersOf
 import org.koin.core.qualifier.named
 
-val introScope = { module: Module ->
-    module.scope(named<IntroFragment>()) {
+val settingsScope = { module: Module ->
+    module.scope(named<SettingsFragment>()) {
         scoped { params ->
-            IntroPresenter(
+            SettingsPresenter(
                     params[0]
-            ) as IntroContract.Presenter
+            ) as SettingsContract.Presenter
         }
     }
 }
 
-fun IntroContract.View.getPresenterParams(
-        view: IntroContract.View
+fun SettingsContract.View.getPresenterParams(
+        view: SettingsContract.View
 ): DefinitionParameters {
     return parametersOf(view)
 }

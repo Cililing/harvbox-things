@@ -8,12 +8,14 @@ import org.koin.core.qualifier.named
 val mainScope = { module: Module ->
     module.scope(named<MainFragment>()) {
         scoped { params ->
-            MainPresenter(params[0]) as MainContract.Presenter
+            MainPresenter(
+                    params[0]
+            ) as MainContract.Presenter
         }
     }
 }
 
-fun MainFragment.getPresenterParams(
+fun MainContract.View.getPresenterParams(
         view: MainContract.View
 ): DefinitionParameters {
     return parametersOf(view)
