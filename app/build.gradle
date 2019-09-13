@@ -24,6 +24,10 @@ android {
 
     flavorDimensions "version"
     productFlavors {
+        stub {
+            dimension "version"
+            versionNameSuffix "-stub"
+        }
         client {
             dimension "version"
             versionNameSuffix "-client"
@@ -57,6 +61,9 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
     implementation "org.jetbrains.anko:anko:$anko_version"
+    compile "org.koin:koin-android:2.0.1"
+    compile 'org.koin:koin-android-scope:2.0.1'
+
 
     // Support
     implementation 'androidx.annotation:annotation:1.1.0'
@@ -65,6 +72,8 @@ dependencies {
     implementation 'androidx.fragment:fragment:1.1.0'
     implementation 'androidx.vectordrawable:vectordrawable-animated:1.1.0'
     implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'com.android.support:design:28.0.0'
+
 
     implementation 'com.google.firebase:firebase-core:17.2.0'
     implementation 'com.google.firebase:firebase-messaging:20.0.0'
