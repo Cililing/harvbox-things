@@ -15,10 +15,12 @@ class IntroPresenter(
     )
 
     override fun onResume() {
+        super.onResume()
         checkNetwork()
     }
 
-    override fun onPause() {
+    override fun onDestroy() {
+        super.onDestroy()
         parentJob.cancel()
     }
 

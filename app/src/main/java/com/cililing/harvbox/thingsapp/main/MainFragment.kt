@@ -33,6 +33,7 @@ class MainFragment : BaseFragment<MainContract.Presenter>(), MainContract.View {
 
         viewPager.adapter = getAdapter()
         viewPager.beginFakeDrag() // disable scrolling
+        viewPager.offscreenPageLimit = presenter.tabs.size
         navBar.setOnNavigationItemSelectedListener {
             presenter.tabSelected(Tab.resolveTabByMenuId(it.itemId))
             true

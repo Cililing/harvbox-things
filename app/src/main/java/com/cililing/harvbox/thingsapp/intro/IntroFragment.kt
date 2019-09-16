@@ -63,5 +63,4 @@ class IntroFragment : BaseFragment<IntroContract.Presenter>(), IntroContract.Vie
     override fun goToMainFragment() {
         replaceFragment(MainFragment.newInstance())
     }
-
 }

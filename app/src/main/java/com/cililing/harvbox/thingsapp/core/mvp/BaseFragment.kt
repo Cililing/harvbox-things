@@ -33,6 +33,11 @@ abstract class BaseFragment<Presenter : BasePresenter<*>> : Fragment(), BaseView
         presenter.onPause()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.onDestroy()
+    }
+
     fun replaceFragment(fragment: BaseFragment<*>) {
         (this.activity as MainActivity).replaceOrInjectFragment(fragment)
     }

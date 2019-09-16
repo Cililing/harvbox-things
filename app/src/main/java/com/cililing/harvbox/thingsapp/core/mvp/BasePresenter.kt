@@ -4,4 +4,5 @@ interface BasePresenter<View> {
     var view: View
     fun onResume()
     fun onPause()
+    fun onDestroy()
 }
