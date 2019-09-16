@@ -3,4 +3,11 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="darkBackground">@android:color/background_dark</color>
+    <color name="whiteBackground">@android:color/background_light</color>
+
+    <color name="navBarSelectedTint">@android:color/white</color>
+    <color name="navBarNotSelectedTint">@android:color/darker_gray</color>
+
 </resources>

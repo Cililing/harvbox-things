@@ -11,8 +11,19 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        applyAppTheme()
+
         val fragment = IntroFragment.newInstance()
         replaceOrInjectFragment(fragment)
+    }
+
+    private fun applyAppTheme() {
+        // Because of some reason changing app style to `NoActionBar` child doesn't
+        // remove action bar. This is a working workaround.
+        // There is a chance that the reason of such a behaviour is a bug in AndroidX
+        // library, as before support to X migration everything worked OK.
+        supportActionBar?.hide()
+        actionBar?.hide()
     }
 
     fun replaceOrInjectFragment(fragment: BaseFragment<*>) {
