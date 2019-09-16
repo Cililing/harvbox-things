@@ -2,7 +2,7 @@ package com.cililing.harvbox.thingsapp
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
+import com.cililing.harvbox.thingsapp.core.mvp.BaseFragment
 import com.cililing.harvbox.thingsapp.intro.IntroFragment
 
 class MainActivity : AppCompatActivity() {
@@ -12,10 +12,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val fragment = IntroFragment.newInstance()
-        injectFragment(fragment)
+        replaceOrInjectFragment(fragment)
     }
 
-    private fun injectFragment(fragment: Fragment) {
+    fun replaceOrInjectFragment(fragment: BaseFragment<*>) {
         with(supportFragmentManager.beginTransaction()) {
             replace(R.id.content_frame, fragment)
             commit()

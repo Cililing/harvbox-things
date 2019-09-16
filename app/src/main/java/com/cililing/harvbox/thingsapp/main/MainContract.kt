@@ -6,10 +6,11 @@ import com.cililing.harvbox.thingsapp.core.mvp.BaseView
 
 interface MainContract : BaseContract {
     interface View : BaseView<Presenter> {
-        // fun showTab(which: Tab)
+        fun showTab(tab: Tab)
     }
 
     interface Presenter : BasePresenter<View> {
-        // fun onTabShown(which: Tab)
+        val tabs: List<Tab>
+        fun tabSelected(tab: Tab)
     }
 }

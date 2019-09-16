@@ -3,19 +3,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.cililing.harvbox.thingsapp">
 
-    <uses-permission android:name="com.google.android.things.permission.USE_PERIPHERAL_IO"/>
+    <uses-permission android:name="com.google.android.things.permission.USE_PERIPHERAL_IO" />
     <uses-permission android:name="com.google.android.things.permission.MANAGE_INPUT_DRIVERS" />
 
     <application
-        android:theme="@style/Theme.AppCompat.Light"
         android:name=".ThingsApp"
+        android:theme="@style/Theme.AppCompat.Light"
         tools:ignore="GoogleAppIndexingWarning">
-        <uses-library android:name="com.google.android.things" />
 
-        <activity android:name=".MainActivity">
+        <uses-library
+            android:name="com.google.android.things"
+            android:required="false" />
+
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>

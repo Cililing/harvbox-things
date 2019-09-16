@@ -56,6 +56,7 @@ dependencies {
 
     directImplementation project(":direct")
     clientImplementation project(":client")
+    implementation project(':common')
 
     // Core
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -64,6 +65,9 @@ dependencies {
     compile "org.koin:koin-android:2.0.1"
     compile 'org.koin:koin-android-scope:2.0.1'
 
+    // Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.0.0"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.0.0"
 
     // Support
     implementation 'androidx.annotation:annotation:1.1.0'
@@ -77,14 +81,13 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-core:17.2.0'
     implementation 'com.google.firebase:firebase-messaging:20.0.0'
-    implementation 'com.google.firebase:firebase-database:19.0.0'
+    implementation 'com.google.firebase:firebase-database:19.1.0'
 
     // Tests
     testImplementation 'junit:junit:4.12'
     //    androidTestImplementation 'com.android.support.test:runner:1.0.2'
     //    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
-    implementation project(':common')
 }
 
 apply plugin: 'com.google.gms.google-services'

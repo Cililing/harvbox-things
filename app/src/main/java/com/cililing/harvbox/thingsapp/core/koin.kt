@@ -3,6 +3,8 @@ package com.cililing.harvbox.thingsapp.core
 import com.cililing.harvbox.thingsapp.dashboard.dashboardScope
 import com.cililing.harvbox.thingsapp.intro.introScope
 import com.cililing.harvbox.thingsapp.main.mainScope
+import com.cililing.harvbox.thingsapp.model.ConnectivityChecker
+import com.cililing.harvbox.thingsapp.model.ConnectivityCheckerImpl
 import com.cililing.harvbox.thingsapp.settings.settingsScope
 import com.cililing.harvbox.thingsapp.stats.statsScope
 import org.koin.core.module.Module
@@ -15,15 +17,19 @@ fun appModule(isDebug: Boolean): Module {
                 DebugLogger()
             } else {
                 ReleaseLogger()
-            } as AppLogger
+            } // as AppLogger
         }
 
         // Fragments scopes.
         introScope(this)
         mainScope(this)
-        dashboardScope(this)
-        settingsScope(this)
-        statsScope(this)
 
+        dashboardScope(this)
+        statsScope(this)
+        settingsScope(this)
+
+        factory {
+            ConnectivityCheckerImpl() as ConnectivityChecker
+        }
     }
 }
