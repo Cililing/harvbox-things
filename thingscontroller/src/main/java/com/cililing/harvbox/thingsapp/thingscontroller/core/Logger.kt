@@ -11,7 +11,7 @@ internal interface Logger {
 internal class DebugLogger: Logger {
 
     companion object {
-        private const val TAG = "ThingsController"
+        private const val TAG = "ThingsControllerImpl"
     }
 
     override fun e(what: String, why: String?, exception: Exception?) {

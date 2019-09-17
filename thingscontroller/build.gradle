@@ -26,6 +26,18 @@ android {
         }
     }
 
+    flavorDimensions "version"
+    productFlavors {
+        normal {
+            dimension "version"
+            versionNameSuffix ""
+        }
+        mock {
+            dimension "version"
+            versionNameSuffix "-mock"
+        }
+    }
+
 }
 
 dependencies {
@@ -35,16 +47,19 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.annotation:annotation:1.1.0'
     implementation "org.jetbrains.anko:anko:$anko_version"
-    api "com.google.android.things:androidthings:$android_things_version"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-    implementation project(':common')
-    api 'com.google.android.things.contrib:driver-adc:2.0'
-
     compile "org.koin:koin-core:2.0.1"
+
+    implementation project(':common')
+
+    normalApi "com.google.android.things:androidthings:$android_things_version"
+    normalApi 'com.google.android.things.contrib:driver-adc:2.0'
+
+
 }
 repositories {
     mavenCentral()

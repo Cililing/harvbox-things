@@ -7,3 +7,4 @@ interface Controller<S: Serializable> {
     fun release()
     fun getSnapshot(): S
 }
+
