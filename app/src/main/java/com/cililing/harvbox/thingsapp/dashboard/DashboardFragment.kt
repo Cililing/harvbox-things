@@ -1,11 +1,17 @@
 package com.cililing.harvbox.thingsapp.dashboard
 
 import android.widget.TextView
+import com.cililing.direct.FirebaseService
 import com.cililing.harvbox.thingsapp.R
 import com.cililing.harvbox.thingsapp.core.ProcuderScheduler
 import com.cililing.harvbox.thingsapp.core.mvp.BaseFragment
 import com.cililing.harvbox.thingsapp.model.LightStatus
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.jetbrains.anko.support.v4.find
+import org.jetbrains.anko.support.v4.runOnUiThread
+import org.jetbrains.anko.support.v4.toast
 import org.koin.android.ext.android.get
 import org.koin.android.scope.currentScope
 
@@ -23,6 +29,19 @@ class DashboardFragment : BaseFragment<DashboardContract.Presenter>(), Dashboard
                 get { ProcuderScheduler.createKoinParams(5000, null) },
                 get()
         )
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        GlobalScope.launch {
+
+            FirebaseService().getSnapshotAsync().let {
+                runOnUiThread {
+                    toast(it)
+                }
+            }
+        }
     }
 
     private val temperatureView by lazy { find<TextView>(R.id.dashboard_temperature) }

@@ -5,7 +5,6 @@ apply plugin: 'kotlin-android'
 android {
     compileSdkVersion 28
 
-
     defaultConfig {
         minSdkVersion 27
         targetSdkVersion 28
@@ -13,7 +12,6 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
     }
 
     buildTypes {
@@ -23,6 +21,15 @@ android {
         }
     }
 
+    flavorDimensions 'version'
+    productFlavors {
+        normal {
+            dimension 'version'
+        }
+        mocked {
+            dimension 'version'
+        }
+    }
 }
 
 dependencies {
@@ -31,13 +38,17 @@ dependencies {
     implementation project(':common')
 
     implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation "org.jetbrains.anko:anko:$anko_version"
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    compile "androidx.core:core-ktx:1.1.0"
+    implementation "androidx.core:core-ktx:1.1.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-
+    implementation 'com.google.firebase:firebase-core:17.2.0'
+    implementation 'com.google.firebase:firebase-messaging:20.0.0'
+    implementation 'com.google.firebase:firebase-database:19.1.0'
+    implementation project(path: ':thingscontroller')
 }
 repositories {
     mavenCentral()

@@ -22,19 +22,26 @@ android {
         }
     }
 
-    flavorDimensions "version"
+    flavorDimensions "version", "type"
     productFlavors {
-        stub {
-            dimension "version"
-            versionNameSuffix "-stub"
-        }
         client {
-            dimension "version"
-            versionNameSuffix "-client"
+            dimension "type"
         }
         direct {
+            dimension "type"
+        }
+        mocked {
             dimension "version"
-            versionNameSuffix "-direct"
+        }
+        normal {
+            dimension "version"
+        }
+    }
+
+    // Disable `mockedClient*` variant
+    variantFilter { variant ->
+        if (variant.name.startsWith("mockedClient")) {
+            setIgnore(true)
         }
     }
 
@@ -54,16 +61,17 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
-    directImplementation project(":direct")
+    directApi project(":direct")
     clientImplementation project(":client")
+
     implementation project(':common')
 
     // Core
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
     implementation "org.jetbrains.anko:anko:$anko_version"
-    compile "org.koin:koin-android:2.0.1"
-    compile 'org.koin:koin-android-scope:2.0.1'
+    implementation "org.koin:koin-android:2.0.1"
+    implementation 'org.koin:koin-android-scope:2.0.1'
 
     // Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.0.0"
