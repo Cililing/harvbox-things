@@ -1,5 +1,7 @@
 package com.cililing.harvbox.thingsapp.core
 
+import com.cililing.harvbox.thingsapp.AppControlerImpl
+import com.cililing.harvbox.thingsapp.AppController
 import com.cililing.harvbox.thingsapp.dashboard.dashboardScope
 import com.cililing.harvbox.thingsapp.intro.introScope
 import com.cililing.harvbox.thingsapp.main.mainScope
@@ -20,6 +22,10 @@ fun appModule(isDebug: Boolean): Module {
             } else {
                 ReleaseLogger()
             } // as AppLogger
+        }
+
+        single {
+            AppControlerImpl() as AppController
         }
 
         // Tools

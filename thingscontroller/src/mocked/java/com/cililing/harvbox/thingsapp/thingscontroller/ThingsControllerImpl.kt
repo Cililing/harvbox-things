@@ -14,7 +14,7 @@ class ThingsControllerImpl(override val parent: Controller<*>?) : ThingsControll
 
     override suspend fun getSnapshotAsync(): ThingsSnapshot {
         return withContext(coroutineScope.coroutineContext) {
-            getSnapshot().delayAndReturn(500)
+            getSnapshot().delayAndReturn(Random.nextLong(2000))
         }
     }
 

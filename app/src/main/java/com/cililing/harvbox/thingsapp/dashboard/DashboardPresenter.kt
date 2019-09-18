@@ -1,5 +1,6 @@
 package com.cililing.harvbox.thingsapp.dashboard
 
+import com.cililing.harvbox.thingsapp.AppController
 import com.cililing.harvbox.thingsapp.core.ProcuderScheduler
 import com.cililing.harvbox.thingsapp.core.mvp.BasePresenterImpl
 import com.cililing.harvbox.thingsapp.model.CurrentValuesProvider
@@ -7,6 +8,7 @@ import kotlinx.coroutines.*
 
 class DashboardPresenter(
         view: DashboardContract.View,
+        private val appController: AppController,
         private val scheduler: ProcuderScheduler,
         private val currentValuesProvider: CurrentValuesProvider
 ) : BasePresenterImpl<DashboardContract.View>(view), DashboardContract.Presenter {
@@ -29,11 +31,9 @@ class DashboardPresenter(
 
     private fun requestForData() {
         coroutineScope.launch {
-            val light = async(Dispatchers.IO) { currentValuesProvider.requestLightStatus() }
-            val temp = async(Dispatchers.IO) { currentValuesProvider.requestTemperature() }
-
-            view.onNewTemperatureReceived(temp.await())
-            view.onNewLightStatusReceived(light.await())
+            appController.getData {
+                view.onNewSnapshot(it)
+            }
         }
     }
 
