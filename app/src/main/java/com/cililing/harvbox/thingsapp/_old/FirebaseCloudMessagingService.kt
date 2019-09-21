@@ -1,7 +1,7 @@
 package com.cililing.harvbox.thingsapp._old
 
 import android.util.Log
-import com.cililing.harvbox.thingsapp.common.TAG
+import com.cililing.harvbox.common.TAG
 import com.google.firebase.messaging.FirebaseMessagingService
 
 class FirebaseCloudMessagingService : FirebaseMessagingService() {

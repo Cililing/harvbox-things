@@ -1,6 +1,6 @@
 package com.cililing.client
 
-import com.cililing.direct.firebase.reporting.FirebaseThingsSnapshot
+import com.cililing.harvbox.common.FirebaseThingsSnapshot
 
 val clientSnapshotMock: FirebaseThingsSnapshot = FirebaseThingsSnapshot(
 

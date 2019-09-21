@@ -1,6 +1,7 @@
 package com.cililing.harvbox.thingsapp.thingscontroller.controllers
 
-import com.cililing.harvbox.thingsapp.thingscontroller.core.Logger
+import com.cililing.harvbox.common.Logger
+import com.cililing.harvbox.thingsapp.thingscontroller.core.StandaloneKoinCompontent
 import com.cililing.harvbox.thingsapp.thingscontroller.core.multithreading.FixedExecutor
 import com.google.android.things.contrib.driver.adc.ads1xxx.Ads1xxx
 import org.koin.core.KoinComponent
@@ -10,7 +11,8 @@ import org.koin.core.parameter.parametersOf
 internal class ADS1015ControllerImpl(i2cName: String,
                                      addr: Int,
                                      range: Int,
-                                     override val parent: Controller<*>? = null) : ADS1015Controller, KoinComponent {
+                                     override val parent: Controller<*>? = null
+) : ADS1015Controller, StandaloneKoinCompontent {
     companion object {
         private const val EXECUTOR_THREADS = 4
     }

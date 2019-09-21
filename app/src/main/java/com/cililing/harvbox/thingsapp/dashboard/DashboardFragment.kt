@@ -1,7 +1,7 @@
 package com.cililing.harvbox.thingsapp.dashboard
 
 import android.widget.TextView
-import com.cililing.direct.firebase.reporting.FirebaseThingsSnapshot
+import com.cililing.harvbox.common.FirebaseThingsSnapshot
 import com.cililing.harvbox.thingsapp.R
 import com.cililing.harvbox.thingsapp.core.ProcuderScheduler
 import com.cililing.harvbox.thingsapp.core.mvp.BaseFragment
@@ -11,7 +11,6 @@ import org.koin.android.ext.android.get
 import org.koin.android.scope.currentScope
 
 class DashboardFragment : BaseFragment<DashboardContract.Presenter>(), DashboardContract.View {
-
     companion object {
         fun newInstance() = DashboardFragment()
     }

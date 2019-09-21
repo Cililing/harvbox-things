@@ -1,29 +1,51 @@
 package com.cililing.direct
 
-import com.cililing.direct.firebase.reporting.FirebaseThingsSnapshot
+import com.cililing.direct.firebase.FirebaseAppDatabase
+import com.cililing.direct.firebase.getFirebaseModule
+import com.cililing.harvbox.common.FirebaseThingsSnapshot
 import com.cililing.harvbox.thingsapp.thingscontroller.ThingsController
-import com.cililing.harvbox.thingsapp.thingscontroller.ThingsControllerBuilderImpl
-import kotlinx.coroutines.*
+import com.google.firebase.FirebaseApp
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import org.koin.core.inject
+import org.koin.dsl.koinApplication
 
-internal class DirectServiceImpl : DirectService {
+internal class DirectServiceImpl(
+        private val firebaseApp: FirebaseApp,
+        private val isDebug: Boolean
+) : DirectService, StandaloneKoinCompontent {
 
-    private val thingsController by lazy {
-        ThingsControllerBuilderImpl().build()
-    }
+    init {
+        StandaloneKoinContext.koinApplication = koinApplication {
+            if (isDebug) printLogger()
 
-    private suspend fun generateThingsSnapshot(): FirebaseThingsSnapshot {
-        return thingsController.getSnapshotAsync().toFirebaseThingsSnapshot()
-    }
-
-    override suspend fun get(listener: (FirebaseThingsSnapshot) -> Unit) {
-        val snapshot = generateThingsSnapshot()
-        withContext(Dispatchers.IO) {
-            reportToFirebase(snapshot)
+            modules(listOf(
+                    getDirectKoinModule(isDebug),
+                    getFirebaseModule(firebaseApp)
+            ))
         }
-        listener.invoke(snapshot)
     }
 
-    private suspend fun reportToFirebase(firebaseThingsSnapshot: FirebaseThingsSnapshot) {
-        delay(1000)
+    private val thingsController: ThingsController by inject()
+    private val cloudDatabase: FirebaseAppDatabase by inject()
+
+    /**
+     * This will return snapshot do provider and report process in background.
+     */
+    override suspend fun getAndProcess(): FirebaseThingsSnapshot {
+        return generateThingsSnapshot().also {
+            // Other things do async to return result faster
+            withContext(Dispatchers.Default) {
+                reportCurrentStatusToFirebase(it)
+            }
+        }
+    }
+
+    private fun reportCurrentStatusToFirebase(firebaseThingsSnapshot: FirebaseThingsSnapshot) {
+        cloudDatabase.post(firebaseThingsSnapshot)
+    }
+
+    private fun generateThingsSnapshot(): FirebaseThingsSnapshot {
+        return thingsController.getSnapshot().toFirebaseThingsSnapshot()
     }
 }

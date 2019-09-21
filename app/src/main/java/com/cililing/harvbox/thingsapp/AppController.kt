@@ -1,7 +1,11 @@
 package com.cililing.harvbox.thingsapp
 
-import com.cililing.direct.firebase.reporting.FirebaseThingsSnapshot
+import com.cililing.harvbox.common.FirebaseThingsSnapshot
 
 interface AppController {
-    suspend fun getData(listener: (FirebaseThingsSnapshot) -> Unit)
+    companion object {
+        val isDebug = BuildConfig.DEBUG
+    }
+
+    suspend fun getData(): FirebaseThingsSnapshot
 }

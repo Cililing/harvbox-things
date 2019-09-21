@@ -1,14 +1,14 @@
-package com.cililing.harvbox.thingsapp.thingscontroller.core
+package com.cililing.harvbox.common
 
 import android.util.Log
 import java.lang.Exception
 
-internal interface Logger {
+interface Logger {
     fun i(what: String)
     fun e(what: String, why: String? = null, exception: Exception? = null)
 }
 
-internal class DebugLogger: Logger {
+class DebugLogger: Logger {
 
     companion object {
         private const val TAG = "ThingsControllerImpl"
@@ -24,7 +24,7 @@ internal class DebugLogger: Logger {
 
 }
 
-internal class ReleaseLogger: Logger {
+class ReleaseLogger: Logger {
     override fun i(what: String) {
     }
 

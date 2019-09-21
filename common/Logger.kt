@@ -4,12 +4,12 @@ import android.util.Log
 import com.cililing.harvbox.thingsapp.common.TAG
 import java.lang.Exception
 
-interface AppLogger {
+interface Logger {
     fun i(source: Any?, what: String)
     fun e(source: Any?, what: String, exception: Exception)
 }
 
-class DebugLogger : AppLogger {
+class DebugLogger : Logger {
     override fun i(source: Any?, what: String) {
         Log.d(source.TAG, what)
     }
@@ -19,7 +19,7 @@ class DebugLogger : AppLogger {
     }
 }
 
-class ReleaseLogger : AppLogger {
+class ReleaseLogger : Logger {
     override fun i(source: Any?, what: String) {
     }
 

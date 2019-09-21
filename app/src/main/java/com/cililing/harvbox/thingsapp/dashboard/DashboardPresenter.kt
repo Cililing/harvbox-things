@@ -31,9 +31,10 @@ class DashboardPresenter(
 
     private fun requestForData() {
         coroutineScope.launch {
-            appController.getData {
-                view.onNewSnapshot(it)
+            val firebaseSnapshot = async {
+                appController.getData()
             }
+            view.onNewSnapshot(firebaseSnapshot.await())
         }
     }
 

@@ -1,15 +1,16 @@
 package com.cililing.harvbox.thingsapp
 
-import com.cililing.direct.firebase.reporting.FirebaseThingsSnapshot
 import com.cililing.direct.getDirectService
+import com.cililing.harvbox.common.FirebaseThingsSnapshot
+import com.google.firebase.FirebaseApp
 
 class AppControlerImpl : AppController {
 
     private val directService by lazy {
-        getDirectService()
+        getDirectService(FirebaseApp.getInstance(), AppController.isDebug)
     }
 
-    override suspend fun getData(listener: (FirebaseThingsSnapshot) -> Unit) {
-        return directService.get(listener)
+    override suspend fun getData(): FirebaseThingsSnapshot {
+        return directService.getAndProcess()
     }
 }

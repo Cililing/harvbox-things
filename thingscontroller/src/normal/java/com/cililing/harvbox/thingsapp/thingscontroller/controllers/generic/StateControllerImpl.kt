@@ -1,7 +1,8 @@
 package com.cililing.harvbox.thingsapp.thingscontroller.controllers.generic
 
+import com.cililing.harvbox.common.Logger
 import com.cililing.harvbox.thingsapp.thingscontroller.controllers.Controller
-import com.cililing.harvbox.thingsapp.thingscontroller.core.Logger
+import com.cililing.harvbox.thingsapp.thingscontroller.core.StandaloneKoinCompontent
 import com.google.android.things.pio.Gpio
 import com.google.android.things.pio.PeripheralManager
 import org.koin.core.KoinComponent
@@ -12,7 +13,7 @@ internal class StateControllerImpl(
         gpio: String,
         startingState: Boolean = false,
         override val parent: Controller<*>? = null
-) : StateController, KoinComponent {
+) : StateController, StandaloneKoinCompontent {
 
     private val peripheralManager by inject<PeripheralManager>()
     private val logger by inject<Logger>()

@@ -2,24 +2,10 @@ package com.cililing.harvbox.thingsapp.thingscontroller
 
 import com.cililing.harvbox.thingsapp.thingscontroller.controllers.*
 import com.cililing.harvbox.thingsapp.thingscontroller.controllers.generic.StateSnapshot
-import kotlinx.coroutines.*
 import kotlin.random.Random
 
 class ThingsControllerImpl(override val parent: Controller<*>?) : ThingsController {
-
-    private val parentJob = Job()
-    private val coroutineScope = CoroutineScope(
-        parentJob + Dispatchers.IO
-    )
-
-    override suspend fun getSnapshotAsync(): ThingsSnapshot {
-        return withContext(coroutineScope.coroutineContext) {
-            getSnapshot().delayAndReturn(Random.nextLong(2000))
-        }
-    }
-
     override fun release() {
-        parentJob.cancel()
     }
 
     override fun getSnapshot(): ThingsSnapshot {
@@ -37,8 +23,4 @@ class ThingsControllerImpl(override val parent: Controller<*>?) : ThingsControll
                 )
         )
     }
-
-    private suspend fun <T> T.delayAndReturn(howLong: Long = 500): T {
-        delay(howLong)
-        return this
-    }}
+}

@@ -1,5 +1,5 @@
 package com.cililing.harvbox.thingsapp.thingscontroller
 
-import com.cililing.harvbox.thingsapp.thingscontroller.controllers.AsyncController
+import com.cililing.harvbox.thingsapp.thingscontroller.controllers.Controller
 
-interface ThingsController : AsyncController<ThingsSnapshot>
+interface ThingsController : Controller<ThingsSnapshot>

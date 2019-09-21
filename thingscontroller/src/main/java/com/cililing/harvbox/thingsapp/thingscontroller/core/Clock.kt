@@ -1,6 +1,6 @@
 package com.cililing.harvbox.thingsapp.thingscontroller.core
 
-interface Clock {
+internal interface Clock {
     fun nano(): Long {
         return System.nanoTime()
     }
@@ -10,4 +10,4 @@ interface Clock {
     }
 }
 
-class RealClock : Clock
+internal class RealClock : Clock

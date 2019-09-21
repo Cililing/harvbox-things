@@ -1,7 +1,8 @@
 package com.cililing.harvbox.thingsapp.thingscontroller.controllers
 
+import com.cililing.harvbox.common.Logger
 import com.cililing.harvbox.thingsapp.thingscontroller.core.Clock
-import com.cililing.harvbox.thingsapp.thingscontroller.core.Logger
+import com.cililing.harvbox.thingsapp.thingscontroller.core.StandaloneKoinCompontent
 import com.cililing.harvbox.thingsapp.thingscontroller.core.multithreading.SerialExecutor
 import com.google.android.things.pio.PeripheralManager
 import org.koin.core.KoinComponent
@@ -13,7 +14,7 @@ internal class HCSR04ControllerImpl(
         gpioTrig: String,
         gpioEcho: String,
         override val parent: Controller<*>? = null
-) : HCSR04Controller, KoinComponent {
+) : HCSR04Controller, StandaloneKoinCompontent {
 
     companion object {
         private const val TRIGGERS_INTERVAL: Long = 300
