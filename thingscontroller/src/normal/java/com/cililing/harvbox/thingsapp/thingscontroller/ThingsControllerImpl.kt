@@ -59,6 +59,11 @@ class ThingsControllerImpl internal constructor(
         twoRelayController.relay2.setState(state.relay2)
     }
 
+    override fun setState(relay1: Boolean?, relay2: Boolean?) {
+        relay1?.let { twoRelayController.relay1.setState(it) }
+        relay2?.let { twoRelayController.relay2.setState(it) }
+    }
+
     override fun getSnapshot(): ThingsSnapshot {
         return ThingsSnapshot(
                 twoRelaySnapshot = twoRelayController.getSnapshot(),

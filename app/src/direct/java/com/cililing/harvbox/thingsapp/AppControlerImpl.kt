@@ -2,6 +2,7 @@ package com.cililing.harvbox.thingsapp
 
 import com.cililing.direct.getDirectService
 import com.cililing.harvbox.common.StatusSnapshot
+import com.cililing.harvbox.common.ThingsActionRequest
 import com.google.firebase.FirebaseApp
 
 class AppControlerImpl : AppController {
@@ -12,5 +13,9 @@ class AppControlerImpl : AppController {
 
     override suspend fun getData(): StatusSnapshot {
         return directService.getAndProcess()
+    }
+
+    override suspend fun request(actionRequest: ThingsActionRequest) {
+        directService.request(actionRequest)
     }
 }

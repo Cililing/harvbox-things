@@ -13,5 +13,8 @@ interface DashboardContract : BaseContract {
         fun onNewSnapshot(new: StatusSnapshot)
     }
 
-    interface Presenter : BasePresenter<View>
+    interface Presenter : BasePresenter<View> {
+        fun onLight1Click()
+        fun onLight2Click()
+    }
 }

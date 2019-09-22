@@ -6,6 +6,8 @@ import com.cililing.direct.firebase.FirebaseAppDatabase
 import com.cililing.direct.firebase.getFirebaseModule
 import com.cililing.harvbox.common.Logger
 import com.cililing.harvbox.common.StatusSnapshot
+import com.cililing.harvbox.common.ThingsActionRequest
+import com.cililing.harvbox.thingsapp.thingscontroller.RequiredThingsState
 import com.cililing.harvbox.thingsapp.thingscontroller.ThingsController
 import com.google.firebase.FirebaseApp
 import kotlinx.coroutines.Dispatchers
@@ -49,6 +51,27 @@ internal class DirectServiceImpl(
                 withContext(Dispatchers.IO) {
                     reportCurrentStatusToElastic(it)
                 }
+            }
+        }
+    }
+
+    override suspend fun request(actionRequest: ThingsActionRequest) {
+        logger.i("Requesting: $actionRequest")
+        withContext(Dispatchers.Default) {
+            val action = when (actionRequest) {
+                is ThingsActionRequest.Light1 -> {
+                    {
+                        thingsController.setState(actionRequest.isOn, null)
+                    }
+                }
+                is ThingsActionRequest.Light2 -> {
+                    {
+                        thingsController.setState(null, actionRequest.isOn)
+                    }
+                }
+            }
+            withContext(Dispatchers.IO) {
+                action()
             }
         }
     }

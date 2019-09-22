@@ -1,11 +1,14 @@
 package com.cililing.harvbox.thingsapp.dashboard
 
+import android.os.Bundle
+import android.view.View
 import android.widget.TextView
 import com.cililing.harvbox.common.StatusSnapshot
 import com.cililing.harvbox.thingsapp.R
 import com.cililing.harvbox.thingsapp.core.ProducerScheduler
 import com.cililing.harvbox.thingsapp.core.mvp.BaseFragment
 import com.cililing.harvbox.thingsapp.model.LightStatus
+import org.jetbrains.anko.sdk27.coroutines.onClick
 import org.jetbrains.anko.support.v4.find
 import org.koin.android.ext.android.get
 import org.koin.android.scope.currentScope
@@ -34,6 +37,21 @@ class DashboardFragment : BaseFragment<DashboardContract.Presenter>(), Dashboard
     private val lightStatusView by lazy { find<TextView>(R.id.dashboard_light_status) }
 
     private val dashboardView by lazy { find<TextView>(R.id.dashboard_snapshot) }
+
+    private val relay1Switcher by lazy { find<View>(R.id.relay_1) }
+    private val relay2Switcher by lazy { find<View>(R.id.relay_2) }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        relay1Switcher.onClick {
+            presenter.onLight1Click()
+        }
+
+        relay2Switcher.onClick {
+            presenter.onLight2Click()
+        }
+    }
 
     override fun onNewTemperatureReceived(new: Float) {
         temperatureView.text = new.toString()

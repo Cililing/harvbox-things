@@ -1,5 +1,7 @@
 package com.cililing.harvbox.thingsapp.dashboard
 
+import com.cililing.harvbox.common.StatusSnapshot
+import com.cililing.harvbox.common.ThingsActionRequest
 import com.cililing.harvbox.thingsapp.AppController
 import com.cililing.harvbox.thingsapp.core.ProducerScheduler
 import com.cililing.harvbox.thingsapp.core.mvp.BasePresenterImpl
@@ -17,6 +19,8 @@ class DashboardPresenter(
     private val coroutineScope = CoroutineScope(
             Dispatchers.Main + parentJob
     )
+
+    private var currentSnapshot: StatusSnapshot? = null
 
     override fun onResume() {
         super.onResume()
@@ -36,7 +40,28 @@ class DashboardPresenter(
             val firebaseSnapshot = async {
                 appController.getData()
             }
-            view.onNewSnapshot(firebaseSnapshot.await())
+            with(firebaseSnapshot.await()) {
+                view.onNewSnapshot(this)
+                currentSnapshot = this
+            }
+        }
+    }
+
+    override fun onLight1Click() {
+        coroutineScope.launch {
+            currentSnapshot?.let {
+                appController.request(ThingsActionRequest.Light1(!it.light1PowerOn.isOn))
+                requestForData()
+            }
+        }
+    }
+
+    override fun onLight2Click() {
+        coroutineScope.launch {
+            currentSnapshot?.let {
+                appController.request(ThingsActionRequest.Light2(!it.light2PowerOn.isOn))
+                requestForData()
+            }
         }
     }
 

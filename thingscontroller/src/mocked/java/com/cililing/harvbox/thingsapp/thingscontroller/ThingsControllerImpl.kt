@@ -14,6 +14,12 @@ class ThingsControllerImpl(override val parent: Controller<*>?) : ThingsControll
         relay2State = relay2State.copy(gpioState = state.relay2)
     }
 
+    override fun setState(relay1: Boolean?,
+                 relay2: Boolean?) {
+        relay1?.let { relay1State = relay1State.copy(gpioState = it) }
+        relay2?.let { relay2State = relay2State.copy(gpioState = it) }
+    }
+
     var proximityValue: Double? = null
     var a1Value: Double? = null
     var a2Value: Double? = null
