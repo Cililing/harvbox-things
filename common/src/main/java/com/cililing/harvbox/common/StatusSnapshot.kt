@@ -16,6 +16,8 @@ fun <T> valueOf(value: T?, default: T): Value<T> {
 }
 
 data class StatusSnapshot constructor(
+        @SerializedName("timestamp")
+        val timestamp: String? = null,
         @SerializedName("light1")
         val light1PowerOn: PowerOn = PowerOn(),
         @SerializedName("light2")

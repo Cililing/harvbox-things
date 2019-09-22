@@ -5,8 +5,9 @@ import com.cililing.harvbox.common.PowerOn
 import com.cililing.harvbox.common.valueOf
 import com.cililing.harvbox.thingsapp.thingscontroller.ThingsSnapshot
 
-internal fun ThingsSnapshot.toFirebaseThingsSnapshot(): StatusSnapshot {
+internal fun ThingsSnapshot.toFirebaseThingsSnapshot(timestamp: String? = null): StatusSnapshot {
     return StatusSnapshot(
+            timestamp = timestamp,
             light1PowerOn = this.twoRelaySnapshot.relay1Snapshot.gpioState.let { PowerOn(it) },
             light2PowerOn = this.twoRelaySnapshot.relay2Snapshot.gpioState.let { PowerOn(it) },
             proximityValue = this.proximitySnapshot.value.let { valueOf(it, 0.0) },

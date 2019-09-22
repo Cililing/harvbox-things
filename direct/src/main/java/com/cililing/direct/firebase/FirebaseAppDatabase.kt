@@ -29,6 +29,7 @@ internal class FirebaseAppDatabaseImpl(
     override fun post(model: StatusSnapshot) {
         realtimeStatus.updateChildren(
                 mapOf(
+                        "timestamp" to model.timestamp,
                         "humidity" to model.humidityValue,
                         "light1" to model.light1PowerOn,
                         "light2" to model.light2PowerOn,

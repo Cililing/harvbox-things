@@ -12,6 +12,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.koin.core.inject
 import org.koin.dsl.koinApplication
+import java.text.SimpleDateFormat
+import java.util.*
 
 internal class DirectServiceImpl(
         private val firebaseApp: FirebaseApp,
@@ -60,6 +62,10 @@ internal class DirectServiceImpl(
     }
 
     private fun generateThingsSnapshot(): StatusSnapshot {
-        return thingsController.getSnapshot().toFirebaseThingsSnapshot()
+        val calendar: Calendar = Calendar.getInstance()
+        val date = SimpleDateFormat("dd-MM-yyy HH:mm:ss z", Locale.US)
+        val currentLocalTime: Date = calendar.time
+        val localTime = date.format(currentLocalTime)
+        return thingsController.getSnapshot().toFirebaseThingsSnapshot(localTime)
     }
 }
