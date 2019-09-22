@@ -5,14 +5,20 @@ import com.cililing.harvbox.thingsapp.thingscontroller.controllers.generic.State
 import kotlin.random.Random
 
 class ThingsControllerImpl(override val parent: Controller<*>?) : ThingsController {
-    override fun release() {
+
+    var relay1State = StateSnapshot(false)
+    var relay2State = StateSnapshot(false)
+
+    override fun setState(state: RequiredThingsState) {
+        relay1State = relay1State.copy(gpioState = state.relay1)
+        relay2State = relay2State.copy(gpioState = state.relay2)
     }
 
     override fun getSnapshot(): ThingsSnapshot {
         return ThingsSnapshot(
                 twoRelaySnapshot = TwoRelaySnapshot(
-                        relay1Snapshot = StateSnapshot(Random.nextBoolean()),
-                        relay2Snapshot = StateSnapshot(Random.nextBoolean())
+                        relay1Snapshot = relay1State,
+                        relay2Snapshot = relay2State
                 ),
                 proximitySnapshot = HCSR04Snapshot(
                         value = Random.nextDouble()
@@ -23,4 +29,8 @@ class ThingsControllerImpl(override val parent: Controller<*>?) : ThingsControll
                 )
         )
     }
+
+    override fun release() {
+    }
+
 }

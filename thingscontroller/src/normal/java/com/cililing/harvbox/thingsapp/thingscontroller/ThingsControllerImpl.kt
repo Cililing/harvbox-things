@@ -43,6 +43,11 @@ class ThingsControllerImpl internal constructor(
             proximityController
     )
 
+    override fun setState(state: RequiredThingsState) {
+        twoRelayController.relay1.setState(state.relay1)
+        twoRelayController.relay2.setState(state.relay2)
+    }
+
     override fun getSnapshot(): ThingsSnapshot {
         return ThingsSnapshot(
                 twoRelaySnapshot = twoRelayController.getSnapshot(),
