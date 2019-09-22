@@ -1,7 +1,7 @@
 package com.cililing.harvbox.thingsapp
 
 import com.cililing.direct.getDirectService
-import com.cililing.harvbox.common.FirebaseThingsSnapshot
+import com.cililing.harvbox.common.StatusSnapshot
 import com.google.firebase.FirebaseApp
 
 class AppControlerImpl : AppController {
@@ -10,7 +10,7 @@ class AppControlerImpl : AppController {
         getDirectService(FirebaseApp.getInstance(), AppController.isDebug)
     }
 
-    override suspend fun getData(): FirebaseThingsSnapshot {
+    override suspend fun getData(): StatusSnapshot {
         return directService.getAndProcess()
     }
 }

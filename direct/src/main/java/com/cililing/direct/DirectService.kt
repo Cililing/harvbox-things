@@ -1,10 +1,10 @@
 package com.cililing.direct
 
-import com.cililing.harvbox.common.FirebaseThingsSnapshot
+import com.cililing.harvbox.common.StatusSnapshot
 import com.google.firebase.FirebaseApp
 
 interface DirectService {
-    suspend fun getAndProcess(): FirebaseThingsSnapshot
+    suspend fun getAndProcess(): StatusSnapshot
 }
 
 fun getDirectService(

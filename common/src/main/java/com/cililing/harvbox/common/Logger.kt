@@ -31,3 +31,4 @@ class ReleaseLogger: Logger {
     override fun e(what: String, why: String?, exception: Exception?) {
     }
 }
+

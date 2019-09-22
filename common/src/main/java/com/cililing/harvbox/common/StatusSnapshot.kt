@@ -1,5 +1,6 @@
 package com.cililing.harvbox.common
 
+import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 
 data class PowerOn constructor(
@@ -14,7 +15,7 @@ fun <T> valueOf(value: T?, default: T): Value<T> {
     return if (value != null) Value(value) else Value(default)
 }
 
-data class FirebaseThingsSnapshot constructor(
+data class StatusSnapshot constructor(
         @SerializedName("light1")
         val light1PowerOn: PowerOn = PowerOn(),
         @SerializedName("light2")
@@ -26,3 +27,7 @@ data class FirebaseThingsSnapshot constructor(
         @SerializedName("temp")
         val tempValue: Value<Int> = Value(0)
 )
+
+fun StatusSnapshot.toJson(gson: Gson): String {
+    return gson.toJson(this)
+}

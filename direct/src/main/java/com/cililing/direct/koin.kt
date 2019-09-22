@@ -1,8 +1,6 @@
 package com.cililing.direct
 
-import com.cililing.harvbox.common.DebugLogger
-import com.cililing.harvbox.common.Logger
-import com.cililing.harvbox.common.ReleaseLogger
+import com.cililing.harvbox.common.*
 import com.cililing.harvbox.thingsapp.thingscontroller.ThingsController
 import com.cililing.harvbox.thingsapp.thingscontroller.ThingsControllerBuilderImpl
 import org.koin.core.Koin
@@ -24,6 +22,10 @@ internal fun getDirectKoinModule(isDebug: Boolean) = module {
 
     single {
         if (isDebug) DebugLogger() else ReleaseLogger() as Logger
+    }
+
+    single {
+        RealClock() as Clock
     }
 
     single {

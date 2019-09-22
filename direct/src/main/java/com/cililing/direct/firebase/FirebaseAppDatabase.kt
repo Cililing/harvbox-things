@@ -1,12 +1,12 @@
 package com.cililing.direct.firebase
 
-import com.cililing.harvbox.common.FirebaseThingsSnapshot
+import com.cililing.harvbox.common.StatusSnapshot
 import com.google.firebase.FirebaseApp
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
 internal interface FirebaseAppDatabase {
-    fun post(model: FirebaseThingsSnapshot)
+    fun post(model: StatusSnapshot)
 }
 
 internal class FirebaseAppDatabaseImpl(
@@ -22,7 +22,7 @@ internal class FirebaseAppDatabaseImpl(
         database.reference.child("status")
     }
 
-    override fun post(model: FirebaseThingsSnapshot) {
+    override fun post(model: StatusSnapshot) {
         mapOf(
                 "humidity" to model.humidityValue,
                 "light1" to model.light1PowerOn,

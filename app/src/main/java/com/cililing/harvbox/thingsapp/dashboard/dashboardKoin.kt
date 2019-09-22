@@ -1,7 +1,7 @@
 package com.cililing.harvbox.thingsapp.dashboard
 
 import com.cililing.harvbox.thingsapp.AppController
-import com.cililing.harvbox.thingsapp.core.ProcuderScheduler
+import com.cililing.harvbox.thingsapp.core.ProducerScheduler
 import com.cililing.harvbox.thingsapp.model.CurrentValuesProvider
 import org.koin.core.module.Module
 import org.koin.core.parameter.DefinitionParameters
@@ -21,7 +21,7 @@ val dashboardScope = { module: Module ->
 fun DashboardContract.View.createPresenterParams(
         view: DashboardContract.View,
         appController: AppController,
-        producerScheduler: ProcuderScheduler,
+        producerScheduler: ProducerScheduler,
         currentValuesProvider: CurrentValuesProvider
 ): DefinitionParameters {
     return parametersOf(view, appController, producerScheduler, currentValuesProvider)

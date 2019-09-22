@@ -51,6 +51,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:20.0.0'
     implementation 'com.google.firebase:firebase-database:19.1.0'
     implementation project(path: ':thingscontroller')
+
+    implementation("io.appbase:appbase-droid:1.2.0")
 }
 repositories {
     mavenCentral()

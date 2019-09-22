@@ -6,7 +6,7 @@ import org.koin.core.parameter.parametersOf
 import java.util.concurrent.Executors
 import kotlin.coroutines.CoroutineContext
 
-class ProcuderScheduler(
+class ProducerScheduler(
         private val interval: Long,
         private val initialDelay: Long?
 ) : CoroutineScope {

@@ -1,12 +1,12 @@
 package com.cililing.direct
 
-import com.cililing.harvbox.common.FirebaseThingsSnapshot
+import com.cililing.harvbox.common.StatusSnapshot
 import com.cililing.harvbox.common.PowerOn
 import com.cililing.harvbox.common.valueOf
 import com.cililing.harvbox.thingsapp.thingscontroller.ThingsSnapshot
 
-internal fun ThingsSnapshot.toFirebaseThingsSnapshot(): FirebaseThingsSnapshot {
-    return FirebaseThingsSnapshot(
+internal fun ThingsSnapshot.toFirebaseThingsSnapshot(): StatusSnapshot {
+    return StatusSnapshot(
             light1PowerOn = this.twoRelaySnapshot.relay1Snapshot.gpioState.let { PowerOn(it) },
             light2PowerOn = this.twoRelaySnapshot.relay2Snapshot.gpioState.let { PowerOn(it) },
             proximityValue = this.proximitySnapshot.value.let { valueOf(it, 0.0) },

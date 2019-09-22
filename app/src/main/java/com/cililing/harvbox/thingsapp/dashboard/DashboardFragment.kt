@@ -1,9 +1,9 @@
 package com.cililing.harvbox.thingsapp.dashboard
 
 import android.widget.TextView
-import com.cililing.harvbox.common.FirebaseThingsSnapshot
+import com.cililing.harvbox.common.StatusSnapshot
 import com.cililing.harvbox.thingsapp.R
-import com.cililing.harvbox.thingsapp.core.ProcuderScheduler
+import com.cililing.harvbox.thingsapp.core.ProducerScheduler
 import com.cililing.harvbox.thingsapp.core.mvp.BaseFragment
 import com.cililing.harvbox.thingsapp.model.LightStatus
 import org.jetbrains.anko.support.v4.find
@@ -21,7 +21,7 @@ class DashboardFragment : BaseFragment<DashboardContract.Presenter>(), Dashboard
         createPresenterParams(
                 this,
                 get(),
-                get { ProcuderScheduler.createKoinParams(5000, null) },
+                get { ProducerScheduler.createKoinParams(5000, null) },
                 get()
         )
     }
@@ -43,7 +43,7 @@ class DashboardFragment : BaseFragment<DashboardContract.Presenter>(), Dashboard
         lightStatusView.text = new.toString()
     }
 
-    override fun onNewSnapshot(new: FirebaseThingsSnapshot) {
+    override fun onNewSnapshot(new: StatusSnapshot) {
         dashboardView.text = new.toString()
     }
 }

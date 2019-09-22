@@ -1,7 +1,7 @@
 package com.cililing.client
 
-import com.cililing.harvbox.common.FirebaseThingsSnapshot
+import com.cililing.harvbox.common.StatusSnapshot
 
-val clientSnapshotMock: FirebaseThingsSnapshot = FirebaseThingsSnapshot(
+val CLIENT_SNAPSHOT_MOCK: StatusSnapshot = StatusSnapshot(
 
 )

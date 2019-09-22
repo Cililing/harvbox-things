@@ -1,11 +1,10 @@
 package com.cililing.harvbox.thingsapp.thingscontroller.controllers
 
+import com.cililing.harvbox.common.Clock
 import com.cililing.harvbox.common.Logger
-import com.cililing.harvbox.thingsapp.thingscontroller.core.Clock
 import com.cililing.harvbox.thingsapp.thingscontroller.core.StandaloneKoinCompontent
 import com.cililing.harvbox.thingsapp.thingscontroller.core.multithreading.SerialExecutor
 import com.google.android.things.pio.PeripheralManager
-import org.koin.core.KoinComponent
 import org.koin.core.inject
 import java.io.IOException
 import java.util.concurrent.TimeUnit
