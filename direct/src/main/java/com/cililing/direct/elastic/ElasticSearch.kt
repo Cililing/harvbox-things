@@ -16,7 +16,7 @@ internal class ElasticSearchImpl(
         private val gson: Gson,
         private val logger: Logger,
         private val clock: Clock,
-        elasticSearchConfig: ElasticSearchConfig = ElasticSearchConfig
+        private val elasticSearchConfig: ElasticSearchConfig = ElasticSearchConfig
 ): ElasticSearch {
     private val elasticClient = AppbaseClient(
             elasticSearchConfig.url,
@@ -25,24 +25,25 @@ internal class ElasticSearchImpl(
             elasticSearchConfig.password
     )
 
-    private val cooldown = elasticSearchConfig.reportCooldown
-    private var lastReport: Long? = null
+    private var nextPossibleReportTime: Long? = null
 
     private fun shouldReport(): Boolean {
-        return (lastReport?.plus(cooldown) ?: Long.MIN_VALUE) > clock.micro()
+        return elasticSearchConfig.isEnabled &&
+                clock.milis() > nextPossibleReportTime ?: Long.MIN_VALUE
     }
 
     override suspend fun reportSnapshot(snapshot: StatusSnapshot) {
-        if (shouldReport().not()) {
+        if (!shouldReport()) {
+            logger.i("ElasticSearch ${clock.milis()}---cool_down---$nextPossibleReportTime")
             return
         }
 
         try {
-            elasticClient.prepareIndex("_doc", snapshot.toJson(gson))
+            val response = elasticClient.prepareIndex("_doc", snapshot.toJson(gson))
                     .execute()
-                    .also {
-                        logger.i("ElasticResponse: $it")
-                    }
+            nextPossibleReportTime = clock.milis() + elasticSearchConfig.reportCooldownMilis
+            logger.i("ElasticResponse succeed. NextReportTime: $nextPossibleReportTime" +
+                    "\n\tresponse: $response")
         } catch (ex: Exception) {
             logger.e("ElasticError", exception = ex)
         }

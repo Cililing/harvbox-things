@@ -29,8 +29,9 @@ internal fun getThingsModule(): Module {
             HCSR04ControllerImpl(gpioTrig, gpioEcho, parent) as HCSR04Controller
         }
 
-        factory { (i2cName: String, addr: Int, range: Int, parent: Controller<*>?) ->
-            ADS1015ControllerImpl(i2cName, addr, range, parent) as ADS1015Controller
+        factory { (i2cName: String, addr: Int, range: Int,
+                          mappers: Array<(Int?) -> Double?>, parent: Controller<*>?) ->
+            ADS1015ControllerImpl(i2cName, addr, range, mappers, parent) as ADS1015Controller
         }
 
     }

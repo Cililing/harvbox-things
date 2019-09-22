@@ -4,6 +4,7 @@ import com.cililing.direct.elastic.ElasticSearch
 import com.cililing.direct.elastic.getElasticModule
 import com.cililing.direct.firebase.FirebaseAppDatabase
 import com.cililing.direct.firebase.getFirebaseModule
+import com.cililing.harvbox.common.Logger
 import com.cililing.harvbox.common.StatusSnapshot
 import com.cililing.harvbox.thingsapp.thingscontroller.ThingsController
 import com.google.firebase.FirebaseApp
@@ -32,11 +33,13 @@ internal class DirectServiceImpl(
     private val thingsController: ThingsController by inject()
     private val cloudDatabase: FirebaseAppDatabase by inject()
     private val elasticSearch: ElasticSearch by inject()
+    private val logger: Logger by inject()
 
     /**
      * This will return snapshot do provider and report process in background.
      */
     override suspend fun getAndProcess(): StatusSnapshot {
+        logger.i("Status snaphot requested!")
         return generateThingsSnapshot().also {
             // Other things do async to return result faster
             withContext(Dispatchers.Default) {

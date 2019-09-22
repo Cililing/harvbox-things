@@ -14,20 +14,58 @@ class ThingsControllerImpl(override val parent: Controller<*>?) : ThingsControll
         relay2State = relay2State.copy(gpioState = state.relay2)
     }
 
+    var proximityValue: Double? = null
+    var a1Value: Double? = null
+    var a2Value: Double? = null
+
     override fun getSnapshot(): ThingsSnapshot {
+        proximityValue = throttleDouble(
+                proximityValue ?: 0.0,
+                0..22
+        )
+        a1Value = throttleDouble(
+                a1Value ?: 24.0,
+                22..28
+        )
+        a2Value = throttleDouble(
+                a2Value ?: 18.0,
+                10..30
+        )
         return ThingsSnapshot(
                 twoRelaySnapshot = TwoRelaySnapshot(
                         relay1Snapshot = relay1State,
                         relay2Snapshot = relay2State
                 ),
                 proximitySnapshot = HCSR04Snapshot(
-                        value = Random.nextDouble()
+                        value = proximityValue
                 ),
                 ads1015Snapshot = ADS1015Snapshot(
-                        a0 = ADS1015Controller.ADS1015PinSnapshot(Random.nextInt()),
-                        a1 = ADS1015Controller.ADS1015PinSnapshot(Random.nextInt())
+                        a0 = ADS1015Controller.ADS1015PinSnapshot(a1Value),
+                        a1 = ADS1015Controller.ADS1015PinSnapshot(a2Value)
                 )
         )
+    }
+
+
+    private fun throttleInt(start: Int, boundaries: IntRange): Int {
+        val boundariesLenght = boundaries.last - boundaries.first
+        val maxBoundaryThrottle = (0.1) * boundariesLenght
+
+        val suggestedValue = start + (boundariesLenght * maxBoundaryThrottle).toInt()
+        return if (boundaries.contains(suggestedValue)) {
+            suggestedValue
+        } else {
+            if (suggestedValue > boundaries.last) {
+                boundaries.last
+            } else {
+                boundaries.first
+            }
+        }
+    }
+
+    private fun throttleDouble(start: Double, boundaries: IntRange): Double {
+        return throttleInt(start.toInt(), boundaries)
+                .plus(Random.nextDouble(-1.0, 1.0))
     }
 
     override fun release() {

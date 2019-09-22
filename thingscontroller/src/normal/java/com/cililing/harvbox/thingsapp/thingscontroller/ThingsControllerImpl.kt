@@ -25,14 +25,25 @@ class ThingsControllerImpl internal constructor(
         }
     }
 
-    val ads1015Controller by inject<ADS1015Controller> {
-        parametersOf(configMap.adcI2C, configMap.adcAdrr, Ads1xxx.RANGE_4_096V, this)
+    private val ads1015Mappers: Array<(Int?) -> Double?> = arrayOf(
+            { i -> i?.toDouble() },
+            { i -> i?.toDouble() }
+    )
+
+    private val ads1015Controller by inject<ADS1015Controller> {
+        parametersOf(configMap.adcI2C,
+                configMap.adcAdrr,
+                Ads1xxx.RANGE_4_096V,
+                ads1015Mappers,
+                this
+        )
     }
 
-    val twoRelayController by inject<TwoRelayController> {
+    private val twoRelayController by inject<TwoRelayController> {
         parametersOf(configMap.relayIn1, configMap.relayIn2, this)
     }
 
+    // TODO: make private
     val proximityController by inject<HCSR04Controller> {
         parametersOf(configMap.proximitySensorTrig, configMap.proximitySensorEcho, this)
     }

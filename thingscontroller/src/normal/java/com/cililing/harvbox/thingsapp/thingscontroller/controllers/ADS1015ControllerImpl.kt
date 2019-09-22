@@ -11,6 +11,7 @@ import org.koin.core.parameter.parametersOf
 internal class ADS1015ControllerImpl(i2cName: String,
                                      addr: Int,
                                      range: Int,
+                                     private val valueMappers: Array<(Int?) -> Double?>,
                                      override val parent: Controller<*>? = null
 ) : ADS1015Controller, StandaloneKoinCompontent {
     companion object {
@@ -47,7 +48,7 @@ internal class ADS1015ControllerImpl(i2cName: String,
         }
 
         override fun getSnapshot(): ADS1015Controller.ADS1015PinSnapshot {
-            return ADS1015Controller.ADS1015PinSnapshot(lastRead)
+            return ADS1015Controller.ADS1015PinSnapshot(valueMappers[channel].invoke(lastRead))
         }
     }
 

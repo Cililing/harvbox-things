@@ -14,6 +14,7 @@ internal fun getFirebaseModule(
     single {
         FirebaseAppDatabaseImpl(
                 firebaseApp,
+                get(),
                 get()
         ) as FirebaseAppDatabase
     }

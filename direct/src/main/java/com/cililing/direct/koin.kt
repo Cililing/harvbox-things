@@ -3,6 +3,7 @@ package com.cililing.direct
 import com.cililing.harvbox.common.*
 import com.cililing.harvbox.thingsapp.thingscontroller.ThingsController
 import com.cililing.harvbox.thingsapp.thingscontroller.ThingsControllerBuilderImpl
+import com.google.gson.Gson
 import org.koin.core.Koin
 import org.koin.core.KoinApplication
 import org.koin.core.KoinComponent
@@ -22,6 +23,10 @@ internal fun getDirectKoinModule(isDebug: Boolean) = module {
 
     single {
         if (isDebug) DebugLogger() else ReleaseLogger() as Logger
+    }
+
+    single {
+        Gson() as Gson
     }
 
     single {

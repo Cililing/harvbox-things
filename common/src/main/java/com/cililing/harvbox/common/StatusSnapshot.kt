@@ -23,9 +23,9 @@ data class StatusSnapshot constructor(
         @SerializedName("proximity")
         val proximityValue: Value<Double> = Value(0.0),
         @SerializedName("humidity")
-        val humidityValue: Value<Int> = Value(0),
+        val humidityValue: Value<Double> = Value(0.0),
         @SerializedName("temp")
-        val tempValue: Value<Int> = Value(0)
+        val tempValue: Value<Double> = Value(0.0)
 )
 
 fun StatusSnapshot.toJson(gson: Gson): String {

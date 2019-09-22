@@ -8,6 +8,10 @@ interface Clock {
     fun micro(): Long {
         return System.currentTimeMillis() * 1000
     }
+
+    fun milis(): Long {
+        return System.currentTimeMillis()
+    }
 }
 
 class RealClock : Clock

@@ -3,6 +3,7 @@ package com.cililing.direct.elastic
 import com.cililing.direct.BuildConfig
 
 object ElasticSearchConfig {
+    const val isEnabled = true
     const val url: String = "https://scalr.api.appbase.io"
     const val appName: String = "harvbox"
 
@@ -10,5 +11,5 @@ object ElasticSearchConfig {
     val username = credentials.split(":")[0]
     val password = credentials.split(":")[1]
 
-    const val reportCooldown = 60_000 // 60 seconds for development... Final will be about 10 min (600_000).
+    const val reportCooldownMilis = 15_000 // 60 seconds for development... Final will be about 10 min (600_000).
 }
