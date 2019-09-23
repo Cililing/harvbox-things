@@ -1,9 +1,6 @@
 package com.cililing.direct.elastic
 
-import com.cililing.harvbox.common.Clock
-import com.cililing.harvbox.common.Logger
-import com.cililing.harvbox.common.StatusSnapshot
-import com.cililing.harvbox.common.toJson
+import com.cililing.harvbox.common.*
 import com.google.gson.Gson
 import io.appbase.client.AppbaseClient
 import java.lang.Exception
@@ -39,7 +36,7 @@ internal class ElasticSearchImpl(
         }
 
         try {
-            val response = elasticClient.prepareIndex("_doc", snapshot.toJson(gson))
+            val response = elasticClient.prepareIndex("_doc", snapshot.toValueJson(gson))
                     .execute()
             nextPossibleReportTime = clock.milis() + elasticSearchConfig.reportCooldownMilis
             logger.i("ElasticResponse succeed. NextReportTime: $nextPossibleReportTime" +

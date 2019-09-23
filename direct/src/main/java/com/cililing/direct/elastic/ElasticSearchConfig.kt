@@ -3,7 +3,7 @@ package com.cililing.direct.elastic
 import com.cililing.direct.BuildConfig
 
 object ElasticSearchConfig {
-    const val isEnabled = false
+    const val isEnabled = true
     const val url: String = "https://scalr.api.appbase.io"
     const val appName: String = "harvbox"
 

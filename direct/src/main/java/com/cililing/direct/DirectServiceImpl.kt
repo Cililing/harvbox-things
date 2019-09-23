@@ -86,7 +86,7 @@ internal class DirectServiceImpl(
 
     private fun generateThingsSnapshot(): StatusSnapshot {
         val calendar: Calendar = Calendar.getInstance()
-        val date = SimpleDateFormat("dd-MM-yyy HH:mm:ss z", Locale.US)
+        val date = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSSSS", Locale.US)
         val currentLocalTime: Date = calendar.time
         val localTime = date.format(currentLocalTime)
         return thingsController.getSnapshot().toFirebaseThingsSnapshot(localTime)
