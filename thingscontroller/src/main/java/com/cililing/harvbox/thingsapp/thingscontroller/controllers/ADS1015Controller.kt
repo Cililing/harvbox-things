@@ -10,8 +10,8 @@ interface ADS1015Controller : Controller<ADS1015Snapshot> {
     }
 
     data class ADS1015PinSnapshot(
-            val value: Double?
-    ): Serializable
+        val value: Double?
+    ) : Serializable
 
     val a0: ADS1015PinController
     val a1: ADS1015PinController
@@ -24,4 +24,3 @@ interface ADS1015Controller : Controller<ADS1015Snapshot> {
         }
     }
 }
-

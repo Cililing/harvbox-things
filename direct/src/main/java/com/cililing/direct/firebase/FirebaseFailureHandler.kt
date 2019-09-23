@@ -9,10 +9,9 @@ internal interface FirebaseFailureHandler {
 }
 
 internal class FirebaseFailureHandlerImpl(
-        private val logger: Logger
+    private val logger: Logger
 ) : FirebaseFailureHandler {
     override fun handle(ex: Exception) {
         logger.e(this.TAG, exception = ex)
     }
-
 }

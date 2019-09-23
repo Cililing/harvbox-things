@@ -1,7 +1,7 @@
 package com.cililing.harvbox.thingsapp.model
 
 import kotlinx.coroutines.delay
-import java.util.*
+import java.util.Random
 
 class CurrentValuesProviderImpl : CurrentValuesProvider {
 
@@ -19,5 +19,4 @@ class CurrentValuesProviderImpl : CurrentValuesProvider {
                 random.nextBoolean()
         )
     }
-
 }

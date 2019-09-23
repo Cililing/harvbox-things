@@ -1,7 +1,6 @@
 package com.cililing.harvbox.thingsapp.intro
 
 import com.cililing.harvbox.thingsapp.model.ConnectivityChecker
-import com.cililing.harvbox.thingsapp.model.ConnectivityCheckerImpl
 import org.koin.core.module.Module
 import org.koin.core.parameter.DefinitionParameters
 import org.koin.core.parameter.parametersOf
@@ -18,8 +17,8 @@ val introScope = { module: Module ->
 }
 
 fun IntroContract.View.getPresenterParams(
-        view: IntroContract.View,
-        connectivityChecker: ConnectivityChecker
+    view: IntroContract.View,
+    connectivityChecker: ConnectivityChecker
 ): DefinitionParameters {
     return parametersOf(view, connectivityChecker)
 }

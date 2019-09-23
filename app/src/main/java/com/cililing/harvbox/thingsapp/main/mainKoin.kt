@@ -16,7 +16,7 @@ val mainScope = { module: Module ->
 }
 
 fun MainContract.View.getPresenterParams(
-        view: MainContract.View
+    view: MainContract.View
 ): DefinitionParameters {
     return parametersOf(view)
 }

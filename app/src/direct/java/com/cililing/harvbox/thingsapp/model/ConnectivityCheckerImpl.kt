@@ -8,4 +8,3 @@ class ConnectivityCheckerImpl : ConnectivityChecker {
         return true
     }
 }
-

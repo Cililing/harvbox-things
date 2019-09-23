@@ -10,8 +10,8 @@ interface DirectService {
 }
 
 fun getDirectService(
-        firebaseApp: FirebaseApp,
-        isDebug: Boolean
+    firebaseApp: FirebaseApp,
+    isDebug: Boolean
 ): DirectService {
     return DirectServiceImpl(firebaseApp, isDebug)
 }

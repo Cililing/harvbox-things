@@ -16,7 +16,7 @@ val statsScope = { module: Module ->
 }
 
 fun StatsContract.View.getPresenterParams(
-        view: StatsContract.View
+    view: StatsContract.View
 ): DefinitionParameters {
     return parametersOf(view)
 }

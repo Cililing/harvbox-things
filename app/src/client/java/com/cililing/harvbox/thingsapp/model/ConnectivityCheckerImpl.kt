@@ -8,5 +8,4 @@ class ConnectivityCheckerImpl : ConnectivityChecker {
         delay(1000)
         return true
     }
-
 }

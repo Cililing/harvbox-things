@@ -4,7 +4,7 @@ import com.google.firebase.FirebaseApp
 import org.koin.dsl.module
 
 internal fun getFirebaseModule(
-        firebaseApp: FirebaseApp
+    firebaseApp: FirebaseApp
 ) = module {
 
     factory {
@@ -18,5 +18,4 @@ internal fun getFirebaseModule(
                 get()
         ) as FirebaseAppDatabase
     }
-
 }

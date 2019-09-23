@@ -9,7 +9,7 @@ class ThingsControllerBuilderImpl : ThingsControllerBuilder {
     fun isDebug(isDebug: Boolean) = apply { this.isDebug = isDebug }
     fun configMap(configMap: ControllerConfigMap) = apply { this.configMap = configMap }
 
-    fun withProximityListener(callback: (Double) -> Unit) = apply { proximityCallback = callback}
+    fun withProximityListener(callback: (Double) -> Unit) = apply { proximityCallback = callback }
 
     override fun build(): ThingsController {
         return ThingsControllerImpl(
@@ -19,7 +19,6 @@ class ThingsControllerBuilderImpl : ThingsControllerBuilder {
             proximityCallback?.let {
                 this.proximityController.distanceCallback = it
             }
-
         }
     }
 }

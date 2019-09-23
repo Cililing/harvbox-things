@@ -16,7 +16,7 @@ val settingsScope = { module: Module ->
 }
 
 fun SettingsContract.View.getPresenterParams(
-        view: SettingsContract.View
+    view: SettingsContract.View
 ): DefinitionParameters {
     return parametersOf(view)
 }

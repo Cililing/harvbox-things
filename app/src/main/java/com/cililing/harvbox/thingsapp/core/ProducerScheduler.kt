@@ -1,14 +1,19 @@
 package com.cililing.harvbox.thingsapp.core
 
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.asCoroutineDispatcher
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
 import org.koin.core.parameter.DefinitionParameters
 import org.koin.core.parameter.parametersOf
 import java.util.concurrent.Executors
 import kotlin.coroutines.CoroutineContext
 
 class ProducerScheduler(
-        private val interval: Long,
-        private val initialDelay: Long?
+    private val interval: Long,
+    private val initialDelay: Long?
 ) : CoroutineScope {
 
     companion object {

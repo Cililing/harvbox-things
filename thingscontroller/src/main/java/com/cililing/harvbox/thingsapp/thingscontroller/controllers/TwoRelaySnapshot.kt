@@ -4,6 +4,6 @@ import com.cililing.harvbox.thingsapp.thingscontroller.controllers.generic.State
 import java.io.Serializable
 
 data class TwoRelaySnapshot(
-        val relay1Snapshot: StateSnapshot,
-        val relay2Snapshot: StateSnapshot
-): Serializable
+    val relay1Snapshot: StateSnapshot,
+    val relay2Snapshot: StateSnapshot
+) : Serializable

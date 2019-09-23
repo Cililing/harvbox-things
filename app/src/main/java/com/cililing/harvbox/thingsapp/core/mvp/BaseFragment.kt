@@ -41,5 +41,4 @@ abstract class BaseFragment<Presenter : BasePresenter<*>> : Fragment(), BaseView
     fun replaceFragment(fragment: BaseFragment<*>) {
         (this.activity as MainActivity).replaceOrInjectFragment(fragment)
     }
-
 }

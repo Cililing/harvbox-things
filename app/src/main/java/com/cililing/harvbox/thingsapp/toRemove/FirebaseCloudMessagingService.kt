@@ -1,4 +1,4 @@
-package com.cililing.harvbox.thingsapp._old
+package com.cililing.harvbox.thingsapp.toRemove
 
 import android.util.Log
 import com.cililing.harvbox.common.TAG
@@ -11,5 +11,4 @@ class FirebaseCloudMessagingService : FirebaseMessagingService() {
 
         Log.d(TAG, "Token received: $token")
     }
-
 }

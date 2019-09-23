@@ -23,8 +23,8 @@ fun <T : LifecycleBasedComponent> LifecycleOwner.newLifecycleComponent(component
 }
 
 class DefaultLifecycleController(
-        private val lifecycleOwner: LifecycleOwner,
-        private val component: LifecycleBasedComponent
+    private val lifecycleOwner: LifecycleOwner,
+    private val component: LifecycleBasedComponent
 ) : LifecycleController, LifecycleObserver {
 
     init {

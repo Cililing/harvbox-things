@@ -1,4 +1,4 @@
-package com.cililing.harvbox.thingsapp._old
+package com.cililing.harvbox.thingsapp.toRemove
 
 import android.util.Log
 import com.cililing.harvbox.common.TAG
@@ -13,7 +13,7 @@ object FirebaseInstanceHelper {
 
     fun retreiveToken(listener: (String?) -> Unit) {
         firebaseInstanceId.instanceId
-                .addOnCompleteListener( OnCompleteListener {
+                .addOnCompleteListener(OnCompleteListener {
                     if (!it.isSuccessful) {
                         Log.w(TAG, "getInstanceId failed", it.exception)
                         listener(null)
@@ -25,5 +25,4 @@ object FirebaseInstanceHelper {
                     listener.invoke(token)
                 })
     }
-
 }

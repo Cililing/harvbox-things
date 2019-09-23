@@ -15,5 +15,4 @@ class StatsFragment : BaseFragment<StatsContract.Presenter>(), StatsContract.Vie
     override val presenter: StatsContract.Presenter by currentScope.inject {
         getPresenterParams(this)
     }
-
 }

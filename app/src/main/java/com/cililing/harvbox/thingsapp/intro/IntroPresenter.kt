@@ -2,11 +2,15 @@ package com.cililing.harvbox.thingsapp.intro
 
 import com.cililing.harvbox.thingsapp.core.mvp.BasePresenterImpl
 import com.cililing.harvbox.thingsapp.model.ConnectivityChecker
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class IntroPresenter(
-        view: IntroContract.View,
-        private val connectivityChecker: ConnectivityChecker
+    view: IntroContract.View,
+    private val connectivityChecker: ConnectivityChecker
 ) : BasePresenterImpl<IntroContract.View>(view), IntroContract.Presenter {
 
     private val parentJob = Job()

@@ -1,15 +1,12 @@
 package com.cililing.harvbox.thingsapp.intro
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ViewAnimator
 import com.cililing.harvbox.thingsapp.R
 import com.cililing.harvbox.thingsapp.core.mvp.BaseFragment
 import com.cililing.harvbox.thingsapp.main.MainFragment
-import com.cililing.harvbox.thingsapp.model.ConnectivityChecker
 import org.jetbrains.anko.sdk27.coroutines.onClick
 import org.jetbrains.anko.support.v4.find
 import org.koin.android.ext.android.get
@@ -22,7 +19,7 @@ class IntroFragment : BaseFragment<IntroContract.Presenter>(), IntroContract.Vie
     private val retryButton by lazy { find<Button>(R.id.network_error_retry_button) }
 
     private enum class ViewAnimatorChild(
-            private val child: Int
+        private val child: Int
     ) {
         PROGRESS(0),
         ERROR(1);

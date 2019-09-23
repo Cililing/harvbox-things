@@ -1,6 +1,7 @@
-package com.cililing.harvbox.thingsapp._old
+package com.cililing.harvbox.thingsapp.toRemove
 
-import com.google.firebase.database.*
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 object FirebaseDatabaseHelper {
 

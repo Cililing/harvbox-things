@@ -13,9 +13,9 @@ import org.koin.core.parameter.parametersOf
 import org.koin.dsl.koinApplication
 
 class ThingsControllerImpl internal constructor(
-        private val configMap: ControllerConfigMap = ControllerConfigMapDefault,
-        debug: Boolean = false,
-        override val parent: Controller<*>? = null
+    private val configMap: ControllerConfigMap = ControllerConfigMapDefault,
+    debug: Boolean = false,
+    override val parent: Controller<*>? = null
 ) : ThingsController, StandaloneKoinCompontent {
 
     init {
@@ -75,5 +75,4 @@ class ThingsControllerImpl internal constructor(
     override fun release() {
         allControllers.forEach { it.release() }
     }
-
 }

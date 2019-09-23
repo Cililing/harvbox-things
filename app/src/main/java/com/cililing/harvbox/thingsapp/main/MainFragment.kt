@@ -7,9 +7,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.cililing.harvbox.thingsapp.R
 import com.cililing.harvbox.thingsapp.core.mvp.BaseFragment
-import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import org.jetbrains.anko.support.v4.find
 import org.koin.android.scope.currentScope
 
@@ -44,7 +42,7 @@ class MainFragment : BaseFragment<MainContract.Presenter>(), MainContract.View {
         viewPager.currentItem = presenter.tabs.indexOf(tab)
     }
 
-    private fun getAdapter() : FragmentStatePagerAdapter {
+    private fun getAdapter(): FragmentStatePagerAdapter {
         val tabs = presenter.tabs
         return object : FragmentStatePagerAdapter(childFragmentManager,
                 BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {

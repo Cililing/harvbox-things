@@ -9,8 +9,8 @@ import com.cililing.harvbox.thingsapp.stats.StatsFragment
 import java.lang.IllegalArgumentException
 
 sealed class Tab(
-        @StringRes val name: Int,
-        val creator: () -> BaseFragment<*>
+    @StringRes val name: Int,
+    val creator: () -> BaseFragment<*>
 ) {
     companion object {
         fun resolveTabByMenuId(id: Int): Tab {

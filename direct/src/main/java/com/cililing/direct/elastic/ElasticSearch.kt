@@ -1,6 +1,9 @@
 package com.cililing.direct.elastic
 
-import com.cililing.harvbox.common.*
+import com.cililing.harvbox.common.Clock
+import com.cililing.harvbox.common.Logger
+import com.cililing.harvbox.common.StatusSnapshot
+import com.cililing.harvbox.common.toValueJson
 import com.google.gson.Gson
 import io.appbase.client.AppbaseClient
 import java.lang.Exception
@@ -10,11 +13,11 @@ internal interface ElasticSearch {
 }
 
 internal class ElasticSearchImpl(
-        private val gson: Gson,
-        private val logger: Logger,
-        private val clock: Clock,
-        private val elasticSearchConfig: ElasticSearchConfig = ElasticSearchConfig
-): ElasticSearch {
+    private val gson: Gson,
+    private val logger: Logger,
+    private val clock: Clock,
+    private val elasticSearchConfig: ElasticSearchConfig = ElasticSearchConfig
+) : ElasticSearch {
     private val elasticClient = AppbaseClient(
             elasticSearchConfig.url,
             elasticSearchConfig.appName,

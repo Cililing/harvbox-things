@@ -5,14 +5,13 @@ import com.cililing.harvbox.thingsapp.thingscontroller.controllers.Controller
 import com.cililing.harvbox.thingsapp.thingscontroller.core.StandaloneKoinCompontent
 import com.google.android.things.pio.Gpio
 import com.google.android.things.pio.PeripheralManager
-import org.koin.core.KoinComponent
 import org.koin.core.inject
 import java.io.IOException
 
 internal class StateControllerImpl(
-        gpio: String,
-        startingState: Boolean = false,
-        override val parent: Controller<*>? = null
+    gpio: String,
+    startingState: Boolean = false,
+    override val parent: Controller<*>? = null
 ) : StateController, StandaloneKoinCompontent {
 
     private val peripheralManager by inject<PeripheralManager>()

@@ -6,4 +6,3 @@ interface TwoRelayController : Controller<TwoRelaySnapshot> {
     val relay1: StateController
     val relay2: StateController
 }
-

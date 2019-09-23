@@ -31,7 +31,7 @@ fun appModule(isDebug: Boolean): Module {
         }
 
         // Tools
-        factory {  params ->
+        factory { params ->
             ProducerScheduler(
                     params[0],
                     params[1]

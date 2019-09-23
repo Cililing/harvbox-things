@@ -8,5 +8,4 @@ class AppControlerImpl : AppController {
     override suspend fun getData(listener: (FirebaseThingsSnapshot) -> Unit) {
         listener.invoke(clientSnapshotMock)
     }
-
 }

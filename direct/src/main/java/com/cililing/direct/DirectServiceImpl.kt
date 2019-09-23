@@ -7,7 +7,6 @@ import com.cililing.direct.firebase.getFirebaseModule
 import com.cililing.harvbox.common.Logger
 import com.cililing.harvbox.common.StatusSnapshot
 import com.cililing.harvbox.common.ThingsActionRequest
-import com.cililing.harvbox.thingsapp.thingscontroller.RequiredThingsState
 import com.cililing.harvbox.thingsapp.thingscontroller.ThingsController
 import com.google.firebase.FirebaseApp
 import kotlinx.coroutines.Dispatchers
@@ -15,11 +14,13 @@ import kotlinx.coroutines.withContext
 import org.koin.core.inject
 import org.koin.dsl.koinApplication
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 internal class DirectServiceImpl(
-        private val firebaseApp: FirebaseApp,
-        private val isDebug: Boolean
+    private val firebaseApp: FirebaseApp,
+    private val isDebug: Boolean
 ) : DirectService, StandaloneKoinCompontent {
 
     init {

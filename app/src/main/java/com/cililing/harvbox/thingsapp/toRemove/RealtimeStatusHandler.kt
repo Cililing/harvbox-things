@@ -1,4 +1,4 @@
-package com.cililing.harvbox.thingsapp._old
+package com.cililing.harvbox.thingsapp.toRemove
 
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -7,7 +7,7 @@ import java.lang.Exception
 
 class RealtimeStatusHandler {
 
-    class RealtimeStatusTypeMismatchException(msg: String? = null): Exception(msg)
+    class RealtimeStatusTypeMismatchException(msg: String? = null) : Exception(msg)
 
     private val statusDbReference by lazy {
         FirebaseDatabaseHelper.obtainMainReference()
@@ -30,6 +30,4 @@ class RealtimeStatusHandler {
             }
         })
     }
-
-
 }

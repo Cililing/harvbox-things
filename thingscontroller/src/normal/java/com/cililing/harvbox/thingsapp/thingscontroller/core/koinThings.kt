@@ -1,6 +1,5 @@
 package com.cililing.harvbox.thingsapp.thingscontroller.core
 
-import com.cililing.harvbox.thingsapp.thingscontroller.controllers.*
 import com.cililing.harvbox.thingsapp.thingscontroller.controllers.ADS1015ControllerImpl
 import com.cililing.harvbox.thingsapp.thingscontroller.controllers.HCSR04ControllerImpl
 import com.cililing.harvbox.thingsapp.thingscontroller.controllers.TwoRelayControllerImpl
@@ -33,6 +32,5 @@ internal fun getThingsModule(): Module {
                           mappers: Array<(Int?) -> Double?>, parent: Controller<*>?) ->
             ADS1015ControllerImpl(i2cName, addr, range, mappers, parent) as ADS1015Controller
         }
-
     }
 }

@@ -32,7 +32,7 @@
         </activity>
 
         <service
-            android:name="._old.FirebaseCloudMessagingService"
+            android:name=".toRemove.FirebaseCloudMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

@@ -1,6 +1,10 @@
 package com.cililing.harvbox.thingsapp.thingscontroller
 
-import com.cililing.harvbox.thingsapp.thingscontroller.controllers.*
+import com.cililing.harvbox.thingsapp.thingscontroller.controllers.ADS1015Controller
+import com.cililing.harvbox.thingsapp.thingscontroller.controllers.ADS1015Snapshot
+import com.cililing.harvbox.thingsapp.thingscontroller.controllers.Controller
+import com.cililing.harvbox.thingsapp.thingscontroller.controllers.HCSR04Snapshot
+import com.cililing.harvbox.thingsapp.thingscontroller.controllers.TwoRelaySnapshot
 import com.cililing.harvbox.thingsapp.thingscontroller.controllers.generic.StateSnapshot
 import kotlin.random.Random
 
@@ -14,8 +18,10 @@ class ThingsControllerImpl(override val parent: Controller<*>?) : ThingsControll
         relay2State = relay2State.copy(gpioState = state.relay2)
     }
 
-    override fun setState(relay1: Boolean?,
-                 relay2: Boolean?) {
+    override fun setState(
+        relay1: Boolean?,
+        relay2: Boolean?
+    ) {
         relay1?.let { relay1State = relay1State.copy(gpioState = it) }
         relay2?.let { relay2State = relay2State.copy(gpioState = it) }
     }
@@ -52,7 +58,6 @@ class ThingsControllerImpl(override val parent: Controller<*>?) : ThingsControll
         )
     }
 
-
     private fun throttleInt(start: Int, boundaries: IntRange): Int {
         val boundariesLenght = boundaries.last - boundaries.first
         val maxBoundaryThrottle = (0.1) * boundariesLenght
@@ -76,5 +81,4 @@ class ThingsControllerImpl(override val parent: Controller<*>?) : ThingsControll
 
     override fun release() {
     }
-
 }

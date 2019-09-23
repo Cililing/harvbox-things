@@ -2,20 +2,17 @@ package com.cililing.direct.firebase
 
 import com.cililing.harvbox.common.Logger
 import com.cililing.harvbox.common.StatusSnapshot
-import com.cililing.harvbox.common.toJson
 import com.google.firebase.FirebaseApp
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.gson.Gson
 
 internal interface FirebaseAppDatabase {
     fun post(model: StatusSnapshot)
 }
 
 internal class FirebaseAppDatabaseImpl(
-        firebaseApp: FirebaseApp,
-        private val firebaseFailureHandler: FirebaseFailureHandler,
-        private val logger: Logger
+    firebaseApp: FirebaseApp,
+    private val firebaseFailureHandler: FirebaseFailureHandler,
+    private val logger: Logger
 ) : FirebaseAppDatabase {
 
     private val database by lazy {

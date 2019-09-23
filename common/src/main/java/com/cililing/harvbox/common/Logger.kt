@@ -8,7 +8,7 @@ interface Logger {
     fun e(what: String, why: String? = null, exception: Exception? = null)
 }
 
-class DebugLogger: Logger {
+class DebugLogger : Logger {
 
     companion object {
         private const val TAG = "ThingsControllerImpl"
@@ -21,14 +21,12 @@ class DebugLogger: Logger {
     override fun i(what: String) {
         Log.d(TAG, what)
     }
-
 }
 
-class ReleaseLogger: Logger {
+class ReleaseLogger : Logger {
     override fun i(what: String) {
     }
 
     override fun e(what: String, why: String?, exception: Exception?) {
     }
 }
-

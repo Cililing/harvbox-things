@@ -19,10 +19,10 @@ val dashboardScope = { module: Module ->
 }
 
 fun DashboardContract.View.createPresenterParams(
-        view: DashboardContract.View,
-        appController: AppController,
-        producerScheduler: ProducerScheduler,
-        currentValuesProvider: CurrentValuesProvider
+    view: DashboardContract.View,
+    appController: AppController,
+    producerScheduler: ProducerScheduler,
+    currentValuesProvider: CurrentValuesProvider
 ): DefinitionParameters {
     return parametersOf(view, appController, producerScheduler, currentValuesProvider)
 }

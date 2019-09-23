@@ -6,13 +6,17 @@ import com.cililing.harvbox.thingsapp.AppController
 import com.cililing.harvbox.thingsapp.core.ProducerScheduler
 import com.cililing.harvbox.thingsapp.core.mvp.BasePresenterImpl
 import com.cililing.harvbox.thingsapp.model.CurrentValuesProvider
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 class DashboardPresenter(
-        view: DashboardContract.View,
-        private val appController: AppController,
-        private val scheduler: ProducerScheduler,
-        private val currentValuesProvider: CurrentValuesProvider
+    view: DashboardContract.View,
+    private val appController: AppController,
+    private val scheduler: ProducerScheduler,
+    private val currentValuesProvider: CurrentValuesProvider
 ) : BasePresenterImpl<DashboardContract.View>(view), DashboardContract.Presenter {
 
     private val parentJob = Job()
@@ -64,5 +68,4 @@ class DashboardPresenter(
             }
         }
     }
-
 }

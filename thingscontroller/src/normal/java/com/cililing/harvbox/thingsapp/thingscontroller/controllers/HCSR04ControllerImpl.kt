@@ -10,9 +10,9 @@ import java.io.IOException
 import java.util.concurrent.TimeUnit
 
 internal class HCSR04ControllerImpl(
-        gpioTrig: String,
-        gpioEcho: String,
-        override val parent: Controller<*>? = null
+    gpioTrig: String,
+    gpioEcho: String,
+    override val parent: Controller<*>? = null
 ) : HCSR04Controller, StandaloneKoinCompontent {
 
     companion object {
@@ -57,7 +57,6 @@ internal class HCSR04ControllerImpl(
 
             distanceCallback?.invoke(distanceInCm)
             lastRead = distanceInCm
-
         } catch (ex: IOException) {
             logger.e("Error on IO", exception = ex)
         }

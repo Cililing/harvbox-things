@@ -4,15 +4,15 @@ import com.cililing.harvbox.common.Logger
 import com.cililing.harvbox.thingsapp.thingscontroller.core.StandaloneKoinCompontent
 import com.cililing.harvbox.thingsapp.thingscontroller.core.multithreading.FixedExecutor
 import com.google.android.things.contrib.driver.adc.ads1xxx.Ads1xxx
-import org.koin.core.KoinComponent
 import org.koin.core.inject
 import org.koin.core.parameter.parametersOf
 
-internal class ADS1015ControllerImpl(i2cName: String,
-                                     addr: Int,
-                                     range: Int,
-                                     private val valueMappers: Array<(Int?) -> Double?>,
-                                     override val parent: Controller<*>? = null
+internal class ADS1015ControllerImpl(
+    i2cName: String,
+    addr: Int,
+    range: Int,
+    private val valueMappers: Array<(Int?) -> Double?>,
+    override val parent: Controller<*>? = null
 ) : ADS1015Controller, StandaloneKoinCompontent {
     companion object {
         private const val EXECUTOR_THREADS = 4
@@ -22,8 +22,10 @@ internal class ADS1015ControllerImpl(i2cName: String,
     private val executor by inject<FixedExecutor> { parametersOf(EXECUTOR_THREADS) }
     private val instance: Ads1xxx = Ads1xxx(i2cName, addr, Ads1xxx.Configuration.ADS1015)
 
-    private inner class ADS1015PinControllerImpl(val channel: Int,
-                                                 override val parent: Controller<*>? = this) :
+    private inner class ADS1015PinControllerImpl(
+        val channel: Int,
+        override val parent: Controller<*>? = this
+    ) :
             ADS1015Controller.ADS1015PinController {
         private var lastRead: Int? = null
 

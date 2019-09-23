@@ -3,7 +3,7 @@ package com.cililing.harvbox.thingsapp.core.mvp
 import androidx.annotation.CallSuper
 
 abstract class BasePresenterImpl<View : BaseView<*>>(
-        override var view: View
+    override var view: View
 ) : BasePresenter<View> {
 
     @CallSuper
@@ -17,5 +17,4 @@ abstract class BasePresenterImpl<View : BaseView<*>>(
     @CallSuper
     override fun onDestroy() {
     }
-
 }

@@ -14,7 +14,7 @@ interface ControllerConfigMap {
     val tempSensorAdcPin: Int
 }
 
-object ControllerConfigMapDefault: ControllerConfigMap {
+object ControllerConfigMapDefault : ControllerConfigMap {
     override val proximitySensorEcho: String = "GPIO2_IO03"
     override val proximitySensorTrig: String = "GPIO1_IO10"
 
