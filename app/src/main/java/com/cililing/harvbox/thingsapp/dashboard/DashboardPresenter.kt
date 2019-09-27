@@ -13,10 +13,10 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 class DashboardPresenter(
-    view: DashboardContract.View,
-    private val appController: AppController,
-    private val scheduler: ProducerScheduler,
-    private val currentValuesProvider: CurrentValuesProvider
+        view: DashboardContract.View,
+        private val appController: AppController,
+        private val scheduler: ProducerScheduler,
+        private val currentValuesProvider: CurrentValuesProvider
 ) : BasePresenterImpl<DashboardContract.View>(view), DashboardContract.Presenter {
 
     private val parentJob = Job()
@@ -44,28 +44,30 @@ class DashboardPresenter(
             val firebaseSnapshot = async {
                 appController.getData()
             }
+
             with(firebaseSnapshot.await()) {
-                view.onNewSnapshot(this)
                 currentSnapshot = this
+                view.onNewSnapshotTimeReceived(currentSnapshot?.timestamp ?: "null")
+                view.onNewProximityReceived(currentSnapshot?.proximityValue?.toFloat() ?: 0.0f)
+                view.onNewHumidityReceived(currentSnapshot?.humidityValue?.toFloat() ?: 0.0f)
+                view.onNewTemperatureReceived(currentSnapshot?.tempValue?.toFloat() ?: 0.0f)
+                view.onNewLight1StatusReceived(currentSnapshot?.light1PowerOn ?: false)
+                view.onNewLight2StatusReceived(currentSnapshot?.light2PowerOn ?: false)
             }
         }
     }
 
-    override fun onLight1Click() {
+    override fun onLight1Click(isOn: Boolean) {
         coroutineScope.launch {
-            currentSnapshot?.let {
-                appController.request(ThingsActionRequest.Light1(!it.light1PowerOn.isOn))
-                requestForData()
-            }
+            appController.request(ThingsActionRequest.Light1(isOn))
+            requestForData()
         }
     }
 
-    override fun onLight2Click() {
+    override fun onLight2Click(isOn: Boolean) {
         coroutineScope.launch {
-            currentSnapshot?.let {
-                appController.request(ThingsActionRequest.Light2(!it.light2PowerOn.isOn))
-                requestForData()
-            }
+            appController.request(ThingsActionRequest.Light2(isOn))
+            requestForData()
         }
     }
 }

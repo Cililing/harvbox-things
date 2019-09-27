@@ -9,9 +9,13 @@ import com.cililing.harvbox.common.StatusSnapshot
 import com.cililing.harvbox.common.ThingsActionRequest
 import com.cililing.harvbox.thingsapp.thingscontroller.ThingsController
 import com.google.firebase.FirebaseApp
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.core.inject
+import org.koin.core.parameter.parametersOf
 import org.koin.dsl.koinApplication
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -36,9 +40,19 @@ internal class DirectServiceImpl(
     }
 
     private val thingsController: ThingsController by inject()
-    private val cloudDatabase: FirebaseAppDatabase by inject()
+    private val cloudDatabase: FirebaseAppDatabase by inject {
+        parametersOf(this)
+    }
     private val elasticSearch: ElasticSearch by inject()
     private val logger: Logger by inject()
+
+    private val parentJob = Job()
+    private val coroutineScope = CoroutineScope(
+            parentJob + Dispatchers.Default
+    )
+
+    private val light1Reporter = SemiblockValueReporter<Boolean>()
+    private val light2Reporter = SemiblockValueReporter<Boolean>()
 
     /**
      * This will return snapshot do provider and report process in background.
@@ -56,17 +70,19 @@ internal class DirectServiceImpl(
         }
     }
 
-    override suspend fun request(actionRequest: ThingsActionRequest) {
+    override fun request(actionRequest: ThingsActionRequest) {
         logger.i("Requesting: $actionRequest")
-        withContext(Dispatchers.Default) {
+        coroutineScope.launch {
             val action = when (actionRequest) {
                 is ThingsActionRequest.Light1 -> {
                     {
+                        light1Reporter.value = actionRequest.isOn
                         thingsController.setState(actionRequest.isOn, null)
                     }
                 }
                 is ThingsActionRequest.Light2 -> {
                     {
+                        light2Reporter.value = actionRequest.isOn
                         thingsController.setState(null, actionRequest.isOn)
                     }
                 }
@@ -75,6 +91,10 @@ internal class DirectServiceImpl(
                 action()
             }
         }
+    }
+
+    override fun release() {
+        parentJob.cancel()
     }
 
     private suspend fun reportCurrentStatusToElastic(snapshot: StatusSnapshot) {
@@ -91,5 +111,9 @@ internal class DirectServiceImpl(
         val currentLocalTime: Date = calendar.time
         val localTime = date.format(currentLocalTime)
         return thingsController.getSnapshot().toFirebaseThingsSnapshot(localTime)
+                .copy(
+                        light1PowerOn = light1Reporter.obtainValueAndRelease(false),
+                        light2PowerOn = light2Reporter.obtainValueAndRelease(false)
+                )
     }
 }

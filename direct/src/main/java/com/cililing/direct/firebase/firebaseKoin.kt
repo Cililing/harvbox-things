@@ -11,10 +11,11 @@ internal fun getFirebaseModule(
         FirebaseFailureHandlerImpl(get()) as FirebaseFailureHandler
     }
 
-    single {
+    single { params -> // params: DirectService
         FirebaseAppDatabaseImpl(
                 firebaseApp,
                 get(),
+                FirebaseNewDataCallbackImpl(params[0]),
                 get()
         ) as FirebaseAppDatabase
     }

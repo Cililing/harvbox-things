@@ -6,32 +6,34 @@
     android:layout_gravity="center"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/dashboard_temperature"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="TEST" />
-
-    <TextView
-        android:id="@+id/dashboard_light_status"
+    <com.cililing.harvbox.thingsapp.customViews.LabelView
+        android:id="@+id/dashboard_last_update"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <TextView
-        android:id="@+id/dashboard_snapshot"
+    <com.cililing.harvbox.thingsapp.customViews.OnOffButton
+        android:id="@+id/dashboard_light_1_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <Button
-        android:id="@+id/relay_1"
+    <com.cililing.harvbox.thingsapp.customViews.OnOffButton
+        android:id="@+id/dashboard_light_2_button"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="relay1" />
+        android:layout_height="wrap_content" />
 
-    <Button
-        android:id="@+id/relay_2"
+    <com.cililing.harvbox.thingsapp.customViews.RealValueView
+        android:id="@+id/dashboard_temp_value"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="relay2" />
+        android:layout_height="wrap_content" />
+
+    <com.cililing.harvbox.thingsapp.customViews.RealValueView
+        android:id="@+id/dashboard_humidity_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <com.cililing.harvbox.thingsapp.customViews.RealValueView
+        android:id="@+id/dashboard_proximity_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

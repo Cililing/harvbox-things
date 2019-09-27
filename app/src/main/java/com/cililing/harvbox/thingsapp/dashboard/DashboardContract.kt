@@ -9,12 +9,15 @@ import com.cililing.harvbox.thingsapp.model.LightStatus
 interface DashboardContract : BaseContract {
     interface View : BaseView<Presenter> {
         fun onNewTemperatureReceived(new: Float)
-        fun onNewLightStatusReceived(new: LightStatus)
-        fun onNewSnapshot(new: StatusSnapshot)
+        fun onNewHumidityReceived(new: Float)
+        fun onNewProximityReceived(new: Float)
+        fun onNewSnapshotTimeReceived(new: String)
+        fun onNewLight1StatusReceived(new: Boolean)
+        fun onNewLight2StatusReceived(new: Boolean)
     }
 
     interface Presenter : BasePresenter<View> {
-        fun onLight1Click()
-        fun onLight2Click()
+        fun onLight1Click(isOn: Boolean)
+        fun onLight2Click(isOn: Boolean)
     }
 }

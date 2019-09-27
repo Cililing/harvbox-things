@@ -6,7 +6,8 @@ import com.google.firebase.FirebaseApp
 
 interface DirectService {
     suspend fun getAndProcess(): StatusSnapshot
-    suspend fun request(actionRequest: ThingsActionRequest)
+    fun request(actionRequest: ThingsActionRequest)
+    fun release()
 }
 
 fun getDirectService(
