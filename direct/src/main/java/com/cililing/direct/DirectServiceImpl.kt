@@ -23,8 +23,8 @@ import java.util.Date
 import java.util.Locale
 
 internal class DirectServiceImpl(
-    private val firebaseApp: FirebaseApp,
-    private val isDebug: Boolean
+        private val firebaseApp: FirebaseApp,
+        private val isDebug: Boolean
 ) : DirectService, StandaloneKoinCompontent {
 
     init {
@@ -110,10 +110,12 @@ internal class DirectServiceImpl(
         val date = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSSSS", Locale.US)
         val currentLocalTime: Date = calendar.time
         val localTime = date.format(currentLocalTime)
-        return thingsController.getSnapshot().toFirebaseThingsSnapshot(localTime)
-                .copy(
-                        light1PowerOn = light1Reporter.obtainValueAndRelease(false),
-                        light2PowerOn = light2Reporter.obtainValueAndRelease(false)
-                )
+
+        val snapshot = thingsController.getSnapshot().toFirebaseThingsSnapshot(localTime)
+
+        return snapshot.copy(
+                light1PowerOn = light1Reporter.obtainValueAndRelease(snapshot.light1PowerOn),
+                light2PowerOn = light2Reporter.obtainValueAndRelease(snapshot.light2PowerOn)
+        )
     }
 }
