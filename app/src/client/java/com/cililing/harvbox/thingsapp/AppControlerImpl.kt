@@ -1,11 +1,25 @@
 package com.cililing.harvbox.thingsapp
 
-import com.cililing.client.clientSnapshotMock
-import com.cililing.direct.firebase.reporting.FirebaseThingsSnapshot
+import com.cililing.client.ClientService
+import com.cililing.client.ClientServiceImpl
+import com.cililing.harvbox.common.StatusSnapshot
+import com.cililing.harvbox.common.ThingsActionRequest
+import com.google.firebase.FirebaseApp
 
 class AppControlerImpl : AppController {
 
-    override suspend fun getData(listener: (FirebaseThingsSnapshot) -> Unit) {
-        listener.invoke(clientSnapshotMock)
+    private val clientService by lazy {
+        ClientServiceImpl(
+                FirebaseApp.getInstance(),
+                AppController.isDebug
+        ) as ClientService
+    }
+
+    override suspend fun getData(): StatusSnapshot {
+        return clientService.getCurrentSnapshot()
+    }
+
+    override suspend fun request(actionRequest: ThingsActionRequest) {
+        clientService.request(actionRequest)
     }
 }

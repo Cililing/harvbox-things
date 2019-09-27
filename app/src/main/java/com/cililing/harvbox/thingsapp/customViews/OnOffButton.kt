@@ -26,9 +26,11 @@ class OnOffButton @JvmOverloads constructor(
 
     private var listener: ((Boolean) -> Unit)? = null
 
-    fun init(labelText: String,
-             initialState: Boolean,
-             iconDrawable: Drawable? = null) {
+    fun init(
+        labelText: String,
+        initialState: Boolean,
+        iconDrawable: Drawable? = null
+    ) {
         label.text = labelText
         switch.isChecked = initialState
         iconDrawable?.let { icon.setImageDrawable(iconDrawable) }

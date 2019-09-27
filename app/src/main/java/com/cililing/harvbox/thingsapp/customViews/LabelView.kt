@@ -8,9 +8,9 @@ import com.cililing.harvbox.thingsapp.R
 import org.jetbrains.anko.find
 
 class LabelView @JvmOverloads constructor(
-        context: Context,
-        attrs: AttributeSet? = null,
-        defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
     init {

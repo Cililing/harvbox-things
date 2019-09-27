@@ -5,6 +5,7 @@ import com.cililing.direct.elastic.getElasticModule
 import com.cililing.direct.firebase.FirebaseAppDatabase
 import com.cililing.direct.firebase.getFirebaseModule
 import com.cililing.harvbox.common.Logger
+import com.cililing.harvbox.common.SemiblockValueReporter
 import com.cililing.harvbox.common.StatusSnapshot
 import com.cililing.harvbox.common.ThingsActionRequest
 import com.cililing.harvbox.thingsapp.thingscontroller.ThingsController
@@ -23,8 +24,8 @@ import java.util.Date
 import java.util.Locale
 
 internal class DirectServiceImpl(
-        private val firebaseApp: FirebaseApp,
-        private val isDebug: Boolean
+    private val firebaseApp: FirebaseApp,
+    private val isDebug: Boolean
 ) : DirectService, StandaloneKoinCompontent {
 
     init {

@@ -23,8 +23,7 @@ class DashboardFragment : BaseFragment<DashboardContract.Presenter>(), Dashboard
         createPresenterParams(
                 this,
                 get(),
-                get { ProducerScheduler.createKoinParams(5000, null) },
-                get()
+                get { ProducerScheduler.createKoinParams(5000, null) }
         )
     }
 

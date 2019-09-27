@@ -5,18 +5,17 @@ import com.cililing.harvbox.common.ThingsActionRequest
 import com.cililing.harvbox.thingsapp.AppController
 import com.cililing.harvbox.thingsapp.core.ProducerScheduler
 import com.cililing.harvbox.thingsapp.core.mvp.BasePresenterImpl
-import com.cililing.harvbox.thingsapp.model.CurrentValuesProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class DashboardPresenter(
-        view: DashboardContract.View,
-        private val appController: AppController,
-        private val scheduler: ProducerScheduler,
-        private val currentValuesProvider: CurrentValuesProvider
+    view: DashboardContract.View,
+    private val appController: AppController,
+    private val scheduler: ProducerScheduler
 ) : BasePresenterImpl<DashboardContract.View>(view), DashboardContract.Presenter {
 
     private val parentJob = Job()
@@ -59,14 +58,14 @@ class DashboardPresenter(
 
     override fun onLight1Click(isOn: Boolean) {
         coroutineScope.launch {
-            appController.request(ThingsActionRequest.Light1(isOn))
+            withContext(Dispatchers.Default) { appController.request(ThingsActionRequest.Light1(isOn)) }
             requestForData()
         }
     }
 
     override fun onLight2Click(isOn: Boolean) {
         coroutineScope.launch {
-            appController.request(ThingsActionRequest.Light2(isOn))
+            withContext(Dispatchers.Default) { appController.request(ThingsActionRequest.Light2(isOn)) }
             requestForData()
         }
     }

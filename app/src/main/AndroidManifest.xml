@@ -9,7 +9,6 @@
     <application
         android:name=".ThingsApp"
         android:theme="@style/Theme.AppCompat.Light"
-        android:networkSecurityConfig="@xml/network_security_config"
         tools:ignore="GoogleAppIndexingWarning">
 
         <uses-library
@@ -30,15 +29,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
-        <service
-            android:name=".toRemove.FirebaseCloudMessagingService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
-
     </application>
 
 </manifest>

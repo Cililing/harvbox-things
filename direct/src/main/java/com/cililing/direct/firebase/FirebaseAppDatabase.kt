@@ -13,10 +13,10 @@ internal interface FirebaseAppDatabase {
 }
 
 internal class FirebaseAppDatabaseImpl(
-        firebaseApp: FirebaseApp,
-        private val firebaseFailureHandler: FirebaseFailureHandler,
-        private val firebaseNewDataCallback: FirebaseNewDataCallback,
-        private val logger: Logger
+    firebaseApp: FirebaseApp,
+    private val firebaseFailureHandler: FirebaseFailureHandler,
+    private val firebaseNewDataCallback: FirebaseNewDataCallback,
+    private val logger: Logger
 ) : FirebaseAppDatabase {
 
     private val database = FirebaseDatabase.getInstance(firebaseApp)

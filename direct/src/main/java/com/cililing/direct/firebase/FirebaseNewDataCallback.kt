@@ -9,7 +9,7 @@ interface FirebaseNewDataCallback {
 }
 
 class FirebaseNewDataCallbackImpl(
-        private val directService: DirectService
+    private val directService: DirectService
 ) : FirebaseNewDataCallback {
     override fun onNewLight1(value: Boolean) {
         directService.request(ThingsActionRequest.Light1(value))
@@ -18,5 +18,4 @@ class FirebaseNewDataCallbackImpl(
     override fun onNewLight2(value: Boolean) {
         directService.request(ThingsActionRequest.Light2(value))
     }
-
 }

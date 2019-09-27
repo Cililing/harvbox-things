@@ -1,7 +1,7 @@
-package com.cililing.direct
+package com.cililing.harvbox.common
 
 class SemiblockValueReporter<T>(
-        var value: T? = null
+    var value: T? = null
 ) {
 
     fun obtainValueAndRelease(default: T): T {
@@ -11,5 +11,4 @@ class SemiblockValueReporter<T>(
             value = null
         }
     }
-
 }
