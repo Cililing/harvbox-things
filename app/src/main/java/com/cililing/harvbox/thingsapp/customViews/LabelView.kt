@@ -14,7 +14,7 @@ class LabelView @JvmOverloads constructor(
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
     init {
-        inflate(context, R.layout.label_view, this)
+        inflate(context, R.layout.view_dashboard_label, this)
     }
 
     private val text = find<TextView>(R.id.label_view_text)

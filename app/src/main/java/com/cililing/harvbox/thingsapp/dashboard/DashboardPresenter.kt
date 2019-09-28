@@ -3,6 +3,7 @@ package com.cililing.harvbox.thingsapp.dashboard
 import com.cililing.harvbox.common.StatusSnapshot
 import com.cililing.harvbox.common.ThingsActionRequest
 import com.cililing.harvbox.thingsapp.AppController
+import com.cililing.harvbox.thingsapp.core.CurrentSnapshotProvider
 import com.cililing.harvbox.thingsapp.core.ProducerScheduler
 import com.cililing.harvbox.thingsapp.core.mvp.BasePresenterImpl
 import kotlinx.coroutines.CoroutineScope
@@ -13,9 +14,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class DashboardPresenter(
-    view: DashboardContract.View,
-    private val appController: AppController,
-    private val scheduler: ProducerScheduler
+        view: DashboardContract.View,
+        private val appController: AppController,
+        private val currentSnapshotProvider: CurrentSnapshotProvider<StatusSnapshot>
 ) : BasePresenterImpl<DashboardContract.View>(view), DashboardContract.Presenter {
 
     private val parentJob = Job()
@@ -23,36 +24,39 @@ class DashboardPresenter(
             Dispatchers.Main + parentJob
     )
 
-    private var currentSnapshot: StatusSnapshot? = null
-
-    override fun onResume() {
-        super.onResume()
-
-        // Schedule getting data
-        scheduler.start(::requestForData)
-    }
-
     override fun onDestroy() {
         super.onDestroy()
-        scheduler.stop()
         parentJob.cancel()
     }
 
-    private fun requestForData() {
-        coroutineScope.launch {
-            val firebaseSnapshot = async {
-                appController.getData()
+    override fun onResume() {
+        currentSnapshotProvider.registerListener(currentSnapshotListener)
+        super.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        currentSnapshotProvider.unregisterListener(currentSnapshotListener)
+    }
+
+    private val currentSnapshotListener: CurrentSnapshotProvider.Listener<StatusSnapshot> =
+            object : CurrentSnapshotProvider.Listener<StatusSnapshot> {
+                override fun onNewSnapshot(snapshot: StatusSnapshot) {
+                    view.run {
+                        onNewSnapshotTimeReceived(snapshot.timestamp ?: "null")
+                        onNewProximityReceived(snapshot.proximityValue.toFloat())
+                        onNewHumidityReceived(snapshot.humidityValue.toFloat())
+                        onNewTemperatureReceived(snapshot.tempValue.toFloat())
+                        onNewLight1StatusReceived(snapshot.light1PowerOn)
+                        onNewLight2StatusReceived(snapshot.light2PowerOn)
+                    }
+                }
             }
 
-            with(firebaseSnapshot.await()) {
-                currentSnapshot = this
-                view.onNewSnapshotTimeReceived(currentSnapshot?.timestamp ?: "null")
-                view.onNewProximityReceived(currentSnapshot?.proximityValue?.toFloat() ?: 0.0f)
-                view.onNewHumidityReceived(currentSnapshot?.humidityValue?.toFloat() ?: 0.0f)
-                view.onNewTemperatureReceived(currentSnapshot?.tempValue?.toFloat() ?: 0.0f)
-                view.onNewLight1StatusReceived(currentSnapshot?.light1PowerOn ?: false)
-                view.onNewLight2StatusReceived(currentSnapshot?.light2PowerOn ?: false)
-            }
+    private fun requestForData() {
+        coroutineScope.launch {
+            val firebaseSnapshot = appController.getData()
+            currentSnapshotProvider.newSnapshotAvailable(firebaseSnapshot)
         }
     }
 

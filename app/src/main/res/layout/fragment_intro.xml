@@ -12,7 +12,7 @@
         android:layout_gravity="center" />
 
     <include
-        layout="@layout/network_error"
+        layout="@layout/layout_network_error"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

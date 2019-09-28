@@ -3,7 +3,6 @@ package com.cililing.harvbox.thingsapp.dashboard
 import android.os.Bundle
 import android.view.View
 import com.cililing.harvbox.thingsapp.R
-import com.cililing.harvbox.thingsapp.core.ProducerScheduler
 import com.cililing.harvbox.thingsapp.core.mvp.BaseFragment
 import com.cililing.harvbox.thingsapp.customViews.LabelView
 import com.cililing.harvbox.thingsapp.customViews.OnOffButton
@@ -11,6 +10,7 @@ import com.cililing.harvbox.thingsapp.customViews.RealValueView
 import org.jetbrains.anko.support.v4.find
 import org.koin.android.ext.android.get
 import org.koin.android.scope.currentScope
+import org.koin.core.qualifier.named
 
 class DashboardFragment : BaseFragment<DashboardContract.Presenter>(), DashboardContract.View {
     companion object {
@@ -23,7 +23,7 @@ class DashboardFragment : BaseFragment<DashboardContract.Presenter>(), Dashboard
         createPresenterParams(
                 this,
                 get(),
-                get { ProducerScheduler.createKoinParams(5000, null) }
+                get(named("things_snapshot"))
         )
     }
 

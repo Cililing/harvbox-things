@@ -14,7 +14,7 @@ class RealValueView @JvmOverloads constructor(
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
     init {
-        inflate(context, R.layout.real_value_view, this)
+        inflate(context, R.layout.view_dashboard_value, this)
     }
 
     private val label = find<TextView>(R.id.real_value_view_label)

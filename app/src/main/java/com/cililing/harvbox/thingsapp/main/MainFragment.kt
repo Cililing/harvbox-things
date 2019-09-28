@@ -9,7 +9,9 @@ import com.cililing.harvbox.thingsapp.R
 import com.cililing.harvbox.thingsapp.core.mvp.BaseFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.jetbrains.anko.support.v4.find
+import org.koin.android.ext.android.get
 import org.koin.android.scope.currentScope
+import org.koin.core.qualifier.named
 
 class MainFragment : BaseFragment<MainContract.Presenter>(), MainContract.View {
 
@@ -18,7 +20,10 @@ class MainFragment : BaseFragment<MainContract.Presenter>(), MainContract.View {
     }
 
     override val presenter: MainContract.Presenter by currentScope.inject {
-        getPresenterParams(this)
+        getPresenterParams(this,
+                get(),
+                get(named("things_snapshot"))
+        )
     }
 
     override fun getLayoutId(): Int = R.layout.fragment_main

@@ -17,7 +17,7 @@ class OnOffButton @JvmOverloads constructor(
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
     init {
-        inflate(context, R.layout.on_off_button, this)
+        inflate(context, R.layout.view_dashboard_on_off_button, this)
     }
 
     private val label = find<TextView>(R.id.on_off_button_label)
