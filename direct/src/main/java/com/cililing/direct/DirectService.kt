@@ -7,6 +7,7 @@ import com.google.firebase.FirebaseApp
 interface DirectService {
     suspend fun getAndProcess(): StatusSnapshot
     fun request(actionRequest: ThingsActionRequest)
+    fun scheduleTasks(tasks: List<ExactTimeScheduleTask>)
     fun release()
 }
 

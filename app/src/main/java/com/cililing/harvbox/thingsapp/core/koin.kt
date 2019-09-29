@@ -4,7 +4,7 @@ import com.cililing.harvbox.common.Clock
 import com.cililing.harvbox.common.DebugLogger
 import com.cililing.harvbox.common.ReleaseLogger
 import com.cililing.harvbox.common.StatusSnapshot
-import com.cililing.harvbox.thingsapp.AppControlerImpl
+import com.cililing.harvbox.thingsapp.AppControllerImpl
 import com.cililing.harvbox.thingsapp.AppController
 import com.cililing.harvbox.thingsapp.dashboard.dashboardScope
 import com.cililing.harvbox.thingsapp.intro.introScope
@@ -33,7 +33,7 @@ fun appModule(isDebug: Boolean): Module {
         }
 
         single {
-            AppControlerImpl() as AppController
+            AppControllerImpl() as AppController
         }
 
         single {
@@ -74,11 +74,12 @@ fun appModule(isDebug: Boolean): Module {
         factory {
             ConnectivityCheckerImpl() as ConnectivityChecker
         }
-        factory {
+        single(createdAtStart = true) {
             AppFirebaseServiceImpl(
                     FirebaseApp.getInstance(),
                     get(named("light1")),
                     get(named("light2")),
+                    get(),
                     get()
             ) as AppFirebaseService
         }

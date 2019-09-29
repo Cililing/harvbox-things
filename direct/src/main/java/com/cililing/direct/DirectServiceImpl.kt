@@ -50,6 +50,8 @@ internal class DirectServiceImpl(
             parentJob + Dispatchers.Default
     )
 
+    private val exactTimeSchedulerExecutor = ExactTimeScheduleExecutor()
+
     private val light1Reporter = SemiblockValueReporter<Boolean>()
     private val light2Reporter = SemiblockValueReporter<Boolean>()
 
@@ -67,6 +69,11 @@ internal class DirectServiceImpl(
                 }
             }
         }
+    }
+
+    override fun scheduleTasks(tasks: List<ExactTimeScheduleTask>) {
+        logger.i("Scheduling tasks: $tasks")
+        exactTimeSchedulerExecutor.schedule(tasks)
     }
 
     override fun request(actionRequest: ThingsActionRequest) {
@@ -94,6 +101,7 @@ internal class DirectServiceImpl(
 
     override fun release() {
         parentJob.cancel()
+        exactTimeSchedulerExecutor.release()
     }
 
     private suspend fun reportCurrentStatusToElastic(snapshot: StatusSnapshot) {

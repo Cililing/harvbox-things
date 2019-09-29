@@ -4,9 +4,10 @@ import com.cililing.client.ClientService
 import com.cililing.client.ClientServiceImpl
 import com.cililing.harvbox.common.StatusSnapshot
 import com.cililing.harvbox.common.ThingsActionRequest
+import com.cililing.harvbox.thingsapp.model.LightTrigger
 import com.google.firebase.FirebaseApp
 
-class AppControlerImpl : AppController {
+class AppControllerImpl : AppController {
 
     private val clientService by lazy {
         ClientServiceImpl(
@@ -19,7 +20,11 @@ class AppControlerImpl : AppController {
         return clientService.getCurrentSnapshot()
     }
 
-    override suspend fun request(actionRequest: ThingsActionRequest) {
+    override fun request(actionRequest: ThingsActionRequest) {
         clientService.request(actionRequest)
+    }
+
+    override fun newLightSettingsReceived(light1: Set<LightTrigger>, light2: Set<LightTrigger>) {
+        // This is implemented only in direct mode.
     }
 }

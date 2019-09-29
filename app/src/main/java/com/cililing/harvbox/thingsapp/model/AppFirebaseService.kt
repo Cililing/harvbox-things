@@ -1,5 +1,6 @@
 package com.cililing.harvbox.thingsapp.model
 
+import com.cililing.harvbox.thingsapp.AppController
 import com.cililing.harvbox.thingsapp.core.CurrentSnapshotProvider
 import com.google.firebase.FirebaseApp
 import com.google.firebase.database.DataSnapshot
@@ -18,6 +19,7 @@ class AppFirebaseServiceImpl(
     firebaseApp: FirebaseApp,
     light1CurrentSnapshotProvider: CurrentSnapshotProvider<Set<LightTrigger>>,
     light2CurrentSnapshotProvider: CurrentSnapshotProvider<Set<LightTrigger>>,
+    private val appController: AppController,
     private val gson: Gson
 ) : AppFirebaseService {
 
@@ -32,6 +34,21 @@ class AppFirebaseServiceImpl(
     private val light2SettingsReference = lightSettingsDbReference.child("light2")
 
     init {
+        lightSettingsDbReference.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                val part1 = p0.child("light1").value?.toString()
+                val part2 = p0.child("light2").value?.toString()
+
+                val part1Result = gson.fromJson<List<LightTrigger>>(part1, typeToken)?.toSet() ?: setOf()
+                val part2Result = gson.fromJson<List<LightTrigger>>(part2, typeToken)?.toSet() ?: setOf()
+
+                appController.newLightSettingsReceived(part1Result, part2Result)
+            }
+        })
+
         light1SettingsReference.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
             }

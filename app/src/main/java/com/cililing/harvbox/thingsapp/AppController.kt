@@ -2,6 +2,7 @@ package com.cililing.harvbox.thingsapp
 
 import com.cililing.harvbox.common.StatusSnapshot
 import com.cililing.harvbox.common.ThingsActionRequest
+import com.cililing.harvbox.thingsapp.model.LightTrigger
 
 interface AppController {
     companion object {
@@ -9,5 +10,7 @@ interface AppController {
     }
 
     suspend fun getData(): StatusSnapshot
-    suspend fun request(actionRequest: ThingsActionRequest)
+    fun request(actionRequest: ThingsActionRequest)
+
+    fun newLightSettingsReceived(light1: Set<LightTrigger>, light2: Set<LightTrigger>)
 }
