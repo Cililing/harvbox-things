@@ -3,7 +3,6 @@ package com.cililing.harvbox.thingsapp.dashboard
 import com.cililing.harvbox.common.StatusSnapshot
 import com.cililing.harvbox.thingsapp.AppController
 import com.cililing.harvbox.thingsapp.core.CurrentSnapshotProvider
-import com.cililing.harvbox.thingsapp.core.ProducerScheduler
 import org.koin.core.module.Module
 import org.koin.core.parameter.DefinitionParameters
 import org.koin.core.parameter.parametersOf

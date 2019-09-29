@@ -4,30 +4,16 @@ import com.cililing.harvbox.common.StatusSnapshot
 import com.cililing.harvbox.common.ThingsActionRequest
 import com.cililing.harvbox.thingsapp.AppController
 import com.cililing.harvbox.thingsapp.core.CurrentSnapshotProvider
-import com.cililing.harvbox.thingsapp.core.ProducerScheduler
 import com.cililing.harvbox.thingsapp.core.mvp.BasePresenterImpl
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class DashboardPresenter(
-        view: DashboardContract.View,
-        private val appController: AppController,
-        private val currentSnapshotProvider: CurrentSnapshotProvider<StatusSnapshot>
+    view: DashboardContract.View,
+    private val appController: AppController,
+    private val currentSnapshotProvider: CurrentSnapshotProvider<StatusSnapshot>
 ) : BasePresenterImpl<DashboardContract.View>(view), DashboardContract.Presenter {
-
-    private val parentJob = Job()
-    private val coroutineScope = CoroutineScope(
-            Dispatchers.Main + parentJob
-    )
-
-    override fun onDestroy() {
-        super.onDestroy()
-        parentJob.cancel()
-    }
 
     override fun onResume() {
         currentSnapshotProvider.registerListener(currentSnapshotListener)

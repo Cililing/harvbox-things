@@ -4,7 +4,7 @@ import kotlinx.coroutines.delay
 
 class ConnectivityCheckerImpl : ConnectivityChecker {
     override suspend fun isNetworkOk(): Boolean {
-        delay(2500)
+        delay(1000)
         return true
     }
 }

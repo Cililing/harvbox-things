@@ -2,9 +2,7 @@ package com.cililing.harvbox.thingsapp.intro
 
 import com.cililing.harvbox.thingsapp.core.mvp.BasePresenterImpl
 import com.cililing.harvbox.thingsapp.model.ConnectivityChecker
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -13,19 +11,9 @@ class IntroPresenter(
     private val connectivityChecker: ConnectivityChecker
 ) : BasePresenterImpl<IntroContract.View>(view), IntroContract.Presenter {
 
-    private val parentJob = Job()
-    private val coroutineScope = CoroutineScope(
-            Dispatchers.Main + parentJob
-    )
-
     override fun onResume() {
         super.onResume()
         checkNetwork()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        parentJob.cancel()
     }
 
     override fun onRetryClick() {

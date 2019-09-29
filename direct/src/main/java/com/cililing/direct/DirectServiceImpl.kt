@@ -4,6 +4,7 @@ import com.cililing.direct.elastic.ElasticSearch
 import com.cililing.direct.elastic.getElasticModule
 import com.cililing.direct.firebase.FirebaseAppDatabase
 import com.cililing.direct.firebase.getFirebaseModule
+import com.cililing.harvbox.common.DateTimeParser
 import com.cililing.harvbox.common.Logger
 import com.cililing.harvbox.common.SemiblockValueReporter
 import com.cililing.harvbox.common.StatusSnapshot
@@ -18,14 +19,11 @@ import kotlinx.coroutines.withContext
 import org.koin.core.inject
 import org.koin.core.parameter.parametersOf
 import org.koin.dsl.koinApplication
-import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Date
-import java.util.Locale
 
 internal class DirectServiceImpl(
     private val firebaseApp: FirebaseApp,
-    private val isDebug: Boolean
+    private val isDebug: Boolean,
+    private val dateTimeParser: DateTimeParser = DateTimeParser
 ) : DirectService, StandaloneKoinCompontent {
 
     init {
@@ -107,13 +105,9 @@ internal class DirectServiceImpl(
     }
 
     private fun generateThingsSnapshot(): StatusSnapshot {
-        val calendar: Calendar = Calendar.getInstance()
-        val date = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSSSS", Locale.US)
-        val currentLocalTime: Date = calendar.time
-        val localTime = date.format(currentLocalTime)
-
-        val snapshot = thingsController.getSnapshot().toFirebaseThingsSnapshot(localTime)
-
+        val snapshot = thingsController.getSnapshot().toFirebaseThingsSnapshot(
+                dateTimeParser.getFormattedDate()
+        )
         return snapshot.copy(
                 light1PowerOn = light1Reporter.obtainValueAndRelease(snapshot.light1PowerOn),
                 light2PowerOn = light2Reporter.obtainValueAndRelease(snapshot.light2PowerOn)

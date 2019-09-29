@@ -89,6 +89,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:20.0.0'
     implementation 'com.google.firebase:firebase-database:19.1.0'
 
+    implementation 'com.google.code.gson:gson:2.8.5'
+
     // Tests
     testImplementation 'junit:junit:4.12'
     //    androidTestImplementation 'com.android.support.test:runner:1.0.2'

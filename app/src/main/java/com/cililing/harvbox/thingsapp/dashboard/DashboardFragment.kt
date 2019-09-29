@@ -2,6 +2,7 @@ package com.cililing.harvbox.thingsapp.dashboard
 
 import android.os.Bundle
 import android.view.View
+import com.cililing.harvbox.common.StatusSnapshot
 import com.cililing.harvbox.thingsapp.R
 import com.cililing.harvbox.thingsapp.core.mvp.BaseFragment
 import com.cililing.harvbox.thingsapp.customViews.LabelView
@@ -23,7 +24,7 @@ class DashboardFragment : BaseFragment<DashboardContract.Presenter>(), Dashboard
         createPresenterParams(
                 this,
                 get(),
-                get(named("things_snapshot"))
+                get(named<StatusSnapshot>())
         )
     }
 

@@ -5,6 +5,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.ViewPager
+import com.cililing.harvbox.common.StatusSnapshot
 import com.cililing.harvbox.thingsapp.R
 import com.cililing.harvbox.thingsapp.core.mvp.BaseFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -22,7 +23,7 @@ class MainFragment : BaseFragment<MainContract.Presenter>(), MainContract.View {
     override val presenter: MainContract.Presenter by currentScope.inject {
         getPresenterParams(this,
                 get(),
-                get(named("things_snapshot"))
+                get(named<StatusSnapshot>())
         )
     }
 
