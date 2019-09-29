@@ -15,10 +15,10 @@ interface AppFirebaseService {
 }
 
 class AppFirebaseServiceImpl(
-        firebaseApp: FirebaseApp,
-        light1CurrentSnapshotProvider: CurrentSnapshotProvider<Set<LightTrigger>>,
-        light2CurrentSnapshotProvider: CurrentSnapshotProvider<Set<LightTrigger>>,
-        private val gson: Gson
+    firebaseApp: FirebaseApp,
+    light1CurrentSnapshotProvider: CurrentSnapshotProvider<Set<LightTrigger>>,
+    light2CurrentSnapshotProvider: CurrentSnapshotProvider<Set<LightTrigger>>,
+    private val gson: Gson
 ) : AppFirebaseService {
 
     companion object {
@@ -38,8 +38,8 @@ class AppFirebaseServiceImpl(
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val json = dataSnapshot.value?.toString()
-                val result = gson.fromJson<List<LightTrigger>>(json, typeToken)
-                light1CurrentSnapshotProvider.newSnapshotAvailable(result.toSet())
+                val result = gson.fromJson<List<LightTrigger>>(json, typeToken)?.toSet() ?: return
+                light1CurrentSnapshotProvider.newSnapshotAvailable(result)
             }
         })
 
@@ -49,8 +49,8 @@ class AppFirebaseServiceImpl(
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val json = dataSnapshot.value?.toString()
-                val result = gson.fromJson<List<LightTrigger>>(json, typeToken)
-                light2CurrentSnapshotProvider.newSnapshotAvailable(result.toSet())
+                val result = gson.fromJson<List<LightTrigger>>(json, typeToken)?.toSet() ?: return
+                light2CurrentSnapshotProvider.newSnapshotAvailable(result)
             }
         })
     }

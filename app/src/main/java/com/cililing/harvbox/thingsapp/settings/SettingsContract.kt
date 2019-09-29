@@ -22,9 +22,11 @@ interface SettingsContract : BaseContract {
 
     interface LightSettingsView {
         fun fillTriggers(lightId: LightId, triggerSet: Set<LightTrigger>)
-        fun showTimePicker(lightId: LightId,
-                           hour: Int,
-                           minute: Int)
+        fun showTimePicker(
+            lightId: LightId,
+            hour: Int,
+            minute: Int
+        )
     }
 
     interface View : BaseView<Presenter>, MenuView, AboutAppView, AppSettingsView, LightSettingsView

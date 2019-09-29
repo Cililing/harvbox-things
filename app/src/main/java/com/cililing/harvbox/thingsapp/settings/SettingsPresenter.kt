@@ -8,11 +8,11 @@ import com.cililing.harvbox.thingsapp.model.LightTrigger
 import com.cililing.harvbox.thingsapp.model.TriggerType
 
 class SettingsPresenter(
-        view: SettingsContract.View,
-        private val appFirebaseService: AppFirebaseService,
-        private val light1CurrentSnapshotProvider: CurrentSnapshotProvider<Set<LightTrigger>>,
-        private val light2CurrentSnapshotProvider: CurrentSnapshotProvider<Set<LightTrigger>>,
-        private val clock: Clock
+    view: SettingsContract.View,
+    private val appFirebaseService: AppFirebaseService,
+    private val light1CurrentSnapshotProvider: CurrentSnapshotProvider<Set<LightTrigger>>,
+    private val light2CurrentSnapshotProvider: CurrentSnapshotProvider<Set<LightTrigger>>,
+    private val clock: Clock
 ) : BasePresenterImpl<SettingsContract.View>(view), SettingsContract.Presenter {
 
     private var light1Triggers = mutableSetOf<LightTrigger>()
@@ -33,7 +33,6 @@ class SettingsPresenter(
                     view.fillTriggers(SettingsContract.LightId.LIGHT_2, light2Triggers)
                 }
             }
-
 
     override fun onResume() {
         super.onResume()
@@ -64,9 +63,11 @@ class SettingsPresenter(
         updateTriggers(lightId, getTriggerSet(lightId), LightTrigger(hour, minute, TriggerType.ON))
     }
 
-    override fun changeTriggerType(lightId: SettingsContract.LightId,
-                                   lightTrigger: LightTrigger,
-                                   isOn: Boolean) {
+    override fun changeTriggerType(
+        lightId: SettingsContract.LightId,
+        lightTrigger: LightTrigger,
+        isOn: Boolean
+    ) {
         val trigger = getTriggerSet(lightId).find { it == lightTrigger } ?: return
         trigger.type = if (isOn) TriggerType.ON else TriggerType.OFF
         updateAndFillTriggers(lightId)
@@ -85,9 +86,10 @@ class SettingsPresenter(
     }
 
     private fun updateTriggers(
-            lightId: SettingsContract.LightId,
-            triggerSet: MutableSet<LightTrigger>,
-            lightTrigger: LightTrigger) {
+        lightId: SettingsContract.LightId,
+        triggerSet: MutableSet<LightTrigger>,
+        lightTrigger: LightTrigger
+    ) {
         // Check if light trigger exists.
         val trigger = triggerSet.find { it == lightTrigger }
 

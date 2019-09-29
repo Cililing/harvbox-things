@@ -15,9 +15,9 @@ import org.jetbrains.anko.sdk27.coroutines.onCheckedChange
 import org.jetbrains.anko.sdk27.coroutines.onClick
 
 class LightTriggersAdapter(
-        private val presenter: SettingsContract.Presenter,
-        private var triggerCollection: List<LightTrigger>,
-        private val lightId: SettingsContract.LightId
+    private val presenter: SettingsContract.Presenter,
+    private var triggerCollection: List<LightTrigger>,
+    private val lightId: SettingsContract.LightId
 ) : RecyclerView.Adapter<LightTriggersAdapter.LightTriggerViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LightTriggerViewHolder {

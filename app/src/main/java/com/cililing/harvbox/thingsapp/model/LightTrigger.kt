@@ -5,9 +5,9 @@ enum class TriggerType {
 }
 
 data class LightTrigger(
-        val hour: Int,
-        val minute: Int,
-        var type: TriggerType
+    val hour: Int,
+    val minute: Int,
+    var type: TriggerType
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

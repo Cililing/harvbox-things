@@ -111,9 +111,11 @@ class SettingsFragment : BaseFragment<SettingsContract.Presenter>(), SettingsCon
         )
     }
 
-    override fun showTimePicker(lightId: SettingsContract.LightId,
-                                hour: Int,
-                                minute: Int) {
+    override fun showTimePicker(
+        lightId: SettingsContract.LightId,
+        hour: Int,
+        minute: Int
+    ) {
         timePickerDialog24(
                 context,
                 hour,

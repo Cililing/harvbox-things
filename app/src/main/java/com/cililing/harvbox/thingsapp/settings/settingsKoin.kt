@@ -24,11 +24,11 @@ val settingsScope = { module: Module ->
 }
 
 fun SettingsContract.View.getPresenterParams(
-        view: SettingsContract.View,
-        appFirebaseService: AppFirebaseService,
-        light1CurrentSnapshotProvider: CurrentSnapshotProvider<Set<LightTrigger>>,
-        light2CurrentSnapshotProvider: CurrentSnapshotProvider<Set<LightTrigger>>,
-        clock: Clock
+    view: SettingsContract.View,
+    appFirebaseService: AppFirebaseService,
+    light1CurrentSnapshotProvider: CurrentSnapshotProvider<Set<LightTrigger>>,
+    light2CurrentSnapshotProvider: CurrentSnapshotProvider<Set<LightTrigger>>,
+    clock: Clock
 ): DefinitionParameters {
     return parametersOf(
             view,
