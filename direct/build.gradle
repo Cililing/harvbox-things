@@ -12,8 +12,6 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
-        buildConfigField("String", "ELASTIC_SEARCH_ADMIN_KEY", ELASTIC_SEARCH_ADMIN_KEY)
     }
 
     buildTypes {
