@@ -1,8 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:background="@drawable/ic_settings"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.cililing.harvbox.thingsapp.customViews.EditLongView
+        android:id="@+id/app_settings_realtime_db"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:hdesc="@string/app_settings_realtime_db_desc"
+        app:htitle="@string/app_settings_realtime_db_title" />
+
+    <com.cililing.harvbox.thingsapp.customViews.EditLongView
+        android:id="@+id/app_settings_elastic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:hdesc="@string/app_settings_elastic_desc"
+        app:htitle="@string/app_settings_elastic_title" />
 
 </LinearLayout>

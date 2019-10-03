@@ -14,7 +14,8 @@ val mainScope = { module: Module ->
             MainPresenter(
                     params[0],
                     params[1],
-                    params[2]
+                    params[2],
+                params[3]
             ) as MainContract.Presenter
         }
     }
@@ -23,7 +24,8 @@ val mainScope = { module: Module ->
 fun MainContract.View.getPresenterParams(
     view: MainContract.View,
     appController: AppController,
-    currentSnapshotProvider: CurrentSnapshotProvider<StatusSnapshot>
+    currentSnapshotProvider: CurrentSnapshotProvider<StatusSnapshot>,
+    realtimeDbCooldownProvider: CurrentSnapshotProvider<Long>
 ): DefinitionParameters {
-    return parametersOf(view, appController, currentSnapshotProvider)
+    return parametersOf(view, appController, currentSnapshotProvider, realtimeDbCooldownProvider)
 }

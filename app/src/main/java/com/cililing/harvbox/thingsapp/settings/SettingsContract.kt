@@ -18,7 +18,10 @@ interface SettingsContract : BaseContract {
 
     interface AboutAppView
 
-    interface AppSettingsView
+    interface AppSettingsView {
+        fun setElasticCooldown(value: Long)
+        fun setRealtimeCooldown(value: Long)
+    }
 
     interface LightSettingsView {
         fun fillTriggers(lightId: LightId, triggerSet: Set<LightTrigger>)
@@ -39,7 +42,10 @@ interface SettingsContract : BaseContract {
 
     interface AboutAppPresenter
 
-    interface AppSettingsPresenter
+    interface AppSettingsPresenter {
+        fun onElasticCooldownOkClicked(value: Long)
+        fun onRealtimeDbCooldownOkClicked(value: Long)
+    }
 
     interface LightSettingsPresenter {
         fun onNewLightTriggerClicked(lightId: LightId)

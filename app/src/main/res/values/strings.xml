@@ -9,4 +9,13 @@
     <string name="fragment_settings_menu_about_app">About app</string>
     <string name="fragment_settings_menu_light_settings">Light settings</string>
     <string name="fragment_settings_menu_app_settings">App settings</string>
+
+    <!--AppSettings-->
+    <string name="app_settings_realtime_db_title">Realtime database (refresh cooldown)</string>
+    <string name="app_settings_realtime_db_desc">How often do you want refresh your data? Put value in miliseconds.</string>
+    <string name="app_settings_elastic_title">Elastic search (refresh cooldown)</string>
+    <string name="app_settings_elastic_desc">How often do you want save stats in analytic database? Put value in miliseconds.</string>
+    <string name="ok">OK</string>
+
+
 </resources>

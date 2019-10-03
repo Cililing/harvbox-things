@@ -13,18 +13,26 @@ import com.google.gson.reflect.TypeToken
 interface AppFirebaseService {
     fun applyNewSettingsToLight1(lightTriggerSet: Set<LightTrigger>)
     fun applyNewSettingsToLight2(lightTriggerSet: Set<LightTrigger>)
+
+    fun setNewElasticCooldown(cooldown: Long)
+    fun setNewRelatimeDbCooldown(cooldown: Long)
 }
 
 class AppFirebaseServiceImpl(
     firebaseApp: FirebaseApp,
     light1CurrentSnapshotProvider: CurrentSnapshotProvider<Set<LightTrigger>>,
     light2CurrentSnapshotProvider: CurrentSnapshotProvider<Set<LightTrigger>>,
+    elasticCooldownSnapshotProvider: CurrentSnapshotProvider<Long>,
+    realtimeDbCooldownSnapshotProvider: CurrentSnapshotProvider<Long>,
     private val appController: AppController,
     private val gson: Gson
 ) : AppFirebaseService {
 
     companion object {
         private val typeToken = object : TypeToken<List<LightTrigger>>() {}.type
+
+        private const val REALTIME_DB_COOLDOWN = 5_000L // every 5 sec
+        private const val ELASTIC_COOLDOWN = 1_000L * 60L * 5L // every 5 min
     }
 
     private val firebaseDb = FirebaseDatabase.getInstance(firebaseApp)
@@ -32,6 +40,10 @@ class AppFirebaseServiceImpl(
     private val lightSettingsDbReference = firebaseDb.reference.child("light_status")
     private val light1SettingsReference = lightSettingsDbReference.child("light1")
     private val light2SettingsReference = lightSettingsDbReference.child("light2")
+
+    private val appSettingsDbReference = firebaseDb.reference.child("app_settings")
+    private val appSettingsElasticCooldown = appSettingsDbReference.child("elastic_cooldown")
+    private val appSettingsRealtimeCooldown = appSettingsDbReference.child("realtime_db_cooldown")
 
     init {
         lightSettingsDbReference.addValueEventListener(object : ValueEventListener {
@@ -70,6 +82,26 @@ class AppFirebaseServiceImpl(
                 light2CurrentSnapshotProvider.newSnapshotAvailable(result)
             }
         })
+
+        appSettingsElasticCooldown.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+            }
+
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val value = dataSnapshot.value?.toString()?.toLongOrNull() ?: ELASTIC_COOLDOWN
+                elasticCooldownSnapshotProvider.newSnapshotAvailable(value)
+            }
+        })
+
+        appSettingsRealtimeCooldown.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+            }
+
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val value = dataSnapshot.value?.toString()?.toLongOrNull() ?: REALTIME_DB_COOLDOWN
+                realtimeDbCooldownSnapshotProvider.newSnapshotAvailable(value)
+            }
+        })
     }
 
     override fun applyNewSettingsToLight1(lightTriggerSet: Set<LightTrigger>) {
@@ -78,5 +110,13 @@ class AppFirebaseServiceImpl(
 
     override fun applyNewSettingsToLight2(lightTriggerSet: Set<LightTrigger>) {
         light2SettingsReference.setValue(lightTriggerSet.toList())
+    }
+
+    override fun setNewElasticCooldown(cooldown: Long) {
+        appSettingsElasticCooldown.setValue(cooldown)
+    }
+
+    override fun setNewRelatimeDbCooldown(cooldown: Long) {
+        appSettingsRealtimeCooldown.setValue(cooldown)
     }
 }

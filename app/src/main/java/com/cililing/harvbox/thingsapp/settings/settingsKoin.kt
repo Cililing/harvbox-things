@@ -11,13 +11,17 @@ import org.koin.core.qualifier.named
 
 val settingsScope = { module: Module ->
     module.scope(named<SettingsFragment>()) {
-        scoped { params ->
+        scoped { defParams ->
+            val params: List<Any> = defParams[0]
+            @Suppress("UNCHECKED_CAST")
             SettingsPresenter(
-                    params[0],
-                    params[1],
-                    params[2],
-                    params[3],
-                    params[4]
+                params[0] as SettingsContract.View,
+                params[1] as AppFirebaseService,
+                params[2] as CurrentSnapshotProvider<Set<LightTrigger>>,
+                params[3] as CurrentSnapshotProvider<Set<LightTrigger>>,
+                params[4] as CurrentSnapshotProvider<Long>,
+                params[5] as CurrentSnapshotProvider<Long>,
+                params[6] as Clock
             ) as SettingsContract.Presenter
         }
     }
@@ -28,13 +32,19 @@ fun SettingsContract.View.getPresenterParams(
     appFirebaseService: AppFirebaseService,
     light1CurrentSnapshotProvider: CurrentSnapshotProvider<Set<LightTrigger>>,
     light2CurrentSnapshotProvider: CurrentSnapshotProvider<Set<LightTrigger>>,
+    realtimeDbCurrentSnapshotProvider: CurrentSnapshotProvider<Long>,
+    elasticCurrentSnapshotProvider: CurrentSnapshotProvider<Long>,
     clock: Clock
 ): DefinitionParameters {
     return parametersOf(
+        listOf(
             view,
             appFirebaseService,
             light1CurrentSnapshotProvider,
             light2CurrentSnapshotProvider,
+            realtimeDbCurrentSnapshotProvider,
+            elasticCurrentSnapshotProvider,
             clock
+        )
     )
 }

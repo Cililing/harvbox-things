@@ -10,7 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cililing.harvbox.common.timePickerDialog24
 import com.cililing.harvbox.thingsapp.R
+import com.cililing.harvbox.thingsapp.core.ProvidersIds
 import com.cililing.harvbox.thingsapp.core.mvp.BaseFragment
+import com.cililing.harvbox.thingsapp.customViews.EditLongView
 import com.cililing.harvbox.thingsapp.model.LightTrigger
 import org.jetbrains.anko.find
 import org.jetbrains.anko.sdk27.coroutines.onClick
@@ -37,7 +39,14 @@ class SettingsFragment : BaseFragment<SettingsContract.Presenter>(), SettingsCon
     override fun getLayoutId(): Int = R.layout.fragment_settings
 
     override val presenter: SettingsContract.Presenter by currentScope.inject {
-        getPresenterParams(this, get(), get(named("light1")), get(named("light2")), get())
+        getPresenterParams(
+            this,
+            get(),
+            get(named(ProvidersIds.LIGHT_1)),
+            get(named(ProvidersIds.LIGHT_2)),
+            get(named(ProvidersIds.REALTIME_DB_COOLDOWN)),
+            get(named(ProvidersIds.ELASTIC_COOLDOWN)),
+            get())
     }
 
     // Menu and container
@@ -48,6 +57,9 @@ class SettingsFragment : BaseFragment<SettingsContract.Presenter>(), SettingsCon
 
     private val light1Settings by lazy { LightSettingsContainer(find(R.id.container_1)) }
     private val light2Settings by lazy { LightSettingsContainer(find(R.id.container_2)) }
+
+    private val realtimeDbCooldown by lazy { find<EditLongView>(R.id.app_settings_realtime_db) }
+    private val elasticCooldown by lazy { find<EditLongView>(R.id.app_settings_elastic) }
 
     private inner class LightSettingsContainer(val container: View) {
         val addTriggerButton by lazy { container.find<Button>(R.id.light_add_trigger) }
@@ -93,6 +105,14 @@ class SettingsFragment : BaseFragment<SettingsContract.Presenter>(), SettingsCon
                 presenter.onNewLightTriggerClicked(SettingsContract.LightId.LIGHT_2)
             }
         }
+
+        realtimeDbCooldown.setOnApplyListener {
+            it?.let { presenter.onRealtimeDbCooldownOkClicked(it) }
+        }
+
+        elasticCooldown.setOnApplyListener {
+            it?.let { presenter.onElasticCooldownOkClicked(it) }
+        }
     }
 
     override fun showAppSettings() = contentFrameAnimator.showAppSettings()
@@ -106,8 +126,8 @@ class SettingsFragment : BaseFragment<SettingsContract.Presenter>(), SettingsCon
         }
 
         settings.updateTriggers(
-                lightId,
-                triggerSet.toList().sortedWith(compareBy(LightTrigger::hour, LightTrigger::minute))
+            lightId,
+            triggerSet.toList().sortedWith(compareBy(LightTrigger::hour, LightTrigger::minute))
         )
     }
 
@@ -117,15 +137,23 @@ class SettingsFragment : BaseFragment<SettingsContract.Presenter>(), SettingsCon
         minute: Int
     ) {
         timePickerDialog24(
-                context,
-                hour,
-                minute,
-                TimePickerDialog.OnTimeSetListener { _, hourOfDay, minuteOfHour ->
-                    presenter.onNewTriggerSelected(lightId, hourOfDay, minuteOfHour)
-                }
+            context,
+            hour,
+            minute,
+            TimePickerDialog.OnTimeSetListener { _, hourOfDay, minuteOfHour ->
+                presenter.onNewTriggerSelected(lightId, hourOfDay, minuteOfHour)
+            }
         ).let {
             it?.setTitle(lightId.toString())
             it?.show()
         }
+    }
+
+    override fun setElasticCooldown(value: Long) {
+        elasticCooldown.setValue(value)
+    }
+
+    override fun setRealtimeCooldown(value: Long) {
+        realtimeDbCooldown.setValue(value)
     }
 }

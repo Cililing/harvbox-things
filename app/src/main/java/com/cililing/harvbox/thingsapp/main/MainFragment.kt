@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.cililing.harvbox.common.StatusSnapshot
 import com.cililing.harvbox.thingsapp.R
+import com.cililing.harvbox.thingsapp.core.ProvidersIds
 import com.cililing.harvbox.thingsapp.core.mvp.BaseFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.jetbrains.anko.support.v4.find
@@ -23,7 +24,8 @@ class MainFragment : BaseFragment<MainContract.Presenter>(), MainContract.View {
     override val presenter: MainContract.Presenter by currentScope.inject {
         getPresenterParams(this,
                 get(),
-                get(named<StatusSnapshot>())
+                get(named<StatusSnapshot>()),
+                get(named(ProvidersIds.REALTIME_DB_COOLDOWN))
         )
     }
 

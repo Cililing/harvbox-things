@@ -12,6 +12,8 @@ class SettingsPresenter(
     private val appFirebaseService: AppFirebaseService,
     private val light1CurrentSnapshotProvider: CurrentSnapshotProvider<Set<LightTrigger>>,
     private val light2CurrentSnapshotProvider: CurrentSnapshotProvider<Set<LightTrigger>>,
+    private val realtimeDbCurrentSnapshotProvider: CurrentSnapshotProvider<Long>,
+    private val elasticCurrentSnapshotProvider: CurrentSnapshotProvider<Long>,
     private val clock: Clock
 ) : BasePresenterImpl<SettingsContract.View>(view), SettingsContract.Presenter {
 
@@ -34,6 +36,20 @@ class SettingsPresenter(
                 }
             }
 
+    private val realtimeDbCurrentSnapshotListener =
+        object : CurrentSnapshotProvider.Listener<Long> {
+            override fun onNewSnapshot(snapshot: Long) {
+                view.setRealtimeCooldown(snapshot)
+            }
+        }
+
+    private val elasticCurrentSnapshotListener =
+        object : CurrentSnapshotProvider.Listener<Long> {
+            override fun onNewSnapshot(snapshot: Long) {
+                view.setElasticCooldown(snapshot)
+            }
+        }
+
     override fun onResume() {
         super.onResume()
 
@@ -42,6 +58,8 @@ class SettingsPresenter(
 
         light1CurrentSnapshotProvider.registerListener(light1CurrentSnapshotListener)
         light2CurrentSnapshotProvider.registerListener(light2CurrentSnapshotListener)
+        elasticCurrentSnapshotProvider.registerListener(elasticCurrentSnapshotListener)
+        realtimeDbCurrentSnapshotProvider.registerListener(realtimeDbCurrentSnapshotListener)
     }
 
     override fun onPause() {
@@ -49,6 +67,8 @@ class SettingsPresenter(
 
         light1CurrentSnapshotProvider.unregisterListener(light1CurrentSnapshotListener)
         light2CurrentSnapshotProvider.unregisterListener(light2CurrentSnapshotListener)
+        elasticCurrentSnapshotProvider.unregisterListener(elasticCurrentSnapshotListener)
+        realtimeDbCurrentSnapshotProvider.unregisterListener(realtimeDbCurrentSnapshotListener)
     }
 
     override fun onAppSettingsClicked() = view.showAppSettings()
@@ -111,5 +131,13 @@ class SettingsPresenter(
         view.fillTriggers(lightId, triggers)
 
         reference(triggers)
+    }
+
+    override fun onElasticCooldownOkClicked(value: Long) {
+        appFirebaseService.setNewElasticCooldown(value)
+    }
+
+    override fun onRealtimeDbCooldownOkClicked(value: Long) {
+        appFirebaseService.setNewRelatimeDbCooldown(value)
     }
 }

@@ -44,18 +44,24 @@ fun appModule(isDebug: Boolean): Module {
         single(named<StatusSnapshot>()) {
             CurrentSnapshotProviderImpl<StatusSnapshot>() as CurrentSnapshotProvider<StatusSnapshot>
         }
-        single(named("light1")) {
+        single(named(ProvidersIds.LIGHT_1)) {
             CurrentSnapshotProviderImpl<Set<LightTrigger>>() as CurrentSnapshotProvider<Set<LightTrigger>>
         }
-        single(named("light2")) {
+        single(named(ProvidersIds.LIGHT_2)) {
             CurrentSnapshotProviderImpl<Set<LightTrigger>>() as CurrentSnapshotProvider<Set<LightTrigger>>
+        }
+        single(named(ProvidersIds.ELASTIC_COOLDOWN)) {
+            CurrentSnapshotProviderImpl<Long>() as CurrentSnapshotProvider<Long>
+        }
+        single(named(ProvidersIds.REALTIME_DB_COOLDOWN)) {
+            CurrentSnapshotProviderImpl<Long>() as CurrentSnapshotProvider<Long>
         }
 
         // Tools
         factory { params ->
             ProducerScheduler(
-                    params[0],
-                    params[1]
+                params[0],
+                params[1]
             )
         }
 
@@ -76,11 +82,13 @@ fun appModule(isDebug: Boolean): Module {
         }
         single(createdAtStart = true) {
             AppFirebaseServiceImpl(
-                    FirebaseApp.getInstance(),
-                    get(named("light1")),
-                    get(named("light2")),
-                    get(),
-                    get()
+                FirebaseApp.getInstance(),
+                get(named(ProvidersIds.LIGHT_1)),
+                get(named(ProvidersIds.LIGHT_2)),
+                get(named(ProvidersIds.ELASTIC_COOLDOWN)),
+                get(named(ProvidersIds.REALTIME_DB_COOLDOWN)),
+                get(),
+                get()
             ) as AppFirebaseService
         }
     }

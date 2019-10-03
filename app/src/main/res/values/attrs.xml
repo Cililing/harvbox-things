@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="EditLongView">
+        <attr name="hdesc" format="reference"/>
+        <attr name="htitle" format="reference"/>
+    </declare-styleable>
+</resources>

@@ -1,6 +1,5 @@
 package com.cililing.direct.elastic
 
-
 object ElasticSearchConfig {
     const val isEnabled = false
     const val url: String = "https://scalr.api.appbase.io"
