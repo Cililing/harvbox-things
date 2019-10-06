@@ -8,12 +8,14 @@ interface DirectService {
     suspend fun getAndProcess(): StatusSnapshot
     fun request(actionRequest: ThingsActionRequest)
     fun scheduleTasks(tasks: List<ExactTimeScheduleTask>)
+    fun setElasticCooldown(cooldown: Long)
     fun release()
 }
 
 fun getDirectService(
     firebaseApp: FirebaseApp,
+    cooldown: Long,
     isDebug: Boolean
 ): DirectService {
-    return DirectServiceImpl(firebaseApp, isDebug)
+    return DirectServiceImpl(firebaseApp, cooldown, isDebug)
 }

@@ -25,7 +25,8 @@ class MainFragment : BaseFragment<MainContract.Presenter>(), MainContract.View {
         getPresenterParams(this,
                 get(),
                 get(named<StatusSnapshot>()),
-                get(named(ProvidersIds.REALTIME_DB_COOLDOWN))
+                get(named(ProvidersIds.REALTIME_DB_COOLDOWN)),
+            get(named(ProvidersIds.ELASTIC_COOLDOWN))
         )
     }
 

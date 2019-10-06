@@ -24,6 +24,10 @@ class AppControllerImpl : AppController {
         clientService.request(actionRequest)
     }
 
+    override fun newElasticCooldownReceived(cooldown: Long) {
+        // This is implemented only in direct mode.
+    }
+
     override fun newLightSettingsReceived(light1: Set<LightTrigger>, light2: Set<LightTrigger>) {
         // This is implemented only in direct mode.
     }

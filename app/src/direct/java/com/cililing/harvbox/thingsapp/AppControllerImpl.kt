@@ -12,7 +12,8 @@ import com.google.firebase.FirebaseApp
 class AppControllerImpl : AppController {
 
     private val directService by lazy {
-        getDirectService(FirebaseApp.getInstance(), AppController.isDebug)
+        getDirectService(FirebaseApp.getInstance(), 0, AppController.isDebug)
+        // init with 0 cooldown, it will be changed later
     }
 
     override suspend fun getData(): StatusSnapshot {
@@ -21,6 +22,10 @@ class AppControllerImpl : AppController {
 
     override fun request(actionRequest: ThingsActionRequest) {
         directService.request(actionRequest)
+    }
+
+    override fun newElasticCooldownReceived(cooldown: Long) {
+        directService.setElasticCooldown(cooldown)
     }
 
     override fun newLightSettingsReceived(light1: Set<LightTrigger>, light2: Set<LightTrigger>) {

@@ -61,46 +61,30 @@ class AppFirebaseServiceImpl(
             }
         })
 
-        light1SettingsReference.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError) {
-            }
-
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val json = dataSnapshot.value?.toString()
-                val result = gson.fromJson<List<LightTrigger>>(json, typeToken)?.toSet() ?: return
-                light1CurrentSnapshotProvider.newSnapshotAvailable(result)
-            }
+        light1SettingsReference.addValueEventListener(ProvideValueEventListener(
+            light1CurrentSnapshotProvider
+        ) {
+            val json = it.value?.toString()
+            gson.fromJson<List<LightTrigger>>(json, typeToken)?.toSet()
         })
 
-        light2SettingsReference.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError) {
-            }
-
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val json = dataSnapshot.value?.toString()
-                val result = gson.fromJson<List<LightTrigger>>(json, typeToken)?.toSet() ?: return
-                light2CurrentSnapshotProvider.newSnapshotAvailable(result)
-            }
+        light2SettingsReference.addValueEventListener(ProvideValueEventListener(
+            light2CurrentSnapshotProvider
+        ) {
+            val json = it.value?.toString()
+            gson.fromJson<List<LightTrigger>>(json, typeToken)?.toSet()
         })
 
-        appSettingsElasticCooldown.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError) {
-            }
-
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val value = dataSnapshot.value?.toString()?.toLongOrNull() ?: ELASTIC_COOLDOWN
-                elasticCooldownSnapshotProvider.newSnapshotAvailable(value)
-            }
+        appSettingsElasticCooldown.addValueEventListener(ProvideValueEventListener(
+            elasticCooldownSnapshotProvider
+        ) {
+            it.value?.toString()?.toLongOrNull() ?: ELASTIC_COOLDOWN
         })
 
-        appSettingsRealtimeCooldown.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError) {
-            }
-
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val value = dataSnapshot.value?.toString()?.toLongOrNull() ?: REALTIME_DB_COOLDOWN
-                realtimeDbCooldownSnapshotProvider.newSnapshotAvailable(value)
-            }
+        appSettingsRealtimeCooldown.addValueEventListener(ProvideValueEventListener(
+            realtimeDbCooldownSnapshotProvider
+        ) {
+            it.value?.toString()?.toLongOrNull() ?: REALTIME_DB_COOLDOWN
         })
     }
 

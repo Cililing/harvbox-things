@@ -9,8 +9,6 @@ import android.widget.TextView
 import com.cililing.harvbox.thingsapp.R
 import org.jetbrains.anko.find
 import org.jetbrains.anko.sdk27.coroutines.onClick
-import org.jetbrains.anko.sdk27.coroutines.onEditorAction
-
 
 class EditLongView @JvmOverloads constructor(
     context: Context,

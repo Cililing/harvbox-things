@@ -6,14 +6,15 @@ import com.cililing.harvbox.common.StatusSnapshot
 import com.cililing.harvbox.common.toValueJson
 import com.google.gson.Gson
 import io.appbase.client.AppbaseClient
-import java.lang.Exception
 
 internal interface ElasticSearch {
     suspend fun reportSnapshot(snapshot: StatusSnapshot)
+    fun setCooldown(cooldown: Long)
 }
 
 internal class ElasticSearchImpl(
     private val gson: Gson,
+    private var cooldown: Long,
     private val logger: Logger,
     private val clock: Clock,
     private val elasticSearchConfig: ElasticSearchConfig = ElasticSearchConfig
@@ -26,6 +27,10 @@ internal class ElasticSearchImpl(
     )
 
     private var nextPossibleReportTime: Long? = null
+
+    override fun setCooldown(cooldown: Long) {
+        this.cooldown = cooldown
+    }
 
     private fun shouldReport(): Boolean {
         return elasticSearchConfig.isEnabled &&
@@ -41,7 +46,7 @@ internal class ElasticSearchImpl(
         try {
             val response = elasticClient.prepareIndex("_doc", snapshot.toValueJson(gson))
                     .execute()
-            nextPossibleReportTime = clock.milis() + elasticSearchConfig.reportCooldownMilis
+            nextPossibleReportTime = clock.milis() + cooldown
             logger.i("ElasticResponse succeed. NextReportTime: $nextPossibleReportTime" +
                     "\n\tresponse: $response")
         } catch (ex: Exception) {

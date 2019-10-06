@@ -22,6 +22,7 @@ import org.koin.dsl.koinApplication
 
 internal class DirectServiceImpl(
     private val firebaseApp: FirebaseApp,
+    cooldown: Long,
     private val isDebug: Boolean,
     private val dateTimeParser: DateTimeParser = DateTimeParser
 ) : DirectService, StandaloneKoinCompontent {
@@ -33,7 +34,7 @@ internal class DirectServiceImpl(
             modules(listOf(
                     getDirectKoinModule(isDebug),
                     getFirebaseModule(firebaseApp),
-                    getElasticModule()
+                    getElasticModule(cooldown)
             ))
         }
     }
@@ -69,6 +70,10 @@ internal class DirectServiceImpl(
                 }
             }
         }
+    }
+
+    override fun setElasticCooldown(cooldown: Long) {
+        elasticSearch.setCooldown(cooldown)
     }
 
     override fun scheduleTasks(tasks: List<ExactTimeScheduleTask>) {
