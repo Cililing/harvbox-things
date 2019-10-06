@@ -1,5 +1,6 @@
 package com.cililing.harvbox.thingsapp
 
+import android.content.Context
 import com.cililing.client.ClientService
 import com.cililing.client.ClientServiceImpl
 import com.cililing.harvbox.common.StatusSnapshot
@@ -7,7 +8,9 @@ import com.cililing.harvbox.common.ThingsActionRequest
 import com.cililing.harvbox.thingsapp.model.LightTrigger
 import com.google.firebase.FirebaseApp
 
-class AppControllerImpl : AppController {
+class AppControllerImpl(
+    @Suppress("UNUSED_PARAMETER") context: Context // Keep for compatibility
+) : AppController {
 
     private val clientService by lazy {
         ClientServiceImpl(

@@ -1,5 +1,6 @@
 package com.cililing.direct
 
+import android.content.Context
 import com.cililing.direct.elastic.ElasticSearch
 import com.cililing.direct.elastic.getElasticModule
 import com.cililing.direct.firebase.FirebaseAppDatabase
@@ -21,6 +22,7 @@ import org.koin.core.parameter.parametersOf
 import org.koin.dsl.koinApplication
 
 internal class DirectServiceImpl(
+    context: Context,
     private val firebaseApp: FirebaseApp,
     cooldown: Long,
     private val isDebug: Boolean,
@@ -32,7 +34,7 @@ internal class DirectServiceImpl(
             if (isDebug) printLogger()
 
             modules(listOf(
-                    getDirectKoinModule(isDebug),
+                    getDirectKoinModule(context, isDebug),
                     getFirebaseModule(firebaseApp),
                     getElasticModule(cooldown)
             ))

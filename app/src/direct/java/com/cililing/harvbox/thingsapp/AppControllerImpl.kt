@@ -1,5 +1,6 @@
 package com.cililing.harvbox.thingsapp
 
+import android.content.Context
 import com.cililing.direct.ExactTimeScheduleTask
 import com.cililing.direct.getDirectService
 import com.cililing.harvbox.common.StatusSnapshot
@@ -9,10 +10,16 @@ import com.cililing.harvbox.thingsapp.model.TriggerType
 import com.cililing.harvbox.thingsapp.settings.SettingsContract
 import com.google.firebase.FirebaseApp
 
-class AppControllerImpl : AppController {
+class AppControllerImpl(
+    context: Context
+) : AppController {
 
     private val directService by lazy {
-        getDirectService(FirebaseApp.getInstance(), 0, AppController.isDebug)
+        getDirectService(
+            context,
+            FirebaseApp.getInstance(),
+            0,
+        AppController.isDebug)
         // init with 0 cooldown, it will be changed later
     }
 

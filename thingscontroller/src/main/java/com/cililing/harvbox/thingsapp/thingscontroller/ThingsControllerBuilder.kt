@@ -1,5 +1,7 @@
 package com.cililing.harvbox.thingsapp.thingscontroller
 
+import android.content.Context
+
 interface ThingsControllerBuilder {
-    fun build(): ThingsController
+    fun build(context: Context): ThingsController
 }

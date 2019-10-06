@@ -25,7 +25,8 @@ class ThingsApp : Application() {
             androidLogger()
             androidContext(this@ThingsApp)
             modules(appModule(
-                    isDebug = BuildConfig.DEBUG
+                    isDebug = BuildConfig.DEBUG,
+                context = applicationContext
             ))
         }
     }

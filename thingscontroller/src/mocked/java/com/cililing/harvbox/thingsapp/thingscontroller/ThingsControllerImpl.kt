@@ -81,4 +81,8 @@ class ThingsControllerImpl(override val parent: Controller<*>?) : ThingsControll
 
     override fun release() {
     }
+
+    override fun requestPhoto(): Boolean {
+        return true
+    }
 }

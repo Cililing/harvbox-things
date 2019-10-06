@@ -1,5 +1,6 @@
 package com.cililing.harvbox.thingsapp.core
 
+import android.content.Context
 import com.cililing.harvbox.common.Clock
 import com.cililing.harvbox.common.DebugLogger
 import com.cililing.harvbox.common.ReleaseLogger
@@ -22,7 +23,7 @@ import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-fun appModule(isDebug: Boolean): Module {
+fun appModule(isDebug: Boolean, context: Context): Module {
     return module {
         single {
             if (isDebug) {
@@ -33,7 +34,7 @@ fun appModule(isDebug: Boolean): Module {
         }
 
         single {
-            AppControllerImpl() as AppController
+            AppControllerImpl(context) as AppController
         }
 
         single {

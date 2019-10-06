@@ -1,5 +1,6 @@
 package com.cililing.direct
 
+import android.content.Context
 import com.cililing.harvbox.common.Clock
 import com.cililing.harvbox.common.DebugLogger
 import com.cililing.harvbox.common.Logger
@@ -23,7 +24,10 @@ internal interface StandaloneKoinCompontent : KoinComponent {
     }
 }
 
-internal fun getDirectKoinModule(isDebug: Boolean) = module {
+internal fun getDirectKoinModule(
+    context: Context,
+    isDebug: Boolean
+) = module {
 
     single {
         if (isDebug) DebugLogger() else ReleaseLogger() as Logger
@@ -39,6 +43,6 @@ internal fun getDirectKoinModule(isDebug: Boolean) = module {
 
     single {
         ThingsControllerBuilderImpl()
-                .build() as ThingsController
+                .build(context) as ThingsController
     }
 }

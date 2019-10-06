@@ -1,5 +1,6 @@
 package com.cililing.direct
 
+import android.content.Context
 import com.cililing.harvbox.common.StatusSnapshot
 import com.cililing.harvbox.common.ThingsActionRequest
 import com.google.firebase.FirebaseApp
@@ -13,9 +14,10 @@ interface DirectService {
 }
 
 fun getDirectService(
+    context: Context,
     firebaseApp: FirebaseApp,
     cooldown: Long,
     isDebug: Boolean
 ): DirectService {
-    return DirectServiceImpl(firebaseApp, cooldown, isDebug)
+    return DirectServiceImpl(context, firebaseApp, cooldown, isDebug)
 }

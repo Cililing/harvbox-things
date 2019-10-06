@@ -1,2 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.cililing.harvbox.thingsapp.thingscontroller" />
+    package="com.cililing.harvbox.thingsapp.thingscontroller" >
+
+    <uses-permission android:name="android.permission.CAMERA" />
+</manifest>
