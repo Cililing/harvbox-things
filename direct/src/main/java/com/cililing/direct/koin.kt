@@ -26,7 +26,8 @@ internal interface StandaloneKoinCompontent : KoinComponent {
 
 internal fun getDirectKoinModule(
     context: Context,
-    isDebug: Boolean
+    isDebug: Boolean,
+    photoListener: (ByteArray) -> Unit
 ) = module {
 
     single {
@@ -43,6 +44,6 @@ internal fun getDirectKoinModule(
 
     single {
         ThingsControllerBuilderImpl()
-                .build(context) as ThingsController
+                .build(context, photoListener) as ThingsController
     }
 }

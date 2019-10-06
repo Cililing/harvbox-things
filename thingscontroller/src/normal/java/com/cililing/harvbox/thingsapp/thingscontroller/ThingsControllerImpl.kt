@@ -20,7 +20,7 @@ import org.koin.dsl.koinApplication
 class ThingsControllerImpl internal constructor(
     context: Context,
     private val configMap: ControllerConfigMap = ControllerConfigMapDefault,
-    private val photoListener: (ByteArray) -> Unit,
+    override val photoListener: (ByteArray) -> Unit,
     debug: Boolean = false,
     override val parent: Controller<*>? = null
 ) : ThingsController, StandaloneKoinCompontent {

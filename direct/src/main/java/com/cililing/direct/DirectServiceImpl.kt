@@ -34,7 +34,7 @@ internal class DirectServiceImpl(
             if (isDebug) printLogger()
 
             modules(listOf(
-                    getDirectKoinModule(context, isDebug),
+                    getDirectKoinModule(context, isDebug, this@DirectServiceImpl::processPhoto),
                     getFirebaseModule(firebaseApp),
                     getElasticModule(cooldown)
             ))
@@ -127,5 +127,8 @@ internal class DirectServiceImpl(
                 light1PowerOn = light1Reporter.obtainValueAndRelease(snapshot.light1PowerOn),
                 light2PowerOn = light2Reporter.obtainValueAndRelease(snapshot.light2PowerOn)
         )
+    }
+
+    private fun processPhoto(byteArray: ByteArray) {
     }
 }

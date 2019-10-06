@@ -8,7 +8,10 @@ import com.cililing.harvbox.thingsapp.thingscontroller.controllers.TwoRelaySnaps
 import com.cililing.harvbox.thingsapp.thingscontroller.controllers.generic.StateSnapshot
 import kotlin.random.Random
 
-class ThingsControllerImpl(override val parent: Controller<*>?) : ThingsController {
+class ThingsControllerImpl(
+    override val parent: Controller<*>?,
+    override val photoListener: (ByteArray) -> Unit
+) : ThingsController {
 
     var relay1State = StateSnapshot(false)
     var relay2State = StateSnapshot(false)
@@ -83,6 +86,8 @@ class ThingsControllerImpl(override val parent: Controller<*>?) : ThingsControll
     }
 
     override fun requestPhoto(): Boolean {
+        // TODO(pmaterna): Return bytes of some photo from resources.
+        photoListener.invoke("IKS DE".toByteArray())
         return true
     }
 }

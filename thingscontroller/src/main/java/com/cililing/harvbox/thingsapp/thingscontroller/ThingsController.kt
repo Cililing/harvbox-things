@@ -7,4 +7,5 @@ interface ThingsController : Controller<ThingsSnapshot> {
     fun setState(relay1: Boolean?, relay2: Boolean?)
 
     fun requestPhoto(): Boolean
+    val photoListener: (ByteArray) -> Unit
 }
