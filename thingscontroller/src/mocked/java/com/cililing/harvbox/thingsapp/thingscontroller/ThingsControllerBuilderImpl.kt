@@ -7,6 +7,10 @@ class ThingsControllerBuilderImpl : ThingsControllerBuilder {
         context: Context,
         photoListener: (ByteArray) -> Unit
     ): ThingsController {
-        return ThingsControllerImpl(parent = null, photoListener = photoListener)
+        return ThingsControllerImpl(
+            parent = null,
+            photoListener = photoListener,
+            context = context
+        )
     }
 }

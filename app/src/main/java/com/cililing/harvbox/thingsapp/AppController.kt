@@ -14,4 +14,6 @@ interface AppController {
 
     fun newLightSettingsReceived(light1: Set<LightTrigger>, light2: Set<LightTrigger>)
     fun newElasticCooldownReceived(cooldown: Long)
+
+    fun requestPhoto()
 }

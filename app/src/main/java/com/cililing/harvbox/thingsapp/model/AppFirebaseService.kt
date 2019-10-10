@@ -24,6 +24,7 @@ class AppFirebaseServiceImpl(
     light2CurrentSnapshotProvider: CurrentSnapshotProvider<Set<LightTrigger>>,
     elasticCooldownSnapshotProvider: CurrentSnapshotProvider<Long>,
     realtimeDbCooldownSnapshotProvider: CurrentSnapshotProvider<Long>,
+    lastPhotoSnapshotProvider: CurrentSnapshotProvider<String>,
     private val appController: AppController,
     private val gson: Gson
 ) : AppFirebaseService {
@@ -44,6 +45,8 @@ class AppFirebaseServiceImpl(
     private val appSettingsDbReference = firebaseDb.reference.child("app_settings")
     private val appSettingsElasticCooldown = appSettingsDbReference.child("elastic_cooldown")
     private val appSettingsRealtimeCooldown = appSettingsDbReference.child("realtime_db_cooldown")
+
+    private val lastPhotoReference = firebaseDb.reference.child("last_photo")
 
     init {
         lightSettingsDbReference.addValueEventListener(object : ValueEventListener {
@@ -85,6 +88,12 @@ class AppFirebaseServiceImpl(
             realtimeDbCooldownSnapshotProvider
         ) {
             it.value?.toString()?.toLongOrNull() ?: REALTIME_DB_COOLDOWN
+        })
+
+        lastPhotoReference.addValueEventListener(ProvideValueEventListener(
+            lastPhotoSnapshotProvider
+        ) {
+            it.value?.toString() ?: ""
         })
     }
 

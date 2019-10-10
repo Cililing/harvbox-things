@@ -4,6 +4,7 @@ import android.content.Context
 import com.cililing.direct.elastic.ElasticSearch
 import com.cililing.direct.elastic.getElasticModule
 import com.cililing.direct.firebase.FirebaseAppDatabase
+import com.cililing.direct.firebase.FirebaseAppStorage
 import com.cililing.direct.firebase.getFirebaseModule
 import com.cililing.harvbox.common.DateTimeParser
 import com.cililing.harvbox.common.Logger
@@ -34,23 +35,24 @@ internal class DirectServiceImpl(
             if (isDebug) printLogger()
 
             modules(listOf(
-                    getDirectKoinModule(context, isDebug, this@DirectServiceImpl::processPhoto),
-                    getFirebaseModule(firebaseApp),
-                    getElasticModule(cooldown)
+                getDirectKoinModule(context, isDebug, this@DirectServiceImpl::processPhoto),
+                getFirebaseModule(firebaseApp),
+                getElasticModule(cooldown)
             ))
         }
     }
 
     private val thingsController: ThingsController by inject()
-    private val cloudDatabase: FirebaseAppDatabase by inject {
+    private val firebaseAppDatabase: FirebaseAppDatabase by inject {
         parametersOf(this)
     }
     private val elasticSearch: ElasticSearch by inject()
     private val logger: Logger by inject()
+    private val firebaseAppStorage: FirebaseAppStorage by inject()
 
     private val parentJob = Job()
     private val coroutineScope = CoroutineScope(
-            parentJob + Dispatchers.Default
+        parentJob + Dispatchers.Default
     )
 
     private val exactTimeSchedulerExecutor = ExactTimeScheduleExecutor()
@@ -86,22 +88,22 @@ internal class DirectServiceImpl(
     override fun request(actionRequest: ThingsActionRequest) {
         logger.i("Requesting: $actionRequest")
         coroutineScope.launch {
-            val action = when (actionRequest) {
+            when (actionRequest) {
                 is ThingsActionRequest.Light1 -> {
-                    {
+                    withContext(Dispatchers.IO) {
                         light1Reporter.value = actionRequest.isOn
                         thingsController.setState(actionRequest.isOn, null)
                     }
                 }
                 is ThingsActionRequest.Light2 -> {
-                    {
+                    withContext(Dispatchers.IO) {
                         light2Reporter.value = actionRequest.isOn
                         thingsController.setState(null, actionRequest.isOn)
                     }
                 }
-            }
-            withContext(Dispatchers.IO) {
-                action()
+                is ThingsActionRequest.Photo -> {
+                    thingsController.requestPhoto()
+                }
             }
         }
     }
@@ -116,19 +118,23 @@ internal class DirectServiceImpl(
     }
 
     private fun reportCurrentStatusToFirebase(statusSnapshot: StatusSnapshot) {
-        cloudDatabase.post(statusSnapshot)
+        firebaseAppDatabase.post(statusSnapshot)
     }
 
     private fun generateThingsSnapshot(): StatusSnapshot {
         val snapshot = thingsController.getSnapshot().toFirebaseThingsSnapshot(
-                dateTimeParser.getFormattedDate()
+            dateTimeParser.getFormattedDate()
         )
         return snapshot.copy(
-                light1PowerOn = light1Reporter.obtainValueAndRelease(snapshot.light1PowerOn),
-                light2PowerOn = light2Reporter.obtainValueAndRelease(snapshot.light2PowerOn)
+            light1PowerOn = light1Reporter.obtainValueAndRelease(snapshot.light1PowerOn),
+            light2PowerOn = light2Reporter.obtainValueAndRelease(snapshot.light2PowerOn)
         )
     }
 
     private fun processPhoto(byteArray: ByteArray) {
+        firebaseAppStorage.putPhoto(byteArray) {
+            // When done just put newest url to fb rt db
+            firebaseAppDatabase.newPhotoAvailable(it)
+        }
     }
 }

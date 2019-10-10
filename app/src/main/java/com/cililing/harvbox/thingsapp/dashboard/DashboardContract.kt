@@ -12,10 +12,12 @@ interface DashboardContract : BaseContract {
         fun onNewSnapshotTimeReceived(new: String)
         fun onNewLight1StatusReceived(new: Boolean)
         fun onNewLight2StatusReceived(new: Boolean)
+        fun onNewPhotoReceived(new: String?)
     }
 
     interface Presenter : BasePresenter<View> {
         fun onLight1Click(isOn: Boolean)
         fun onLight2Click(isOn: Boolean)
+        fun onRequestPhotoClicked()
     }
 }

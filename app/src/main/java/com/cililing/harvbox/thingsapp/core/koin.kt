@@ -57,6 +57,9 @@ fun appModule(isDebug: Boolean, context: Context): Module {
         single(named(ProvidersIds.REALTIME_DB_COOLDOWN)) {
             CurrentSnapshotProviderImpl<Long>() as CurrentSnapshotProvider<Long>
         }
+        single(named(ProvidersIds.LAST_PHOTO)) {
+            CurrentSnapshotProviderImpl<String>() as CurrentSnapshotProvider<String>
+        }
 
         // Tools
         factory { params ->
@@ -88,6 +91,7 @@ fun appModule(isDebug: Boolean, context: Context): Module {
                 get(named(ProvidersIds.LIGHT_2)),
                 get(named(ProvidersIds.ELASTIC_COOLDOWN)),
                 get(named(ProvidersIds.REALTIME_DB_COOLDOWN)),
+                get(named(ProvidersIds.LAST_PHOTO)),
                 get(),
                 get()
             ) as AppFirebaseService

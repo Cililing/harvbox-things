@@ -1,6 +1,7 @@
 package com.cililing.harvbox.thingsapp.core
 
 object ProvidersIds {
+    const val LAST_PHOTO = "last_photo"
     const val LIGHT_1 = "light1"
     const val LIGHT_2 = "light2"
 

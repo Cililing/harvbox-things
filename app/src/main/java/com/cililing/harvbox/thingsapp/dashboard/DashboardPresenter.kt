@@ -12,17 +12,20 @@ import kotlinx.coroutines.withContext
 class DashboardPresenter(
     view: DashboardContract.View,
     private val appController: AppController,
-    private val currentSnapshotProvider: CurrentSnapshotProvider<StatusSnapshot>
+    private val currentSnapshotProvider: CurrentSnapshotProvider<StatusSnapshot>,
+    private val lastPhotoProvider: CurrentSnapshotProvider<String>
 ) : BasePresenterImpl<DashboardContract.View>(view), DashboardContract.Presenter {
 
     override fun onResume() {
         currentSnapshotProvider.registerListener(currentSnapshotListener)
+        lastPhotoProvider.registerListener(lastPhotoListener)
         super.onResume()
     }
 
     override fun onPause() {
-        super.onPause()
         currentSnapshotProvider.unregisterListener(currentSnapshotListener)
+        lastPhotoProvider.unregisterListener(lastPhotoListener)
+        super.onPause()
     }
 
     private val currentSnapshotListener: CurrentSnapshotProvider.Listener<StatusSnapshot> =
@@ -38,6 +41,13 @@ class DashboardPresenter(
                     }
                 }
             }
+
+    private val lastPhotoListener: CurrentSnapshotProvider.Listener<String> =
+        object : CurrentSnapshotProvider.Listener<String> {
+            override fun onNewSnapshot(snapshot: String) {
+                view.onNewPhotoReceived(snapshot)
+            }
+        }
 
     private fun requestForData() {
         coroutineScope.launch {
@@ -58,5 +68,9 @@ class DashboardPresenter(
             withContext(Dispatchers.Default) { appController.request(ThingsActionRequest.Light2(isOn)) }
             requestForData()
         }
+    }
+
+    override fun onRequestPhotoClicked() {
+        appController.requestPhoto()
     }
 }

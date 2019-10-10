@@ -34,4 +34,8 @@ class AppControllerImpl(
     override fun newLightSettingsReceived(light1: Set<LightTrigger>, light2: Set<LightTrigger>) {
         // This is implemented only in direct mode.
     }
+
+    override fun requestPhoto() {
+        clientService.request(ThingsActionRequest.Photo)
+    }
 }

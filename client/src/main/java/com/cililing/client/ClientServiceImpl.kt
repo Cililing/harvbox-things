@@ -23,6 +23,7 @@ class ClientServiceImpl(
         when (actionRequest) {
             is ThingsActionRequest.Light1 -> firebaseDb.setLight1(actionRequest.isOn)
             is ThingsActionRequest.Light2 -> firebaseDb.setLight2(actionRequest.isOn)
+            is ThingsActionRequest.Photo -> firebaseDb.triggerPhoto()
         }
     }
 

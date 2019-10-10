@@ -19,4 +19,11 @@ internal fun getFirebaseModule(
                 get()
         ) as FirebaseAppDatabase
     }
+
+    single {
+        FirebaseAppStorageImpl(
+            firebaseApp,
+            get()
+        ) as FirebaseAppStorage
+    }
 }

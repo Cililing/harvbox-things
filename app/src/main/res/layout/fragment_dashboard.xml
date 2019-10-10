@@ -1,39 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_gravity="center"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <com.cililing.harvbox.thingsapp.customViews.LabelView
-        android:id="@+id/dashboard_last_update"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/dashboard_photo_thumb"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <com.cililing.harvbox.thingsapp.customViews.OnOffButton
-        android:id="@+id/dashboard_light_1_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/dashboard_request_photo_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Request Photo" />
 
-    <com.cililing.harvbox.thingsapp.customViews.OnOffButton
-        android:id="@+id/dashboard_light_2_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <com.cililing.harvbox.thingsapp.customViews.LabelView
+            android:id="@+id/dashboard_last_update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-    <com.cililing.harvbox.thingsapp.customViews.RealValueView
-        android:id="@+id/dashboard_temp_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <com.cililing.harvbox.thingsapp.customViews.OnOffButton
+            android:id="@+id/dashboard_light_2_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-    <com.cililing.harvbox.thingsapp.customViews.RealValueView
-        android:id="@+id/dashboard_humidity_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <com.cililing.harvbox.thingsapp.customViews.OnOffButton
+            android:id="@+id/dashboard_light_1_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-    <com.cililing.harvbox.thingsapp.customViews.RealValueView
-        android:id="@+id/dashboard_proximity_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <com.cililing.harvbox.thingsapp.customViews.RealValueView
+            android:id="@+id/dashboard_humidity_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-</LinearLayout>
+        <com.cililing.harvbox.thingsapp.customViews.RealValueView
+            android:id="@+id/dashboard_proximity_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <com.cililing.harvbox.thingsapp.customViews.RealValueView
+            android:id="@+id/dashboard_temp_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/dashboard_photo_thumb"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:background="#FF0000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,6 +2,7 @@ package com.cililing.client
 
 import com.cililing.harvbox.common.SemiblockValueReporter
 import com.cililing.harvbox.common.StatusSnapshot
+import com.cililing.harvbox.common.ThingsActionRequest
 import com.google.firebase.FirebaseApp
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -12,6 +13,7 @@ internal interface FirebaseDatabaseService {
     fun getSnapshot(): StatusSnapshot?
     fun setLight1(isOn: Boolean)
     fun setLight2(isOn: Boolean)
+    fun triggerPhoto()
 }
 
 internal class FirebaseDatabaseServiceImpl(
@@ -20,6 +22,9 @@ internal class FirebaseDatabaseServiceImpl(
 
     private val database = FirebaseDatabase.getInstance(firebaseApp)
     private val realtimeStatus = database.reference.child("status")
+
+    private val triggers = database.reference.child("triggers")
+    private val photoTrigger = triggers.child("photo")
 
     var currentSnapshot: StatusSnapshot? = null
 
@@ -60,5 +65,11 @@ internal class FirebaseDatabaseServiceImpl(
     override fun setLight2(isOn: Boolean) {
         light2SemiblockReporter.value = isOn
         realtimeStatus.child("light2").setValue(isOn)
+    }
+
+    override fun triggerPhoto() {
+        photoTrigger.setValue(false).addOnSuccessListener {
+            photoTrigger.setValue(true)
+        }
     }
 }

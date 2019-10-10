@@ -2,12 +2,17 @@ package com.cililing.harvbox.thingsapp.dashboard
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
+import android.widget.ImageView
 import com.cililing.harvbox.common.StatusSnapshot
 import com.cililing.harvbox.thingsapp.R
+import com.cililing.harvbox.thingsapp.core.ProvidersIds
 import com.cililing.harvbox.thingsapp.core.mvp.BaseFragment
 import com.cililing.harvbox.thingsapp.customViews.LabelView
 import com.cililing.harvbox.thingsapp.customViews.OnOffButton
 import com.cililing.harvbox.thingsapp.customViews.RealValueView
+import com.squareup.picasso.Picasso
+import org.jetbrains.anko.sdk27.coroutines.onClick
 import org.jetbrains.anko.support.v4.find
 import org.koin.android.ext.android.get
 import org.koin.android.scope.currentScope
@@ -24,7 +29,8 @@ class DashboardFragment : BaseFragment<DashboardContract.Presenter>(), Dashboard
         createPresenterParams(
                 this,
                 get(),
-                get(named<StatusSnapshot>())
+                get(named<StatusSnapshot>()),
+                get(named(ProvidersIds.LAST_PHOTO))
         )
     }
 
@@ -34,6 +40,8 @@ class DashboardFragment : BaseFragment<DashboardContract.Presenter>(), Dashboard
     private val proximityView by lazy { find<RealValueView>(R.id.dashboard_proximity_value) }
     private val light1Button by lazy { find<OnOffButton>(R.id.dashboard_light_1_button) }
     private val light2Button by lazy { find<OnOffButton>(R.id.dashboard_light_2_button) }
+    private val requestPhotoButton by lazy { find<Button>(R.id.dashboard_request_photo_button) }
+    private val photoThumb by lazy { find<ImageView>(R.id.dashboard_photo_thumb) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -51,6 +59,14 @@ class DashboardFragment : BaseFragment<DashboardContract.Presenter>(), Dashboard
         light2Button.setOnCheckedListner {
             presenter.onLight2Click(it)
         }
+        requestPhotoButton.onClick {
+            presenter.onRequestPhotoClicked()
+        }
+    }
+
+    override fun onNewPhotoReceived(new: String?) {
+        if (new.isNullOrEmpty()) return
+        Picasso.get().load(new).into(photoThumb)
     }
 
     override fun onNewLight1StatusReceived(new: Boolean) {

@@ -1,5 +1,7 @@
 package com.cililing.harvbox.thingsapp.thingscontroller
 
+import android.content.Context
+import android.os.Handler
 import com.cililing.harvbox.thingsapp.thingscontroller.controllers.ADS1015Controller
 import com.cililing.harvbox.thingsapp.thingscontroller.controllers.ADS1015Snapshot
 import com.cililing.harvbox.thingsapp.thingscontroller.controllers.Controller
@@ -10,8 +12,11 @@ import kotlin.random.Random
 
 class ThingsControllerImpl(
     override val parent: Controller<*>?,
-    override val photoListener: (ByteArray) -> Unit
+    override val photoListener: (ByteArray) -> Unit,
+    private val context: Context
 ) : ThingsController {
+
+    private val photos = mockedPhotos.mapNotNull { context.getByteArrayDrawable(it) }
 
     var relay1State = StateSnapshot(false)
     var relay2State = StateSnapshot(false)
@@ -85,9 +90,20 @@ class ThingsControllerImpl(
     override fun release() {
     }
 
+    private var counter: Int = 0
+    private var handler = Handler()
+
     override fun requestPhoto(): Boolean {
-        // TODO(pmaterna): Return bytes of some photo from resources.
-        photoListener.invoke("IKS DE".toByteArray())
+        schedulePhotoListenerInvoking(counter++)
         return true
     }
+
+    private fun schedulePhotoListenerInvoking(counter: Int) {
+        handler.postDelayed({
+            photoListener.invoke(
+                photos[counter % photos.size]
+            )
+        }, Random.nextLong(300, 1000))
+    }
+
 }

@@ -49,6 +49,10 @@ class AppControllerImpl(
         )
     }
 
+    override fun requestPhoto() {
+        directService.request(ThingsActionRequest.Photo)
+    }
+
     private fun LightTrigger.toThingsActionRequest(lightId: SettingsContract.LightId): ThingsActionRequest {
         val isOn = this.type == TriggerType.ON
         return when (lightId) {

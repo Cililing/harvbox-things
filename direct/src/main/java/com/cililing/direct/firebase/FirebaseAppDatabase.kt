@@ -1,5 +1,6 @@
 package com.cililing.direct.firebase
 
+import android.net.Uri
 import com.cililing.harvbox.common.Logger
 import com.cililing.harvbox.common.StatusSnapshot
 import com.google.firebase.FirebaseApp
@@ -10,6 +11,7 @@ import com.google.firebase.database.ValueEventListener
 
 internal interface FirebaseAppDatabase {
     fun post(model: StatusSnapshot)
+    fun newPhotoAvailable(it: Uri)
 }
 
 internal class FirebaseAppDatabaseImpl(
@@ -21,6 +23,10 @@ internal class FirebaseAppDatabaseImpl(
 
     private val database = FirebaseDatabase.getInstance(firebaseApp)
     private val realtimeStatus = database.reference.child("status")
+    private val lastPhoto = database.reference.child("last_photo")
+
+    private val triggers = database.reference.child("triggers")
+    private val photoTrigger = triggers.child("photo")
 
     init {
         realtimeStatus.child("light1").addValueEventListener(object : ValueEventListener {
@@ -41,6 +47,18 @@ internal class FirebaseAppDatabaseImpl(
             override fun onCancelled(p0: DatabaseError) {
             }
         })
+
+        photoTrigger.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                if (p0.value == true) {
+                    logger.i("Triggering photo")
+                    firebaseNewDataCallback.onPhotoRequested()
+                }
+            }
+        })
     }
 
     override fun post(model: StatusSnapshot) {
@@ -55,5 +73,9 @@ internal class FirebaseAppDatabaseImpl(
         ).addOnFailureListener {
             firebaseFailureHandler.handle(it)
         }
+    }
+
+    override fun newPhotoAvailable(it: Uri) {
+        lastPhoto.setValue(it.toString())
     }
 }
