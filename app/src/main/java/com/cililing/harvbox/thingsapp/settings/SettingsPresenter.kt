@@ -14,6 +14,7 @@ class SettingsPresenter(
     private val light2CurrentSnapshotProvider: CurrentSnapshotProvider<Set<LightTrigger>>,
     private val realtimeDbCurrentSnapshotProvider: CurrentSnapshotProvider<Long>,
     private val elasticCurrentSnapshotProvider: CurrentSnapshotProvider<Long>,
+    private val photoCooldownSnapshotProvider: CurrentSnapshotProvider<Long>,
     private val clock: Clock
 ) : BasePresenterImpl<SettingsContract.View>(view), SettingsContract.Presenter {
 
@@ -50,6 +51,13 @@ class SettingsPresenter(
             }
         }
 
+    private val photoCooldownCurrentSnapshotListener =
+        object : CurrentSnapshotProvider.Listener<Long> {
+            override fun onNewSnapshot(snapshot: Long) {
+                view.setPhotoCooldown(snapshot)
+            }
+        }
+
     override fun onResume() {
         super.onResume()
 
@@ -60,6 +68,7 @@ class SettingsPresenter(
         light2CurrentSnapshotProvider.registerListener(light2CurrentSnapshotListener)
         elasticCurrentSnapshotProvider.registerListener(elasticCurrentSnapshotListener)
         realtimeDbCurrentSnapshotProvider.registerListener(realtimeDbCurrentSnapshotListener)
+        photoCooldownSnapshotProvider.registerListener(photoCooldownCurrentSnapshotListener)
     }
 
     override fun onPause() {
@@ -69,6 +78,7 @@ class SettingsPresenter(
         light2CurrentSnapshotProvider.unregisterListener(light2CurrentSnapshotListener)
         elasticCurrentSnapshotProvider.unregisterListener(elasticCurrentSnapshotListener)
         realtimeDbCurrentSnapshotProvider.unregisterListener(realtimeDbCurrentSnapshotListener)
+        photoCooldownSnapshotProvider.unregisterListener(photoCooldownCurrentSnapshotListener)
     }
 
     override fun onAppSettingsClicked() = view.showAppSettings()
@@ -139,5 +149,9 @@ class SettingsPresenter(
 
     override fun onRealtimeDbCooldownOkClicked(value: Long) {
         appFirebaseService.setNewRelatimeDbCooldown(value)
+    }
+
+    override fun onPhotoCooldownOkClicked(value: Long) {
+        appFirebaseService.setNewPhotoCooldown(value)
     }
 }

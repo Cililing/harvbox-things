@@ -1,22 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <com.cililing.harvbox.thingsapp.customViews.EditLongView
-        android:id="@+id/app_settings_realtime_db"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:hdesc="@string/app_settings_realtime_db_desc"
-        app:htitle="@string/app_settings_realtime_db_title" />
+        android:orientation="vertical">
 
-    <com.cililing.harvbox.thingsapp.customViews.EditLongView
-        android:id="@+id/app_settings_elastic"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:hdesc="@string/app_settings_elastic_desc"
-        app:htitle="@string/app_settings_elastic_title" />
+        <com.cililing.harvbox.thingsapp.customViews.EditLongView
+            android:id="@+id/app_settings_realtime_db"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hdesc="@string/app_settings_realtime_db_desc"
+            app:htitle="@string/app_settings_realtime_db_title" />
 
-</LinearLayout>
+        <com.cililing.harvbox.thingsapp.customViews.EditLongView
+            android:id="@+id/app_settings_elastic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hdesc="@string/app_settings_elastic_desc"
+            app:htitle="@string/app_settings_elastic_title" />
+
+        <com.cililing.harvbox.thingsapp.customViews.EditLongView
+            android:id="@+id/app_setting_photo_cooldown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:hdesc="@string/app_settings_photo_desc"
+            app:htitle="@string/app_settings_photo_title" />
+
+    </LinearLayout>
+
+</ScrollView>

@@ -10,8 +10,8 @@ interface DashboardContract : BaseContract {
         fun onNewHumidityReceived(new: Float)
         fun onNewProximityReceived(new: Float)
         fun onNewSnapshotTimeReceived(new: String)
-        fun onNewLight1StatusReceived(new: Boolean)
-        fun onNewLight2StatusReceived(new: Boolean)
+        fun onNewLight1StatusReceived(new: Boolean, isInRequiredState: Boolean)
+        fun onNewLight2StatusReceived(new: Boolean, isInRequiredState: Boolean)
         fun onNewPhotoReceived(new: String?)
     }
 

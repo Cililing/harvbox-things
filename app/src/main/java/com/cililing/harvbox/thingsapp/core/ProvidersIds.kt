@@ -7,4 +7,5 @@ object ProvidersIds {
 
     const val ELASTIC_COOLDOWN = "elastic"
     const val REALTIME_DB_COOLDOWN = "realtimedb"
+    const val PHOTO_COOLDOWN = "photoCooldown"
 }

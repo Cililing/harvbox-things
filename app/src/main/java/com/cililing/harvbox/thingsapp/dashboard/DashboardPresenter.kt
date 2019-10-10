@@ -5,6 +5,8 @@ import com.cililing.harvbox.common.ThingsActionRequest
 import com.cililing.harvbox.thingsapp.AppController
 import com.cililing.harvbox.thingsapp.core.CurrentSnapshotProvider
 import com.cililing.harvbox.thingsapp.core.mvp.BasePresenterImpl
+import com.cililing.harvbox.thingsapp.model.LightStatusHandler
+import com.cililing.harvbox.thingsapp.settings.SettingsContract
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -13,7 +15,8 @@ class DashboardPresenter(
     view: DashboardContract.View,
     private val appController: AppController,
     private val currentSnapshotProvider: CurrentSnapshotProvider<StatusSnapshot>,
-    private val lastPhotoProvider: CurrentSnapshotProvider<String>
+    private val lastPhotoProvider: CurrentSnapshotProvider<String>,
+    private val lightStatusHandler: LightStatusHandler
 ) : BasePresenterImpl<DashboardContract.View>(view), DashboardContract.Presenter {
 
     override fun onResume() {
@@ -29,18 +32,30 @@ class DashboardPresenter(
     }
 
     private val currentSnapshotListener: CurrentSnapshotProvider.Listener<StatusSnapshot> =
-            object : CurrentSnapshotProvider.Listener<StatusSnapshot> {
-                override fun onNewSnapshot(snapshot: StatusSnapshot) {
-                    view.run {
-                        onNewSnapshotTimeReceived(snapshot.timestamp ?: "null")
-                        onNewProximityReceived(snapshot.proximityValue.toFloat())
-                        onNewHumidityReceived(snapshot.humidityValue.toFloat())
-                        onNewTemperatureReceived(snapshot.tempValue.toFloat())
-                        onNewLight1StatusReceived(snapshot.light1PowerOn)
-                        onNewLight2StatusReceived(snapshot.light2PowerOn)
-                    }
+        object : CurrentSnapshotProvider.Listener<StatusSnapshot> {
+            override fun onNewSnapshot(snapshot: StatusSnapshot) {
+                view.run {
+                    onNewSnapshotTimeReceived(snapshot.timestamp ?: "null")
+                    onNewProximityReceived(snapshot.proximityValue.toFloat())
+                    onNewHumidityReceived(snapshot.humidityValue.toFloat())
+                    onNewTemperatureReceived(snapshot.tempValue.toFloat())
+                    onNewLight1StatusReceived(
+                        snapshot.light1PowerOn,
+                        lightStatusHandler.isInRequiredState(
+                            SettingsContract.LightId.LIGHT_1,
+                            snapshot.light1PowerOn
+                        ) ?: false
+                    )
+                    onNewLight2StatusReceived(
+                        snapshot.light2PowerOn,
+                        lightStatusHandler.isInRequiredState(
+                            SettingsContract.LightId.LIGHT_2,
+                            snapshot.light2PowerOn
+                        ) ?: false
+                    )
                 }
             }
+        }
 
     private val lastPhotoListener: CurrentSnapshotProvider.Listener<String> =
         object : CurrentSnapshotProvider.Listener<String> {
@@ -71,6 +86,9 @@ class DashboardPresenter(
     }
 
     override fun onRequestPhotoClicked() {
+        coroutineScope.launch {
+            view.onNewPhotoReceived(null)
+        }
         appController.requestPhoto()
     }
 }

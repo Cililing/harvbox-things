@@ -21,6 +21,7 @@ interface SettingsContract : BaseContract {
     interface AppSettingsView {
         fun setElasticCooldown(value: Long)
         fun setRealtimeCooldown(value: Long)
+        fun setPhotoCooldown(value: Long)
     }
 
     interface LightSettingsView {
@@ -45,6 +46,7 @@ interface SettingsContract : BaseContract {
     interface AppSettingsPresenter {
         fun onElasticCooldownOkClicked(value: Long)
         fun onRealtimeDbCooldownOkClicked(value: Long)
+        fun onPhotoCooldownOkClicked(value: Long)
     }
 
     interface LightSettingsPresenter {

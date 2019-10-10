@@ -15,6 +15,8 @@
     <string name="app_settings_realtime_db_desc">How often do you want refresh your data? Put value in miliseconds.</string>
     <string name="app_settings_elastic_title">Elastic search (refresh cooldown)</string>
     <string name="app_settings_elastic_desc">How often do you want save stats in analytic database? Put value in miliseconds.</string>
+    <string name="app_settings_photo_title">Photo (refresh cooldown)</string>
+    <string name="app_settings_photo_desc">How often do you want take a new photo? Put value in miliseconds.</string>
     <string name="ok">OK</string>
 
 

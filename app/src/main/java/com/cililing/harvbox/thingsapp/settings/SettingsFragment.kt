@@ -46,6 +46,7 @@ class SettingsFragment : BaseFragment<SettingsContract.Presenter>(), SettingsCon
             get(named(ProvidersIds.LIGHT_2)),
             get(named(ProvidersIds.REALTIME_DB_COOLDOWN)),
             get(named(ProvidersIds.ELASTIC_COOLDOWN)),
+            get(named(ProvidersIds.PHOTO_COOLDOWN)),
             get())
     }
 
@@ -60,6 +61,7 @@ class SettingsFragment : BaseFragment<SettingsContract.Presenter>(), SettingsCon
 
     private val realtimeDbCooldown by lazy { find<EditLongView>(R.id.app_settings_realtime_db) }
     private val elasticCooldown by lazy { find<EditLongView>(R.id.app_settings_elastic) }
+    private val photoCooldown by lazy { find<EditLongView>(R.id.app_setting_photo_cooldown) }
 
     private inner class LightSettingsContainer(val container: View) {
         val addTriggerButton by lazy { container.find<Button>(R.id.light_add_trigger) }
@@ -113,6 +115,10 @@ class SettingsFragment : BaseFragment<SettingsContract.Presenter>(), SettingsCon
         elasticCooldown.setOnApplyListener {
             it?.let { presenter.onElasticCooldownOkClicked(it) }
         }
+
+        photoCooldown.setOnApplyListener {
+            it?.let { presenter.onPhotoCooldownOkClicked(it) }
+        }
     }
 
     override fun showAppSettings() = contentFrameAnimator.showAppSettings()
@@ -155,5 +161,9 @@ class SettingsFragment : BaseFragment<SettingsContract.Presenter>(), SettingsCon
 
     override fun setRealtimeCooldown(value: Long) {
         realtimeDbCooldown.setValue(value)
+    }
+
+    override fun setPhotoCooldown(value: Long) {
+        photoCooldown.setValue(value)
     }
 }

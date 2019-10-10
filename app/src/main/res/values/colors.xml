@@ -5,6 +5,7 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="darkBackground">@android:color/background_dark</color>
+    <color name="darkBackground80">#CB000000</color>
     <color name="whiteBackground">@android:color/background_light</color>
 
     <color name="navBarSelectedTint">@android:color/white</color>

@@ -21,7 +21,8 @@ val settingsScope = { module: Module ->
                 params[3] as CurrentSnapshotProvider<Set<LightTrigger>>,
                 params[4] as CurrentSnapshotProvider<Long>,
                 params[5] as CurrentSnapshotProvider<Long>,
-                params[6] as Clock
+                params[6] as CurrentSnapshotProvider<Long>,
+                params[7] as Clock
             ) as SettingsContract.Presenter
         }
     }
@@ -34,6 +35,7 @@ fun SettingsContract.View.getPresenterParams(
     light2CurrentSnapshotProvider: CurrentSnapshotProvider<Set<LightTrigger>>,
     realtimeDbCurrentSnapshotProvider: CurrentSnapshotProvider<Long>,
     elasticCurrentSnapshotProvider: CurrentSnapshotProvider<Long>,
+    photoCooldownSnapshotProvider: CurrentSnapshotProvider<Long>,
     clock: Clock
 ): DefinitionParameters {
     return parametersOf(
@@ -44,6 +46,7 @@ fun SettingsContract.View.getPresenterParams(
             light2CurrentSnapshotProvider,
             realtimeDbCurrentSnapshotProvider,
             elasticCurrentSnapshotProvider,
+            photoCooldownSnapshotProvider,
             clock
         )
     )

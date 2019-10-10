@@ -2,6 +2,7 @@ package com.cililing.harvbox.thingsapp.thingscontroller
 
 import android.content.Context
 import android.os.Handler
+import android.os.Looper
 import com.cililing.harvbox.thingsapp.thingscontroller.controllers.ADS1015Controller
 import com.cililing.harvbox.thingsapp.thingscontroller.controllers.ADS1015Snapshot
 import com.cililing.harvbox.thingsapp.thingscontroller.controllers.Controller
@@ -91,7 +92,7 @@ class ThingsControllerImpl(
     }
 
     private var counter: Int = 0
-    private var handler = Handler()
+    private var handler = Handler(Looper.getMainLooper())
 
     override fun requestPhoto(): Boolean {
         schedulePhotoListenerInvoking(counter++)

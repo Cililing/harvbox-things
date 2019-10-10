@@ -14,6 +14,8 @@ import com.cililing.harvbox.thingsapp.model.AppFirebaseService
 import com.cililing.harvbox.thingsapp.model.AppFirebaseServiceImpl
 import com.cililing.harvbox.thingsapp.model.ConnectivityChecker
 import com.cililing.harvbox.thingsapp.model.ConnectivityCheckerImpl
+import com.cililing.harvbox.thingsapp.model.LightStatusHandler
+import com.cililing.harvbox.thingsapp.model.LightStatusHandlerImpl
 import com.cililing.harvbox.thingsapp.model.LightTrigger
 import com.cililing.harvbox.thingsapp.settings.settingsScope
 import com.cililing.harvbox.thingsapp.stats.statsScope
@@ -60,6 +62,9 @@ fun appModule(isDebug: Boolean, context: Context): Module {
         single(named(ProvidersIds.LAST_PHOTO)) {
             CurrentSnapshotProviderImpl<String>() as CurrentSnapshotProvider<String>
         }
+        single(named(ProvidersIds.PHOTO_COOLDOWN)) {
+            CurrentSnapshotProviderImpl<Long>() as CurrentSnapshotProvider<Long>
+        }
 
         // Tools
         factory { params ->
@@ -67,6 +72,14 @@ fun appModule(isDebug: Boolean, context: Context): Module {
                 params[0],
                 params[1]
             )
+        }
+
+        single {
+            LightStatusHandlerImpl(
+                get(),
+                get(named(ProvidersIds.LIGHT_1)),
+                get(named(ProvidersIds.LIGHT_2))
+            ) as LightStatusHandler
         }
 
         factory {
@@ -92,6 +105,7 @@ fun appModule(isDebug: Boolean, context: Context): Module {
                 get(named(ProvidersIds.ELASTIC_COOLDOWN)),
                 get(named(ProvidersIds.REALTIME_DB_COOLDOWN)),
                 get(named(ProvidersIds.LAST_PHOTO)),
+                get(named(ProvidersIds.PHOTO_COOLDOWN)),
                 get(),
                 get()
             ) as AppFirebaseService

@@ -16,6 +16,7 @@ interface AppFirebaseService {
 
     fun setNewElasticCooldown(cooldown: Long)
     fun setNewRelatimeDbCooldown(cooldown: Long)
+    fun setNewPhotoCooldown(cooldown: Long)
 }
 
 class AppFirebaseServiceImpl(
@@ -25,6 +26,7 @@ class AppFirebaseServiceImpl(
     elasticCooldownSnapshotProvider: CurrentSnapshotProvider<Long>,
     realtimeDbCooldownSnapshotProvider: CurrentSnapshotProvider<Long>,
     lastPhotoSnapshotProvider: CurrentSnapshotProvider<String>,
+    photoCooldownSnapshotProvider: CurrentSnapshotProvider<Long>,
     private val appController: AppController,
     private val gson: Gson
 ) : AppFirebaseService {
@@ -34,6 +36,7 @@ class AppFirebaseServiceImpl(
 
         private const val REALTIME_DB_COOLDOWN = 5_000L // every 5 sec
         private const val ELASTIC_COOLDOWN = 1_000L * 60L * 5L // every 5 min
+        private const val PHOTO_COOLDOWN = 1_000L * 60L * 5L
     }
 
     private val firebaseDb = FirebaseDatabase.getInstance(firebaseApp)
@@ -45,6 +48,7 @@ class AppFirebaseServiceImpl(
     private val appSettingsDbReference = firebaseDb.reference.child("app_settings")
     private val appSettingsElasticCooldown = appSettingsDbReference.child("elastic_cooldown")
     private val appSettingsRealtimeCooldown = appSettingsDbReference.child("realtime_db_cooldown")
+    private val appSettingsPhotoCooldown= appSettingsDbReference.child("photo_cooldown")
 
     private val lastPhotoReference = firebaseDb.reference.child("last_photo")
 
@@ -95,6 +99,12 @@ class AppFirebaseServiceImpl(
         ) {
             it.value?.toString() ?: ""
         })
+
+        appSettingsPhotoCooldown.addValueEventListener(ProvideValueEventListener(
+            photoCooldownSnapshotProvider
+        ) {
+            it.value?.toString()?.toLongOrNull() ?: PHOTO_COOLDOWN
+        })
     }
 
     override fun applyNewSettingsToLight1(lightTriggerSet: Set<LightTrigger>) {
@@ -111,5 +121,9 @@ class AppFirebaseServiceImpl(
 
     override fun setNewRelatimeDbCooldown(cooldown: Long) {
         appSettingsRealtimeCooldown.setValue(cooldown)
+    }
+
+    override fun setNewPhotoCooldown(cooldown: Long) {
+        appSettingsPhotoCooldown.setValue(cooldown)
     }
 }
