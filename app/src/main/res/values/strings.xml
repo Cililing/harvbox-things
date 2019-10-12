@@ -18,6 +18,9 @@
     <string name="app_settings_photo_title">Photo (refresh cooldown)</string>
     <string name="app_settings_photo_desc">How often do you want take a new photo? Put value in miliseconds.</string>
     <string name="ok">OK</string>
+    <string name="request_photo">Request Photo</string>
+    <string name="last_update_date">Last update date %s</string>
+    <string name="light_in_not_required_state">This light is not in required state!</string>
 
 
 </resources>

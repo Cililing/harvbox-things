@@ -1,11 +1,10 @@
 package com.cililing.harvbox.thingsapp.customViews
 
 import android.content.Context
-import android.graphics.drawable.Drawable
+import android.text.method.ScrollingMovementMethod
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.SwitchCompat
 import com.cililing.harvbox.thingsapp.R
@@ -31,7 +30,12 @@ class LightSwitchButton @JvmOverloads constructor(
         labelText: String,
         initialState: Boolean
     ) {
-        label.text = labelText
+        with (label) {
+            text = labelText
+            isSelected = true
+            movementMethod = ScrollingMovementMethod()
+        }
+
         switch.isChecked = initialState
     }
 

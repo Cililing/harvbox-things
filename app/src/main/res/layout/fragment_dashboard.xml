@@ -1,57 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/dashboard_photo_container"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <Button
-            android:id="@+id/dashboard_request_photo_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Request Photo" />
-
-        <com.cililing.harvbox.thingsapp.customViews.LabelView
-            android:id="@+id/dashboard_last_update"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <com.cililing.harvbox.thingsapp.customViews.LightSwitchButton
-            android:id="@+id/dashboard_light_2_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <com.cililing.harvbox.thingsapp.customViews.LightSwitchButton
-            android:id="@+id/dashboard_light_1_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <com.cililing.harvbox.thingsapp.customViews.RealValueView
-            android:id="@+id/dashboard_humidity_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <com.cililing.harvbox.thingsapp.customViews.RealValueView
-            android:id="@+id/dashboard_proximity_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <com.cililing.harvbox.thingsapp.customViews.RealValueView
-            android:id="@+id/dashboard_temp_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
 
     <ViewAnimator
         android:id="@+id/dashboard_photo_container"
@@ -74,6 +26,87 @@
             android:layout_gravity="center" />
 
     </ViewAnimator>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/dashboard_photo_container"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <Button
+            android:id="@+id/dashboard_request_photo_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/request_photo"
+            app:cornerRadius="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+        <LinearLayout
+            android:id="@+id/dashboard_data_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:padding="8dp"
+            app:layout_constraintBottom_toTopOf="@id/dashboard_request_photo_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dashboard_light_2_button">
+
+            <com.cililing.harvbox.thingsapp.customViews.RealValueView
+                android:id="@+id/dashboard_humidity_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <com.cililing.harvbox.thingsapp.customViews.RealValueView
+                android:id="@+id/dashboard_proximity_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <com.cililing.harvbox.thingsapp.customViews.RealValueView
+                android:id="@+id/dashboard_temp_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <com.cililing.harvbox.thingsapp.customViews.LabelView
+            android:id="@+id/dashboard_last_update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:background="@color/darkBackground"
+            tools:layout_height="24dp"
+            tools:layout_width="match_parent" />
+
+        <com.cililing.harvbox.thingsapp.customViews.LightSwitchButton
+            android:id="@+id/dashboard_light_2_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dashboard_light_1_button" />
+
+
+        <com.cililing.harvbox.thingsapp.customViews.LightSwitchButton
+            android:id="@+id/dashboard_light_1_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dashboard_last_update" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

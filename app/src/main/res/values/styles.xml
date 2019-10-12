@@ -1,13 +1,13 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar" />
 
     <style name="TextHeader" parent="TextAppearance.AppCompat" />
     <style name="TextSubheader" parent="TextAppearance.AppCompat" />
     <style name="TextBody" parent="TextAppearance.AppCompat" />
     <style name="TextSubbody" parent="TextAppearance.AppCompat" />
 
-    <style name="Button" parent="TextAppearance.AppCompat.Button" />
+    <style name="Button" parent="TextAppearance.MaterialComponents.Button" />
 
 </resources>

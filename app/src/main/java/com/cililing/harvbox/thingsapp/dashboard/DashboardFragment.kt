@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.ViewAnimator
+import com.cililing.harvbox.common.Clock
 import com.cililing.harvbox.common.StatusSnapshot
 import com.cililing.harvbox.thingsapp.R
 import com.cililing.harvbox.thingsapp.core.ProvidersIds
@@ -100,7 +101,7 @@ class DashboardFragment : BaseFragment<DashboardContract.Presenter>(), Dashboard
     }
 
     override fun onNewSnapshotTimeReceived(new: String) {
-        lastUpdateView.setLabel("Last snapshot date: $new")
+        lastUpdateView.setLabel(getString(R.string.last_update_date, Clock.parseFirebaseDate(new)))
     }
 
     override fun onNewTemperatureReceived(new: Float) {
