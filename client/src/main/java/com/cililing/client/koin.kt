@@ -18,8 +18,8 @@ internal interface StandaloneKoinComponent : KoinComponent {
 
 internal fun getClientKoin(firebaseApp: FirebaseApp, isDebug: Boolean) = module {
     factory {
-        FirebaseDatabaseServiceImpl(
+        FirebaseRelatimeDatabaseImpl(
                 firebaseApp
-        ) as FirebaseDatabaseService
+        ) as FirebaseRelatimeDatabase
     }
 }

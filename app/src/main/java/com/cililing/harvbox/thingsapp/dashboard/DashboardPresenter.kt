@@ -5,7 +5,7 @@ import com.cililing.harvbox.common.ThingsActionRequest
 import com.cililing.harvbox.thingsapp.AppController
 import com.cililing.harvbox.thingsapp.core.CurrentSnapshotProvider
 import com.cililing.harvbox.thingsapp.core.mvp.BasePresenterImpl
-import com.cililing.harvbox.thingsapp.model.LightStatusHandler
+import com.cililing.harvbox.thingsapp.core.LightStatusHandler
 import com.cililing.harvbox.thingsapp.settings.SettingsContract
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

@@ -1,7 +1,7 @@
-package com.cililing.harvbox.thingsapp.model
+package com.cililing.harvbox.thingsapp.core
 
+import com.cililing.harvbox.common.FirebaseConstans
 import com.cililing.harvbox.thingsapp.AppController
-import com.cililing.harvbox.thingsapp.core.CurrentSnapshotProvider
 import com.google.firebase.FirebaseApp
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -10,7 +10,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-interface AppFirebaseService {
+interface FirebaseRealtimeDatabase {
     fun applyNewSettingsToLight1(lightTriggerSet: Set<LightTrigger>)
     fun applyNewSettingsToLight2(lightTriggerSet: Set<LightTrigger>)
 
@@ -19,7 +19,7 @@ interface AppFirebaseService {
     fun setNewPhotoCooldown(cooldown: Long)
 }
 
-class AppFirebaseServiceImpl(
+class FirebaseRealtimeDatabaseImpl(
     firebaseApp: FirebaseApp,
     light1CurrentSnapshotProvider: CurrentSnapshotProvider<Set<LightTrigger>>,
     light2CurrentSnapshotProvider: CurrentSnapshotProvider<Set<LightTrigger>>,
@@ -29,7 +29,7 @@ class AppFirebaseServiceImpl(
     photoCooldownSnapshotProvider: CurrentSnapshotProvider<Long>,
     private val appController: AppController,
     private val gson: Gson
-) : AppFirebaseService {
+) : FirebaseRealtimeDatabase {
 
     companion object {
         private val typeToken = object : TypeToken<List<LightTrigger>>() {}.type
@@ -41,16 +41,16 @@ class AppFirebaseServiceImpl(
 
     private val firebaseDb = FirebaseDatabase.getInstance(firebaseApp)
 
-    private val lightSettingsDbReference = firebaseDb.reference.child("light_status")
-    private val light1SettingsReference = lightSettingsDbReference.child("light1")
-    private val light2SettingsReference = lightSettingsDbReference.child("light2")
+    private val lightSettingsDbReference = firebaseDb.reference.child(FirebaseConstans.Realtime.LightSettings.name)
+    private val light1SettingsReference = lightSettingsDbReference.child(FirebaseConstans.Realtime.LightSettings.light1)
+    private val light2SettingsReference = lightSettingsDbReference.child(FirebaseConstans.Realtime.LightSettings.light2)
 
-    private val appSettingsDbReference = firebaseDb.reference.child("app_settings")
-    private val appSettingsElasticCooldown = appSettingsDbReference.child("elastic_cooldown")
-    private val appSettingsRealtimeCooldown = appSettingsDbReference.child("realtime_db_cooldown")
-    private val appSettingsPhotoCooldown= appSettingsDbReference.child("photo_cooldown")
+    private val appSettingsDbReference = firebaseDb.reference.child(FirebaseConstans.Realtime.AppSettings.name)
+    private val appSettingsElasticCooldown = appSettingsDbReference.child(FirebaseConstans.Realtime.AppSettings.elasticCooldown)
+    private val appSettingsRealtimeCooldown = appSettingsDbReference.child(FirebaseConstans.Realtime.AppSettings.realtimeDbCooldown)
+    private val appSettingsPhotoCooldown= appSettingsDbReference.child(FirebaseConstans.Realtime.AppSettings.photoCooldown)
 
-    private val lastPhotoReference = firebaseDb.reference.child("last_photo")
+    private val lastPhotoReference = firebaseDb.reference.child(FirebaseConstans.Realtime.lastPhoto)
 
     init {
         lightSettingsDbReference.addValueEventListener(object : ValueEventListener {
@@ -58,8 +58,8 @@ class AppFirebaseServiceImpl(
             }
 
             override fun onDataChange(p0: DataSnapshot) {
-                val part1 = p0.child("light1").value?.toString()
-                val part2 = p0.child("light2").value?.toString()
+                val part1 = p0.child(FirebaseConstans.Realtime.LightSettings.light1).value?.toString()
+                val part2 = p0.child(FirebaseConstans.Realtime.LightSettings.light2).value?.toString()
 
                 val part1Result = gson.fromJson<List<LightTrigger>>(part1, typeToken)?.toSet() ?: setOf()
                 val part2Result = gson.fromJson<List<LightTrigger>>(part2, typeToken)?.toSet() ?: setOf()
@@ -85,13 +85,15 @@ class AppFirebaseServiceImpl(
         appSettingsElasticCooldown.addValueEventListener(ProvideValueEventListener(
             elasticCooldownSnapshotProvider
         ) {
-            it.value?.toString()?.toLongOrNull() ?: ELASTIC_COOLDOWN
+            it.value?.toString()?.toLongOrNull()
+                ?: ELASTIC_COOLDOWN
         })
 
         appSettingsRealtimeCooldown.addValueEventListener(ProvideValueEventListener(
             realtimeDbCooldownSnapshotProvider
         ) {
-            it.value?.toString()?.toLongOrNull() ?: REALTIME_DB_COOLDOWN
+            it.value?.toString()?.toLongOrNull()
+                ?: REALTIME_DB_COOLDOWN
         })
 
         lastPhotoReference.addValueEventListener(ProvideValueEventListener(
@@ -103,7 +105,8 @@ class AppFirebaseServiceImpl(
         appSettingsPhotoCooldown.addValueEventListener(ProvideValueEventListener(
             photoCooldownSnapshotProvider
         ) {
-            it.value?.toString()?.toLongOrNull() ?: PHOTO_COOLDOWN
+            it.value?.toString()?.toLongOrNull()
+                ?: PHOTO_COOLDOWN
         })
     }
 

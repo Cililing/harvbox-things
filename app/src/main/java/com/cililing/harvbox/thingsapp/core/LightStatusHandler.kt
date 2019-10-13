@@ -1,7 +1,6 @@
-package com.cililing.harvbox.thingsapp.model
+package com.cililing.harvbox.thingsapp.core
 
 import com.cililing.harvbox.common.Clock
-import com.cililing.harvbox.thingsapp.core.CurrentSnapshotProvider
 import com.cililing.harvbox.thingsapp.settings.SettingsContract
 
 interface LightStatusHandler {

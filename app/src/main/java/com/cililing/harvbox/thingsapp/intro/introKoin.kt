@@ -1,6 +1,6 @@
 package com.cililing.harvbox.thingsapp.intro
 
-import com.cililing.harvbox.thingsapp.model.ConnectivityChecker
+import com.cililing.harvbox.thingsapp.core.ConnectivityChecker
 import org.koin.core.module.Module
 import org.koin.core.parameter.DefinitionParameters
 import org.koin.core.parameter.parametersOf

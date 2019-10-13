@@ -3,7 +3,7 @@ package com.cililing.harvbox.thingsapp.settings
 import com.cililing.harvbox.thingsapp.core.mvp.BaseContract
 import com.cililing.harvbox.thingsapp.core.mvp.BasePresenter
 import com.cililing.harvbox.thingsapp.core.mvp.BaseView
-import com.cililing.harvbox.thingsapp.model.LightTrigger
+import com.cililing.harvbox.thingsapp.core.LightTrigger
 
 interface SettingsContract : BaseContract {
     enum class LightId {

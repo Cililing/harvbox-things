@@ -2,7 +2,7 @@ package com.cililing.harvbox.thingsapp
 
 import com.cililing.harvbox.common.StatusSnapshot
 import com.cililing.harvbox.common.ThingsActionRequest
-import com.cililing.harvbox.thingsapp.model.LightTrigger
+import com.cililing.harvbox.thingsapp.core.LightTrigger
 
 interface AppController {
     companion object {

@@ -1,7 +1,7 @@
 package com.cililing.harvbox.thingsapp.intro
 
 import com.cililing.harvbox.thingsapp.core.mvp.BasePresenterImpl
-import com.cililing.harvbox.thingsapp.model.ConnectivityChecker
+import com.cililing.harvbox.thingsapp.core.ConnectivityChecker
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

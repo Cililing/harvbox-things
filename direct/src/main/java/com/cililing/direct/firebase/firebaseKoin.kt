@@ -12,18 +12,18 @@ internal fun getFirebaseModule(
     }
 
     single { params -> // params: DirectService
-        FirebaseAppDatabaseImpl(
+        FirebaseRealtimeDatabaseImpl(
                 firebaseApp,
                 get(),
                 FirebaseNewDataCallbackImpl(params[0]),
                 get()
-        ) as FirebaseAppDatabase
+        ) as FirebaseRealtimeDatabase
     }
 
     single {
-        FirebaseAppStorageImpl(
+        FirebaseCloudDatabaseImpl(
             firebaseApp,
             get()
-        ) as FirebaseAppStorage
+        ) as FirebaseCloudDatabase
     }
 }

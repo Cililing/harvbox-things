@@ -5,8 +5,8 @@ import com.cililing.direct.ExactTimeScheduleTask
 import com.cililing.direct.getDirectService
 import com.cililing.harvbox.common.StatusSnapshot
 import com.cililing.harvbox.common.ThingsActionRequest
-import com.cililing.harvbox.thingsapp.model.LightTrigger
-import com.cililing.harvbox.thingsapp.model.TriggerType
+import com.cililing.harvbox.thingsapp.core.LightTrigger
+import com.cililing.harvbox.thingsapp.core.TriggerType
 import com.cililing.harvbox.thingsapp.settings.SettingsContract
 import com.google.firebase.FirebaseApp
 

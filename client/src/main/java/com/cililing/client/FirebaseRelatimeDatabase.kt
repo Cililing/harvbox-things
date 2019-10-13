@@ -1,30 +1,30 @@
 package com.cililing.client
 
+import com.cililing.harvbox.common.FirebaseConstans
 import com.cililing.harvbox.common.SemiblockValueReporter
 import com.cililing.harvbox.common.StatusSnapshot
-import com.cililing.harvbox.common.ThingsActionRequest
 import com.google.firebase.FirebaseApp
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-internal interface FirebaseDatabaseService {
+internal interface FirebaseRelatimeDatabase {
     fun getSnapshot(): StatusSnapshot?
     fun setLight1(isOn: Boolean)
     fun setLight2(isOn: Boolean)
     fun triggerPhoto()
 }
 
-internal class FirebaseDatabaseServiceImpl(
+internal class FirebaseRelatimeDatabaseImpl(
     firebaseApp: FirebaseApp
-) : FirebaseDatabaseService {
+) : FirebaseRelatimeDatabase {
 
     private val database = FirebaseDatabase.getInstance(firebaseApp)
-    private val realtimeStatus = database.reference.child("status")
+    private val realtimeStatus = database.reference.child(FirebaseConstans.Realtime.Status.name)
 
-    private val triggers = database.reference.child("triggers")
-    private val photoTrigger = triggers.child("photo")
+    private val triggers = database.reference.child(FirebaseConstans.Realtime.Triggers.name)
+    private val photoTrigger = triggers.child(FirebaseConstans.Realtime.Triggers.photo)
 
     var currentSnapshot: StatusSnapshot? = null
 
@@ -38,12 +38,12 @@ internal class FirebaseDatabaseServiceImpl(
 
             override fun onDataChange(p0: DataSnapshot) {
                 val snapshot = StatusSnapshot(
-                        light1PowerOn = p0.child("light1").value as? Boolean ?: false,
-                        light2PowerOn = p0.child("light2").value as? Boolean ?: false,
-                        timestamp = p0.child("timestamp").value.toString(),
-                        tempValue = p0.child("temp").value as? Double ?: 0.0,
-                        humidityValue = p0.child("humidity").value as? Double ?: 0.0,
-                        proximityValue = p0.child("proximity").value as? Double ?: 0.0
+                        light1PowerOn = p0.child(FirebaseConstans.Realtime.Status.light1).value as? Boolean ?: false,
+                        light2PowerOn = p0.child(FirebaseConstans.Realtime.Status.light2).value as? Boolean ?: false,
+                        timestamp = p0.child(FirebaseConstans.Realtime.Status.timestamp).value.toString(),
+                        tempValue = p0.child(FirebaseConstans.Realtime.Status.temp).value as? Double ?: 0.0,
+                        humidityValue = p0.child(FirebaseConstans.Realtime.Status.humidity).value as? Double ?: 0.0,
+                        proximityValue = p0.child(FirebaseConstans.Realtime.Status.proximity).value as? Double ?: 0.0
                 )
                 currentSnapshot = snapshot.copy(
                         light1PowerOn = light1SemiblockReporter.obtainValueAndRelease(snapshot.light1PowerOn),
@@ -59,12 +59,12 @@ internal class FirebaseDatabaseServiceImpl(
 
     override fun setLight1(isOn: Boolean) {
         light1SemiblockReporter.value = isOn
-        realtimeStatus.child("light1").setValue(isOn)
+        realtimeStatus.child(FirebaseConstans.Realtime.Status.light1).setValue(isOn)
     }
 
     override fun setLight2(isOn: Boolean) {
         light2SemiblockReporter.value = isOn
-        realtimeStatus.child("light2").setValue(isOn)
+        realtimeStatus.child(FirebaseConstans.Realtime.Status.light2).setValue(isOn)
     }
 
     override fun triggerPhoto() {

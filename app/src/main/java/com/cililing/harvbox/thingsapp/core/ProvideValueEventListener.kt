@@ -1,6 +1,5 @@
-package com.cililing.harvbox.thingsapp.model
+package com.cililing.harvbox.thingsapp.core
 
-import com.cililing.harvbox.thingsapp.core.CurrentSnapshotProvider
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener

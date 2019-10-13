@@ -17,17 +17,17 @@ class ClientServiceImpl(
         }
     }
 
-    private val firebaseDb: FirebaseDatabaseService by inject()
+    private val mFirebaseRelatimeDb: FirebaseRelatimeDatabase by inject()
 
     override fun request(actionRequest: ThingsActionRequest) {
         when (actionRequest) {
-            is ThingsActionRequest.Light1 -> firebaseDb.setLight1(actionRequest.isOn)
-            is ThingsActionRequest.Light2 -> firebaseDb.setLight2(actionRequest.isOn)
-            is ThingsActionRequest.Photo -> firebaseDb.triggerPhoto()
+            is ThingsActionRequest.Light1 -> mFirebaseRelatimeDb.setLight1(actionRequest.isOn)
+            is ThingsActionRequest.Light2 -> mFirebaseRelatimeDb.setLight2(actionRequest.isOn)
+            is ThingsActionRequest.Photo -> mFirebaseRelatimeDb.triggerPhoto()
         }
     }
 
     override fun getCurrentSnapshot(): StatusSnapshot {
-        return firebaseDb.getSnapshot() ?: StatusSnapshot()
+        return mFirebaseRelatimeDb.getSnapshot() ?: StatusSnapshot()
     }
 }

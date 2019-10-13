@@ -3,8 +3,8 @@ package com.cililing.direct
 import android.content.Context
 import com.cililing.direct.elastic.ElasticSearch
 import com.cililing.direct.elastic.getElasticModule
-import com.cililing.direct.firebase.FirebaseAppDatabase
-import com.cililing.direct.firebase.FirebaseAppStorage
+import com.cililing.direct.firebase.FirebaseRealtimeDatabase
+import com.cililing.direct.firebase.FirebaseCloudDatabase
 import com.cililing.direct.firebase.getFirebaseModule
 import com.cililing.harvbox.common.DateTimeParser
 import com.cililing.harvbox.common.Logger
@@ -43,12 +43,12 @@ internal class DirectServiceImpl(
     }
 
     private val thingsController: ThingsController by inject()
-    private val firebaseAppDatabase: FirebaseAppDatabase by inject {
+    private val mFirebaseRealtimeDatabase: FirebaseRealtimeDatabase by inject {
         parametersOf(this)
     }
     private val elasticSearch: ElasticSearch by inject()
     private val logger: Logger by inject()
-    private val firebaseAppStorage: FirebaseAppStorage by inject()
+    private val mFirebaseCloudDatabase: FirebaseCloudDatabase by inject()
 
     private val parentJob = Job()
     private val coroutineScope = CoroutineScope(
@@ -118,7 +118,7 @@ internal class DirectServiceImpl(
     }
 
     private fun reportCurrentStatusToFirebase(statusSnapshot: StatusSnapshot) {
-        firebaseAppDatabase.post(statusSnapshot)
+        mFirebaseRealtimeDatabase.post(statusSnapshot)
     }
 
     private fun generateThingsSnapshot(): StatusSnapshot {
@@ -132,9 +132,9 @@ internal class DirectServiceImpl(
     }
 
     private fun processPhoto(byteArray: ByteArray) {
-        firebaseAppStorage.putPhoto(byteArray) {
+        mFirebaseCloudDatabase.putPhoto(byteArray) {
             // When done just put newest url to fb rt db
-            firebaseAppDatabase.newPhotoAvailable(it)
+            mFirebaseRealtimeDatabase.newPhotoAvailable(it)
         }
     }
 }

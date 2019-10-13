@@ -7,16 +7,18 @@
 
     <ViewAnimator
         android:id="@+id/dashboard_photo_container"
-        android:layout_width="320dp"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         android:background="@color/darkBackground80"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/dashboard_photo_thumb"
-            android:layout_width="320dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center" />
 
@@ -35,7 +37,7 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/dashboard_photo_container"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_weight="2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
@@ -107,6 +109,13 @@
             app:layout_constraintTop_toBottomOf="@id/dashboard_last_update" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent=".6"
+        android:orientation="vertical" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,13 +3,13 @@ package com.cililing.harvbox.thingsapp.settings
 import com.cililing.harvbox.common.Clock
 import com.cililing.harvbox.thingsapp.core.CurrentSnapshotProvider
 import com.cililing.harvbox.thingsapp.core.mvp.BasePresenterImpl
-import com.cililing.harvbox.thingsapp.model.AppFirebaseService
-import com.cililing.harvbox.thingsapp.model.LightTrigger
-import com.cililing.harvbox.thingsapp.model.TriggerType
+import com.cililing.harvbox.thingsapp.core.FirebaseRealtimeDatabase
+import com.cililing.harvbox.thingsapp.core.LightTrigger
+import com.cililing.harvbox.thingsapp.core.TriggerType
 
 class SettingsPresenter(
     view: SettingsContract.View,
-    private val appFirebaseService: AppFirebaseService,
+    private val firebaseRealtimeDatabase: FirebaseRealtimeDatabase,
     private val light1CurrentSnapshotProvider: CurrentSnapshotProvider<Set<LightTrigger>>,
     private val light2CurrentSnapshotProvider: CurrentSnapshotProvider<Set<LightTrigger>>,
     private val realtimeDbCurrentSnapshotProvider: CurrentSnapshotProvider<Long>,
@@ -134,8 +134,8 @@ class SettingsPresenter(
 
     private fun updateAndFillTriggers(lightId: SettingsContract.LightId) {
         val (reference, triggers) = when (lightId) {
-            SettingsContract.LightId.LIGHT_1 -> Pair(appFirebaseService::applyNewSettingsToLight1, light1Triggers)
-            SettingsContract.LightId.LIGHT_2 -> Pair(appFirebaseService::applyNewSettingsToLight2, light2Triggers)
+            SettingsContract.LightId.LIGHT_1 -> Pair(firebaseRealtimeDatabase::applyNewSettingsToLight1, light1Triggers)
+            SettingsContract.LightId.LIGHT_2 -> Pair(firebaseRealtimeDatabase::applyNewSettingsToLight2, light2Triggers)
         }
 
         view.fillTriggers(lightId, triggers)
@@ -144,14 +144,14 @@ class SettingsPresenter(
     }
 
     override fun onElasticCooldownOkClicked(value: Long) {
-        appFirebaseService.setNewElasticCooldown(value)
+        firebaseRealtimeDatabase.setNewElasticCooldown(value)
     }
 
     override fun onRealtimeDbCooldownOkClicked(value: Long) {
-        appFirebaseService.setNewRelatimeDbCooldown(value)
+        firebaseRealtimeDatabase.setNewRelatimeDbCooldown(value)
     }
 
     override fun onPhotoCooldownOkClicked(value: Long) {
-        appFirebaseService.setNewPhotoCooldown(value)
+        firebaseRealtimeDatabase.setNewPhotoCooldown(value)
     }
 }

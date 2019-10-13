@@ -10,13 +10,7 @@ import com.cililing.harvbox.thingsapp.AppController
 import com.cililing.harvbox.thingsapp.dashboard.dashboardScope
 import com.cililing.harvbox.thingsapp.intro.introScope
 import com.cililing.harvbox.thingsapp.main.mainScope
-import com.cililing.harvbox.thingsapp.model.AppFirebaseService
-import com.cililing.harvbox.thingsapp.model.AppFirebaseServiceImpl
-import com.cililing.harvbox.thingsapp.model.ConnectivityChecker
 import com.cililing.harvbox.thingsapp.model.ConnectivityCheckerImpl
-import com.cililing.harvbox.thingsapp.model.LightStatusHandler
-import com.cililing.harvbox.thingsapp.model.LightStatusHandlerImpl
-import com.cililing.harvbox.thingsapp.model.LightTrigger
 import com.cililing.harvbox.thingsapp.settings.settingsScope
 import com.cililing.harvbox.thingsapp.stats.statsScope
 import com.google.firebase.FirebaseApp
@@ -98,7 +92,7 @@ fun appModule(isDebug: Boolean, context: Context): Module {
             ConnectivityCheckerImpl() as ConnectivityChecker
         }
         single(createdAtStart = true) {
-            AppFirebaseServiceImpl(
+            FirebaseRealtimeDatabaseImpl(
                 FirebaseApp.getInstance(),
                 get(named(ProvidersIds.LIGHT_1)),
                 get(named(ProvidersIds.LIGHT_2)),
@@ -108,7 +102,7 @@ fun appModule(isDebug: Boolean, context: Context): Module {
                 get(named(ProvidersIds.PHOTO_COOLDOWN)),
                 get(),
                 get()
-            ) as AppFirebaseService
+            ) as FirebaseRealtimeDatabase
         }
     }
 }

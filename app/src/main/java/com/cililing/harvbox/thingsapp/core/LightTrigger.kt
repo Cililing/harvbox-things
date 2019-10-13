@@ -1,4 +1,4 @@
-package com.cililing.harvbox.thingsapp.model
+package com.cililing.harvbox.thingsapp.core
 
 enum class TriggerType {
     ON, OFF

@@ -2,8 +2,8 @@ package com.cililing.harvbox.thingsapp.settings
 
 import com.cililing.harvbox.common.Clock
 import com.cililing.harvbox.thingsapp.core.CurrentSnapshotProvider
-import com.cililing.harvbox.thingsapp.model.AppFirebaseService
-import com.cililing.harvbox.thingsapp.model.LightTrigger
+import com.cililing.harvbox.thingsapp.core.FirebaseRealtimeDatabase
+import com.cililing.harvbox.thingsapp.core.LightTrigger
 import org.koin.core.module.Module
 import org.koin.core.parameter.DefinitionParameters
 import org.koin.core.parameter.parametersOf
@@ -16,7 +16,7 @@ val settingsScope = { module: Module ->
             @Suppress("UNCHECKED_CAST")
             SettingsPresenter(
                 params[0] as SettingsContract.View,
-                params[1] as AppFirebaseService,
+                params[1] as FirebaseRealtimeDatabase,
                 params[2] as CurrentSnapshotProvider<Set<LightTrigger>>,
                 params[3] as CurrentSnapshotProvider<Set<LightTrigger>>,
                 params[4] as CurrentSnapshotProvider<Long>,
@@ -30,7 +30,7 @@ val settingsScope = { module: Module ->
 
 fun SettingsContract.View.getPresenterParams(
     view: SettingsContract.View,
-    appFirebaseService: AppFirebaseService,
+    firebaseRealtimeDatabase: FirebaseRealtimeDatabase,
     light1CurrentSnapshotProvider: CurrentSnapshotProvider<Set<LightTrigger>>,
     light2CurrentSnapshotProvider: CurrentSnapshotProvider<Set<LightTrigger>>,
     realtimeDbCurrentSnapshotProvider: CurrentSnapshotProvider<Long>,
@@ -41,7 +41,7 @@ fun SettingsContract.View.getPresenterParams(
     return parametersOf(
         listOf(
             view,
-            appFirebaseService,
+            firebaseRealtimeDatabase,
             light1CurrentSnapshotProvider,
             light2CurrentSnapshotProvider,
             realtimeDbCurrentSnapshotProvider,

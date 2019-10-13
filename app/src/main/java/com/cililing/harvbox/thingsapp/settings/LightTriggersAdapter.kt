@@ -8,8 +8,8 @@ import android.widget.Button
 import android.widget.Switch
 import androidx.recyclerview.widget.RecyclerView
 import com.cililing.harvbox.thingsapp.R
-import com.cililing.harvbox.thingsapp.model.LightTrigger
-import com.cililing.harvbox.thingsapp.model.TriggerType
+import com.cililing.harvbox.thingsapp.core.LightTrigger
+import com.cililing.harvbox.thingsapp.core.TriggerType
 import org.jetbrains.anko.find
 import org.jetbrains.anko.sdk27.coroutines.onCheckedChange
 import org.jetbrains.anko.sdk27.coroutines.onClick

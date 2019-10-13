@@ -13,7 +13,7 @@ import com.cililing.harvbox.thingsapp.R
 import com.cililing.harvbox.thingsapp.core.ProvidersIds
 import com.cililing.harvbox.thingsapp.core.mvp.BaseFragment
 import com.cililing.harvbox.thingsapp.customViews.EditLongView
-import com.cililing.harvbox.thingsapp.model.LightTrigger
+import com.cililing.harvbox.thingsapp.core.LightTrigger
 import org.jetbrains.anko.find
 import org.jetbrains.anko.sdk27.coroutines.onClick
 import org.jetbrains.anko.support.v4.find
@@ -51,9 +51,9 @@ class SettingsFragment : BaseFragment<SettingsContract.Presenter>(), SettingsCon
     }
 
     // Menu and container
-    private val appSettingsButton by lazy { find<Button>(R.id.fragment_settings_menu_app) }
-    private val lightSettingsButton by lazy { find<Button>(R.id.fragment_settings_menu_light) }
-    private val aboutAppButton by lazy { find<Button>(R.id.fragment_settings_menu_about_app) }
+    private val appSettingsButton by lazy { find<View>(R.id.fragment_settings_menu_app) }
+    private val lightSettingsButton by lazy { find<View>(R.id.fragment_settings_menu_light) }
+    private val aboutAppButton by lazy { find<View>(R.id.fragment_settings_menu_about_app) }
     private val contentFrameAnimator by lazy { find<ViewAnimator>(R.id.fragment_settings_content_animator) }
 
     private val light1Settings by lazy { LightSettingsContainer(find(R.id.container_1)) }
@@ -90,9 +90,15 @@ class SettingsFragment : BaseFragment<SettingsContract.Presenter>(), SettingsCon
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        appSettingsButton.onClick { presenter.onAppSettingsClicked() }
-        lightSettingsButton.onClick { presenter.onLightSettingsClicked() }
-        aboutAppButton.onClick { presenter.onShowAboutAppClicked() }
+        appSettingsButton.onClick {
+            presenter.onAppSettingsClicked()
+        }
+        lightSettingsButton.onClick {
+            presenter.onLightSettingsClicked()
+        }
+        aboutAppButton.onClick {
+            presenter.onShowAboutAppClicked()
+        }
 
         with(light1Settings) {
             setLightTitle("Light1")
@@ -121,9 +127,15 @@ class SettingsFragment : BaseFragment<SettingsContract.Presenter>(), SettingsCon
         }
     }
 
-    override fun showAppSettings() = contentFrameAnimator.showAppSettings()
-    override fun showLightSettings() = contentFrameAnimator.showLightSettings()
-    override fun showAboutApp() = contentFrameAnimator.showAboutApp()
+    override fun showAppSettings() {
+        contentFrameAnimator.showAppSettings()
+    }
+    override fun showLightSettings() {
+        contentFrameAnimator.showLightSettings()
+    }
+    override fun showAboutApp() {
+        contentFrameAnimator.showAboutApp()
+    }
 
     override fun fillTriggers(lightId: SettingsContract.LightId, triggerSet: Set<LightTrigger>) {
         val settings = when (lightId) {
