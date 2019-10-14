@@ -5,7 +5,7 @@ import com.cililing.harvbox.thingsapp.R
 import com.cililing.harvbox.thingsapp.core.mvp.BaseFragment
 import com.cililing.harvbox.thingsapp.dashboard.DashboardFragment
 import com.cililing.harvbox.thingsapp.settings.SettingsFragment
-import com.cililing.harvbox.thingsapp.stats.StatsFragment
+import com.cililing.harvbox.thingsapp.gallery.GalleryFragment
 import java.lang.IllegalArgumentException
 
 sealed class Tab(
@@ -31,9 +31,9 @@ sealed class Tab(
     )
 
     object Stats : Tab(
-            name = R.string.menu_stats,
+            name = R.string.menu_gallery,
             creator = {
-                StatsFragment.newInstance()
+                GalleryFragment.newInstance()
             }
     )
 

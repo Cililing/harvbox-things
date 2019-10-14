@@ -12,7 +12,7 @@ import com.cililing.harvbox.thingsapp.intro.introScope
 import com.cililing.harvbox.thingsapp.main.mainScope
 import com.cililing.harvbox.thingsapp.model.ConnectivityCheckerImpl
 import com.cililing.harvbox.thingsapp.settings.settingsScope
-import com.cililing.harvbox.thingsapp.stats.statsScope
+import com.cililing.harvbox.thingsapp.gallery.galleryScope
 import com.google.firebase.FirebaseApp
 import com.google.gson.Gson
 import org.koin.core.module.Module
@@ -84,7 +84,7 @@ fun appModule(isDebug: Boolean, context: Context): Module {
         introScope(this)
         mainScope(this)
         dashboardScope(this)
-        statsScope(this)
+        galleryScope(this)
         settingsScope(this)
 
         // Model
@@ -103,6 +103,11 @@ fun appModule(isDebug: Boolean, context: Context): Module {
                 get(),
                 get()
             ) as FirebaseRealtimeDatabase
+        }
+        single(createdAtStart = true) {
+            FirebaseCloudDatabaseImpl(
+                FirebaseApp.getInstance()
+            ) as FirebaseCloudDatabase
         }
     }
 }

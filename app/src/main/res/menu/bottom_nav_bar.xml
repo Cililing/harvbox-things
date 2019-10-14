@@ -12,7 +12,7 @@
         android:id="@+id/menu_stats"
         android:enabled="true"
         android:icon="@drawable/ic_stats"
-        android:title="@string/menu_stats"
+        android:title="@string/menu_gallery"
         app:showAsAction="ifRoom" />
 
     <item
