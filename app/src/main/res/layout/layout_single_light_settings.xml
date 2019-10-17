@@ -9,6 +9,7 @@
 
     <Button
         android:id="@+id/light_add_trigger"
+        android:text="@string/new_trigger"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

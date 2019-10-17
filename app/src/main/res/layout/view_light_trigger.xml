@@ -3,15 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:padding="4dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal">
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/trigger_remove"
         android:layout_width="48dp"
         android:layout_height="wrap_content"
+        android:padding="4dp"
+        app:cornerRadius="180dp"
         android:text="X" />
 
     <Switch
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:id="@+id/trigger_switch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

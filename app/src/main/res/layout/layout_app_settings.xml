@@ -25,7 +25,7 @@
 
         <com.cililing.harvbox.thingsapp.customViews.EditLongView
             android:id="@+id/app_setting_photo_cooldown"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:hdesc="@string/app_settings_photo_desc"
             app:htitle="@string/app_settings_photo_title" />

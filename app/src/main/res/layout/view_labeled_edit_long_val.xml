@@ -7,19 +7,19 @@
 
     <TextView
         android:id="@+id/labeled_edit_text_title"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="Title" />
 
     <TextView
         android:id="@+id/labeled_edit_text_desc"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="Description" />
 
     <EditText
         android:id="@+id/labeled_edit_text_input"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="number" />
 

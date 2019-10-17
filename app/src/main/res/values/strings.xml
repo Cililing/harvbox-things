@@ -21,6 +21,8 @@
     <string name="request_photo">Request Photo</string>
     <string name="last_update_date">Last update date %s</string>
     <string name="light_in_not_required_state">This light is not in required state!</string>
+    <string name="new_trigger">New trigger</string>
+    <string name="about_author">This application is created by Przemyslaw Materna for university purposes.</string>
 
 
 </resources>
