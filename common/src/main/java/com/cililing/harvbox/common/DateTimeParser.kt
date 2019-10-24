@@ -1,6 +1,9 @@
 package com.cililing.harvbox.common
 
 import java.text.SimpleDateFormat
+import java.time.Instant.ofEpochMilli
+import java.time.LocalDateTime
+import java.time.ZoneOffset
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
@@ -23,4 +26,14 @@ object DateTimeParser {
 
 fun StatusSnapshot.getDate(): Date? {
     return this.timestamp?.let { DateTimeParser.getDate(it) }
+}
+
+fun Long.milisToDate(): LocalDateTime? {
+    val calendar = Calendar.getInstance()
+    calendar.timeInMillis = this
+
+    val date = ofEpochMilli(this)
+    val utc = LocalDateTime.ofInstant(date, ZoneOffset.UTC)
+
+    return utc
 }

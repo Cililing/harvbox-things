@@ -4,7 +4,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.cililing.harvbox.common.Clock
 import com.cililing.harvbox.thingsapp.R
 import com.squareup.picasso.Picasso
 import org.jetbrains.anko.find
@@ -45,9 +47,15 @@ class GalleryPreviewRecyclerViewAdapter(
 class GalleryPreviewViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     private val image = itemView.find<ImageView>(R.id.gallery_preview)
+    private val date = itemView.find<TextView>(R.id.gallery_date)
 
     fun bind(galleryItem: GalleryItem, clickCallback: (GalleryItem) -> Unit) {
         itemView.onClick { clickCallback.invoke(galleryItem) }
-        Picasso.get().load(galleryItem.uriString).into(image)
+        Picasso
+            .get()
+            .load(galleryItem.uriString)
+            .placeholder(R.drawable.image_placeholder)
+            .into(image)
+        date.text = Clock.Companion::parseLocalDateTime.invoke(galleryItem.photoTime)
     }
 }

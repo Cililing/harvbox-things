@@ -3,8 +3,10 @@ package com.cililing.harvbox.thingsapp.gallery
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.cililing.harvbox.common.Clock
 import com.cililing.harvbox.thingsapp.R
 import com.cililing.harvbox.thingsapp.core.mvp.BaseFragment
 import com.squareup.picasso.Picasso
@@ -20,6 +22,7 @@ class GalleryFragment : BaseFragment<GalleryContract.Presenter>(), GalleryContra
 
     private val previewRecyclerView by lazy { find<RecyclerView>(R.id.gallery_preview) }
     private val photoView by lazy { find<ImageView>(R.id.photo_view) }
+    private val photoDate by lazy { find<TextView>(R.id.photo_view_date) }
     private var isLoading = false
 
     private val galleryPreviewAdapter = GalleryPreviewRecyclerViewAdapter(
@@ -57,7 +60,12 @@ class GalleryFragment : BaseFragment<GalleryContract.Presenter>(), GalleryContra
     }
 
     override fun showPhoto(item: GalleryItem) {
-        Picasso.get().load(item.uriString).into(photoView)
+        Picasso.get()
+            .load(item.uriString)
+            .placeholder(R.drawable.image_placeholder)
+            .into(photoView)
+
+        photoDate.text = Clock.parseLocalDateTime(item.photoTime)
     }
 
     private fun handlePreviewScroll(recyclerView: RecyclerView) {

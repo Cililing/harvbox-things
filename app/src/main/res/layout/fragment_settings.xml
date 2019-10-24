@@ -36,7 +36,7 @@
     <ViewAnimator
         android:id="@+id/fragment_settings_content_animator"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_toEndOf="@+id/settings_menu_container"
         android:animateFirstView="true"
         android:padding="4dp">

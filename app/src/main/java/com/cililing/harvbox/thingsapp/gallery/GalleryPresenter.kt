@@ -1,5 +1,6 @@
 package com.cililing.harvbox.thingsapp.gallery
 
+import com.cililing.harvbox.common.milisToDate
 import com.cililing.harvbox.thingsapp.core.FirebaseCloudDatabase
 import com.cililing.harvbox.thingsapp.core.mvp.BasePresenterImpl
 import kotlinx.coroutines.launch
@@ -24,7 +25,11 @@ class GalleryPresenter(
     override fun requestNewItems() {
         coroutineScope.launch {
             val photos = photoFetcher.next(SIZE)
-            view.newItemsReceived(photos.map { GalleryItem(it.toString()) })
+            view.newItemsReceived(photos.map {
+                // Generate date
+                val photoTime = it.filename.toLong().milisToDate()
+                GalleryItem(it.uri.toString(), photoTime)
+            })
         }
     }
 

@@ -16,6 +16,11 @@ interface FirebaseCloudDatabase {
     fun getPhotoFetcher(): CloudUriFetcher
 }
 
+data class CloudItem(
+    val uri: Uri,
+    val filename: String
+)
+
 class CloudUriFetcher(
     private val containerReference: StorageReference
 ) {
@@ -24,9 +29,9 @@ class CloudUriFetcher(
     private var hasNext: Boolean = true
     private var currentDeferreds: List<Deferred<*>>? = listOf()
 
-    suspend fun next(size: Int): List<Uri> = coroutineScope {
+    suspend fun next(size: Int): List<CloudItem> = coroutineScope {
         if (!hasNext) {
-            return@coroutineScope listOf<Uri>()
+            return@coroutineScope listOf<CloudItem>()
         }
 
         val token = lastToken
@@ -39,15 +44,24 @@ class CloudUriFetcher(
         lastToken = callResult.pageToken
 
         callResult.items.map {
-            it.downloadUrl.asDeferred()
+            val deferreds = it.downloadUrl.asDeferred()
+            val filenames = it.name
+
+            Pair(deferreds, filenames)
         }.also {
-            currentDeferreds = it
-        }.awaitAll(
-        ).also {
+            currentDeferreds = it.map { it.first }
+        }.map {
+            Pair(
+                it.first.await(),
+                it.second
+            )
+        }.also {
             if (it.size < size) {
                 hasNext = false
             }
             currentDeferreds = null
+        }.map {
+            CloudItem(it.first, it.second)
         }
     }
 
