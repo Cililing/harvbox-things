@@ -4,7 +4,6 @@ import androidx.annotation.CallSuper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.cancel
 
 abstract class BasePresenterImpl<View : BaseView<*>>(
     override var view: View

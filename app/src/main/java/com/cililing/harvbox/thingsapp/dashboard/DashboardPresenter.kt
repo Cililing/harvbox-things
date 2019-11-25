@@ -73,14 +73,14 @@ class DashboardPresenter(
 
     override fun onLight1Click(isOn: Boolean) {
         coroutineScope.launch {
-            withContext(Dispatchers.Default) { appController.request(ThingsActionRequest.Light1(isOn)) }
+            appController.request(ThingsActionRequest.Light1(isOn))
             requestForData()
         }
     }
 
     override fun onLight2Click(isOn: Boolean) {
         coroutineScope.launch {
-            withContext(Dispatchers.Default) { appController.request(ThingsActionRequest.Light2(isOn)) }
+            appController.request(ThingsActionRequest.Light2(isOn))
             requestForData()
         }
     }

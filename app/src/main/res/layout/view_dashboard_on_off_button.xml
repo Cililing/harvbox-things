@@ -28,7 +28,6 @@
         android:scrollHorizontally="true"
         android:ellipsize="marquee"
         android:marqueeRepeatLimit ="marquee_forever"
-        android:text="This is very very long long text that should marquuueeeeeee on very small screen :) :) :) !!!"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
